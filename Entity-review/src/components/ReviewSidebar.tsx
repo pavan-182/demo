@@ -27,6 +27,7 @@ interface ReviewSidebarProps {
   onChangeType: (id: string, type: string) => void;
   toggleDropdown: (id: string) => void;
   showDropdownId: string | null;
+  onSubmit: () => void;
 }
 
 const ReviewSidebar: React.FC<ReviewSidebarProps> = ({ 
@@ -36,10 +37,12 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
   onAccept, 
   onChangeType,
   toggleDropdown,
-  showDropdownId
+  showDropdownId,
+  onSubmit
 }) => {
   const unacknowledged = entities.filter(e => e.status === 'unacknowledged');
   const acknowledged = entities.filter(e => e.status === 'acknowledged');
+  const isComplete = unacknowledged.length === 0;
 
   return (
     <aside className="w-[420px] bg-white border-l border-[#C2C6CA] flex flex-col overflow-hidden shrink-0 sidebar-shadow font-source relative" data-purpose="ReviewSidebar">
@@ -47,13 +50,14 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
       <div 
         style={{
           position: 'absolute',
-          width: '323.6px',
+          width: isComplete ? '100%' : '323.6px',
           height: '4px',
           left: '0px',
           top: '0px',
           background: '#1C40CA',
           borderRadius: '0px 40px 40px 0px',
-          zIndex: 20
+          zIndex: 20,
+          transition: 'width 0.5s ease-in-out'
         }}
       />
 
@@ -61,7 +65,7 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
       <div className="px-6 pt-4 pb-2 border-b border-[#F1F3F5] shrink-0">
         <div className="flex items-center justify-between mb-1">
           <button className="flex items-center text-[10px] font-bold text-[#868E94] uppercase tracking-widest gap-1">
-            STEP 8 OF 10 
+            {isComplete ? 'STEP 10 OF 10' : 'STEP 8 OF 10'} 
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2"></path></svg>
           </button>
         </div>
@@ -80,24 +84,32 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
 
       {/* Stripe (Instruction Bar) */}
       <div 
-        className="flex items-start px-4 py-2 gap-2 h-8 bg-[#EEF2FA] border-b border-[#9AAFFF] shrink-0 z-0"
+        className={`flex items-start px-4 py-2 gap-2 h-8 shrink-0 z-0 transition-colors ${isComplete ? 'bg-green-50 border-b border-green-200' : 'bg-[#EEF2FA] border-b border-[#9AAFFF]'}`}
         style={{ boxSizing: 'border-box' }}
       >
-        <svg className="w-4 h-4 shrink-0 text-[#1C40CA]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
-        <p className="text-[11px] font-medium text-[#35424D] leading-4 truncate">
-          Confirm the correctness of the entity type tagged to each entity name.
+        <svg className={`w-4 h-4 shrink-0 ${isComplete ? 'text-green-600' : 'text-[#1C40CA]'}`} fill="currentColor" viewBox="0 0 24 24">
+          {isComplete ? (
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+          ) : (
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+          )}
+        </svg>
+        <p className={`text-[11px] font-medium leading-4 truncate ${isComplete ? 'text-green-800' : 'text-[#35424D]'}`}>
+          {isComplete ? "All entities reviewed successfully." : "Confirm the correctness of the entity type tagged to each entity name."}
         </p>
       </div>
 
       {/* Accordion Content */}
-      <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-12 pt-4 custom-scrollbar">
-        <div className="flex items-center justify-between border-b border-[#F1F3F5] pb-2">
-          <span className="font-bold text-sm text-[#35424D]">Unacknowledged ({unacknowledged.length})</span>
-          <div className="flex items-center gap-2 text-[#868E94]">
-            <svg className="w-4 h-4 cursor-pointer hover:text-[#35424D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7" strokeWidth="2"></path></svg>
-            <svg className="w-4 h-4 cursor-pointer hover:text-[#35424D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2"></path></svg>
+      <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-24 pt-4 custom-scrollbar">
+        {unacknowledged.length > 0 && (
+          <div className="flex items-center justify-between border-b border-[#F1F3F5] pb-2">
+            <span className="font-bold text-sm text-[#35424D]">Unacknowledged ({unacknowledged.length})</span>
+            <div className="flex items-center gap-2 text-[#868E94]">
+              <svg className="w-4 h-4 cursor-pointer hover:text-[#35424D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7" strokeWidth="2"></path></svg>
+              <svg className="w-4 h-4 cursor-pointer hover:text-[#35424D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2"></path></svg>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Unacknowledged Cards */}
         <div className="space-y-3">
@@ -193,18 +205,15 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
               )}
             </div>
           ))}
-          {unacknowledged.length === 0 && (
-            <p className="text-center py-8 text-[#868E94] text-sm italic">No more entities to review.</p>
-          )}
         </div>
 
         {/* Acknowledged Section */}
-        <div className="pt-4 border-t border-[#F1F3F5]">
+        <div className={`pt-4 ${!isComplete ? 'border-t border-[#F1F3F5]' : ''}`}>
           <div className="flex items-center justify-between pb-2 mb-4">
             <span className={`font-bold text-sm ${acknowledged.length > 0 ? 'text-[#35424D]' : 'text-[#868E94]'}`}>
               Acknowledged ({acknowledged.length})
             </span>
-            <svg className="w-4 h-4 text-[#868E94] cursor-pointer hover:text-[#35424D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2"></path></svg>
+            <svg className={`w-4 h-4 cursor-pointer transition-transform ${isComplete ? 'rotate-180 text-[#35424D]' : 'text-[#868E94]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2"></path></svg>
           </div>
           <div className="space-y-2">
             {acknowledged.map(entity => (
@@ -219,6 +228,19 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Submit Footer Action */}
+      {isComplete && (
+        <div className="absolute bottom-0 left-0 w-full p-6 bg-white border-t border-[#F1F3F5] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] animate-in slide-in-from-bottom-4">
+          <button 
+            className="w-full bg-[#1C40CA] text-white py-3 rounded-lg font-bold shadow hover:bg-blue-800 transition-all flex items-center justify-center gap-2"
+            onClick={onSubmit}
+          >
+            Submit Review
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
+      )}
     </aside>
   );
 };

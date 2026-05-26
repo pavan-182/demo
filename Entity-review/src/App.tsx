@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import DocumentEditor from './components/DocumentEditor';
 import ReviewSidebar from './components/ReviewSidebar';
+import PublisherCentral from './components/PublisherCentral';
 import type { Entity } from './components/ReviewSidebar';
 import './App.css';
 
@@ -16,6 +17,8 @@ const App: React.FC = () => {
   const [entities, setEntities] = useState<Entity[]>(INITIAL_ENTITIES);
   const [activeEntityId, setActiveEntityId] = useState<string | null>(null);
   const [showDropdownId, setShowDropdownId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
   const [connectors, setConnectors] = useState<Array<{
     id: string;
     pathData: string;
@@ -52,7 +55,18 @@ const App: React.FC = () => {
     setShowDropdownId(null);
   };
 
+  const handleSubmit = () => {
+    setIsSubmitting(true);
+    // Simulate network request
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setShowDashboard(true);
+    }, 2000); // 2 second loading screen
+  };
+
   useEffect(() => {
+    if (showDashboard) return;
+
     const updateConnectors = () => {
       const activeEntity = entities.find(e => e.id === activeEntityId && e.status === 'unacknowledged');
       const newConnectors: typeof connectors = [];
@@ -117,7 +131,11 @@ const App: React.FC = () => {
       sidebar?.removeEventListener('scroll', handleUpdate);
       window.removeEventListener('click', handleGlobalClick);
     };
-  }, [activeEntityId, entities]);
+  }, [activeEntityId, entities, showDashboard]);
+
+  if (showDashboard) {
+    return <PublisherCentral />;
+  }
 
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-white text-on-surface font-sans">
@@ -132,6 +150,7 @@ const App: React.FC = () => {
           onChangeType={handleChangeType}
           toggleDropdown={toggleDropdown}
           showDropdownId={showDropdownId}
+          onSubmit={handleSubmit}
         />
         
         <svg className="fixed inset-0 pointer-events-none z-50 w-full h-full">
@@ -155,6 +174,16 @@ const App: React.FC = () => {
           })}
         </svg>
       </main>
+      
+      {/* Loading Overlay */}
+      {isSubmitting && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/50 backdrop-blur-sm">
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 border-4 border-blue-200 border-t-[#1C40CA] rounded-full animate-spin"></div>
+            <p className="mt-4 text-[#1C40CA] font-semibold tracking-wide">Submitting Review...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -6,9 +6,10 @@ import type { Entity } from './components/ReviewSidebar';
 import './App.css';
 
 const INITIAL_ENTITIES: Entity[] = [
-  { id: 'zncl2', name: 'ZnCl2', type: 'org_compound', status: 'unacknowledged' },
-  { id: 'n2o', name: 'N2O', type: 'complex', status: 'unacknowledged' },
-  { id: 'nh4-n', name: 'NH4-N', type: 'ion', status: 'unacknowledged' },
+  { id: 'pge2', name: 'PGE2', type: 'protein', status: 'unacknowledged' },
+  { id: '4hne', name: '4-hydroxynonenal (4HNE)', type: 'gene', status: 'unacknowledged' },
+  { id: 'ltb4', name: 'LTB4', type: 'ion', status: 'unacknowledged' },
+  { id: 'ltc4', name: 'LTC4', type: 'complex', status: 'unacknowledged' },
 ];
 
 const App: React.FC = () => {
@@ -27,6 +28,12 @@ const App: React.FC = () => {
   const handleEntityClick = (id: string) => {
     setActiveEntityId(id);
     setShowDropdownId(null);
+    
+    // Scroll to document entity
+    const element = document.getElementById(`target-entity-${id}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   };
 
   const handleAccept = (id: string) => {
@@ -40,7 +47,8 @@ const App: React.FC = () => {
   };
 
   const handleChangeType = (id: string, type: string) => {
-    setEntities(prev => prev.map(e => e.id === id ? { ...e, type } : e));
+    setEntities(prev => prev.map(e => e.id === id ? { ...e, type, status: 'acknowledged' } : e));
+    setActiveEntityId(null);
     setShowDropdownId(null);
   };
 
@@ -128,20 +136,20 @@ const App: React.FC = () => {
         
         <svg className="fixed inset-0 pointer-events-none z-50 w-full h-full">
           {connectors.map(conn => {
-            const color = "#ef4444";
+            const color = "#E65100"; // Matching the hexagon color
             return (
               <React.Fragment key={conn.id}>
                 <path 
                   d={conn.pathData} 
                   fill="none" 
                   stroke={color} 
-                  strokeWidth="1"
-                  strokeDasharray="2 2"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 3"
                   className="transition-all duration-300"
-                  opacity="0.6"
+                  opacity="0.85"
                 />
-                <circle cx={conn.startX} cy={conn.startY} r="2" fill={color} opacity="0.6" />
-                <circle cx={conn.endX} cy={conn.endY} r="2" fill={color} opacity="0.6" />
+                <circle cx={conn.startX} cy={conn.startY} r="3" fill={color} opacity="0.9" />
+                <circle cx={conn.endX} cy={conn.endY} r="3" fill={color} opacity="0.9" />
               </React.Fragment>
             );
           })}

@@ -228,7 +228,7 @@ const PublisherCentral: React.FC = () => {
                 </header>
 
                 {/* Scrollable Content Area */}
-                <div className="flex-1 overflow-y-auto flex flex-col items-start gap-4 px-8">
+                <div className="flex-1 overflow-y-auto flex flex-col items-start gap-4 px-8 w-full">
                   {/* Article Details Grid */}
                   <section className="flex flex-col items-start p-0 pt-6 pb-6 w-full border-b border-[#ECEEEE] flex-none box-border">
                     <div className="flex justify-between items-center w-full mb-6">
@@ -238,91 +238,91 @@ const PublisherCentral: React.FC = () => {
                         Edit Details
                       </button>
                     </div>
-                    <div className="grid grid-cols-4 gap-12 w-full">
-                      <div className="space-y-4">
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">DOI</span>
-                          <a style={{ color: brandBlue }} className="hover:underline font-bold text-sm truncate" href="#">10.1176/appi.prcp</a>
+                    <div className="grid grid-cols-4 gap-x-8 gap-y-1 w-full">
+                      <div className="space-y-3">
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">DOI</span>
+                          <a style={{ color: brandBlue }} className="hover:underline font-normal text-sm truncate" href="#">10.1176/appi.prcp</a>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Journal ID</span>
-                          <span className="font-bold text-sm">AC</span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Journal ID</span>
+                          <span className="font-normal text-sm">AC</span>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Issue ID</span>
-                          <span className="font-bold text-sm">12</span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Issue ID</span>
+                          <span className="font-normal text-sm">12</span>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Vol/Issue</span>
-                          <span className="font-bold text-sm">12/35</span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Vol/Issue</span>
+                          <span className="font-normal text-sm">12/35</span>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Typeset Pages</span>
-                          <span className="font-bold text-sm">10</span>
-                        </div>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Article Category</span>
-                          <span className="font-bold text-sm">Initial Check</span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Copyediting Level</span>
-                          <span className="font-bold text-sm">L1</span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Total Tables</span>
-                          <span className="font-bold text-sm">2</span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Total Figures</span>
-                          <span className="font-bold text-sm">2</span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Total Suppl. Mtl</span>
-                          <span className="font-bold text-sm">19</span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Typeset Pages</span>
+                          <span className="font-normal text-sm">10</span>
                         </div>
                       </div>
-                      <div className="space-y-4">
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Workflow</span>
-                          <span className="font-bold text-sm">1</span>
+                      <div className="space-y-3">
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Article Category</span>
+                          <span className="font-normal text-sm">Initial Check</span>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Days in Prod.</span>
-                          <span className="font-bold text-sm">10 Days</span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Copyediting Level</span>
+                          <span className="font-normal text-sm">L1</span>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Status</span>
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#dcfce7] text-[#166534] border border-[#bbf7d0] w-fit text-[11px] font-bold mt-1">
-                            <span className="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Total Tables</span>
+                          <span className="font-normal text-sm">2</span>
+                        </div>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Total Figures</span>
+                          <span className="font-normal text-sm">2</span>
+                        </div>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Total Suppl. Mtl</span>
+                          <span className="font-normal text-sm">19</span>
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Workflow</span>
+                          <span className="font-normal text-sm">1</span>
+                        </div>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Days in Prod.</span>
+                          <span className="font-normal text-sm">10 Days</span>
+                        </div>
+                        <div className="flex justify-start items-center">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Status</span>
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#dcfce7] text-[#166534] border border-[#bbf7d0] w-fit text-[10px] font-medium">
+                            <span className="w-1 h-1 bg-green-600 rounded-full"></span>
                             In-progress
                           </div>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Billing Status</span>
-                          <span className="font-bold text-sm">Unbilled</span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Billing Status</span>
+                          <span className="font-normal text-sm">Unbilled</span>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Embargo date</span>
-                          <span className="font-bold text-sm">15/01/2026</span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Embargo date</span>
+                          <span className="font-normal text-sm">15/01/2026</span>
                         </div>
                       </div>
-                      <div className="space-y-4">
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Corr. Author</span>
-                          <span className="font-bold text-sm">Dylan Field</span>
+                      <div className="space-y-3">
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Corr. Author</span>
+                          <span className="font-normal text-sm">Dylan Field</span>
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-gray-500 text-xs font-medium">Co- Author</span>
-                          <span className="font-bold text-sm">John Brewis, Harv... <span style={{ color: brandBlue }} className="hover:underline cursor-pointer">+ 5 more</span></span>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Co- Author</span>
+                          <span className="font-normal text-sm">John Brewis, Harv... <span style={{ color: brandBlue }} className="hover:underline cursor-pointer font-bold">+ 5</span></span>
                         </div>
                       </div>
                     </div>
                   </section>
 
                   {/* Progress Section */}
-                  <section className="flex flex-col items-start p-0 pt-2 pb-12 w-full flex-none">
+                  <section className="flex flex-col items-start p-0 pt-2 pb-12 w-3/4 flex-none">
                     <h2 className="text-lg font-bold text-gray-900 mb-8">Progress</h2>
                     
                     <div className="w-full space-y-0 relative">

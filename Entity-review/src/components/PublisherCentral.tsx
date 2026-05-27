@@ -329,7 +329,7 @@ const PublisherCentral: React.FC = () => {
                       {/* Step 1 */}
                       <div className="flex gap-6 pb-12 relative z-10">
                         <div className="flex flex-col items-center">
-                          <img src="/check_circle.png" alt="completed" className="w-8 h-8" />
+                          <img src="/check_circle_1.png" alt="completed" className="w-8 h-8" />
                         </div>
                         <div className="flex-1 pt-0.5">
                           <div className="flex justify-between items-center">
@@ -347,7 +347,7 @@ const PublisherCentral: React.FC = () => {
                       {/* Step 2 */}
                       <div className="flex gap-6 pb-12 relative z-10">
                         <div className="flex flex-col items-center">
-                          <img src="/check_circle.png" alt="completed" className="w-8 h-8" />
+                          <img src="/check_circle_1.png" alt="completed" className="w-8 h-8" />
                         </div>
                         <div className="flex-1 pt-0.5">
                           <div className="flex justify-between items-center">

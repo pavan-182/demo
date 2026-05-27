@@ -2,34 +2,50 @@ import React, { useState } from 'react';
 
 const PublisherCentral: React.FC = () => {
   const [view, setView] = useState<'all-articles' | 'article-details'>('all-articles');
+  const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
+  const [isApproved, setIsApproved] = useState(false);
 
   // Theme Constants
-  const brandBlue = "#1a56db"; // True Corporate Royal Blue
-  const brandBlueLight = "#f1f5f9"; // Very pale blue-gray
+  const brandBlue = "#1c40ca";
+
+  const handleApprove = () => {
+    setIsApproved(true);
+    setIsActionMenuOpen(false);
+    // Automatically hide toast after 5 seconds
+    setTimeout(() => {
+      // Logic to hide toast if needed, but for now we'll keep the state
+    }, 5000);
+  };
 
   return (
-    <div className="bg-[#f9f9fa] text-[#35424D] font-sans min-h-screen flex flex-col h-screen overflow-hidden w-full">
-      {/* TopAppBar - Fluid Full Width */}
-      <header className="bg-white border-b border-gray-200 fixed top-0 z-50 flex items-center h-[60px] w-full shrink-0 px-6">
+    <div className="bg-white text-[#35424D] font-source min-h-screen flex flex-col h-screen overflow-hidden w-full relative">
+      {/* Top Header */}
+      <header className="bg-white border-b border-[#c2c6ca] fixed top-0 z-50 flex items-center h-[60px] w-full shrink-0 px-4">
         <div className="w-full flex justify-between items-center">
-          <div className="flex items-center gap-1">
-            <button className="p-1 hover:bg-gray-100 transition-colors rounded-full -ml-2">
-              <img src="/menu.png" alt="menu" className="w-8 h-8" />
+          <div className="flex items-center gap-4">
+            <button className="p-1 hover:bg-gray-100 transition-colors rounded-full">
+              <img src="/menu.png" alt="menu" className="w-9 h-9" />
             </button>
             <div className="flex items-center">
-              <img src="/PubClogo.png" alt="Publisher Central" className="h-12" />
+              <img src="/PubClogo.png" alt="Publisher Central" className="h-10" />
             </div>
           </div>
-          <div className="flex items-center gap-6">
-            <button style={{ color: brandBlue }} className="flex items-center gap-2 font-semibold text-sm hover:underline transition-all">
-              <img src="/upload.png" alt="upload" className="w-5 h-5" />
-              Upload Manuscript
-            </button>
-            <div className="relative flex items-center">
-              <img src="/notification.png" alt="notifications" className="w-6 h-6 cursor-pointer" />
-            </div>
+          <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#1e293b] text-white flex items-center justify-center font-bold text-xs">
+              <button className="flex items-center gap-1.5 px-2 py-1.5 rounded-[4px] hover:bg-blue-50 transition-all">
+                <img src="/upload.png" alt="upload" className="w-5 h-5" />
+                <span className="text-[#1c40ca] font-semibold text-base">Upload Manuscript</span>
+              </button>
+              <div className="p-1 cursor-pointer hover:bg-gray-100 rounded-full">
+                <img src="/notification.png" alt="notifications" className="w-6 h-6" />
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3 px-3 py-1.5 border border-[#d7d9db] rounded-[4px]">
+              <div className="w-4 h-6 relative flex items-center justify-center">
+                <img src="/π.png" alt="flag" className="w-full h-auto object-contain" />
+              </div>
+              <div className="w-6 h-6 rounded-full bg-[#35424d] text-white flex items-center justify-center font-semibold text-[13px]">
                 JD
               </div>
             </div>
@@ -37,121 +53,101 @@ const PublisherCentral: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Container - Fluid Full Width */}
+      {/* Main Container */}
       <div className="flex flex-1 pt-[60px] overflow-hidden w-full">
-        {/* Navigation Drawer - Flush Left */}
+        {/* Navigation Sidebar */}
         <aside 
-          className="w-[320px] h-full bg-white py-2 flex flex-col z-40 shrink-0"
+          className="w-[212px] h-full bg-white py-2 flex flex-col z-40 shrink-0 border-r border-[#c2c6ca]"
           style={{ boxShadow: '1px 0px 0px #C2C6CA' }}
         >
-          <nav className="flex flex-col gap-2.5 px-2">
-            {/* Dashboard */}
-            <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">
-              <img src="/space_dashboard.png" alt="dashboard" className="w-5 h-5" />
-              <span className="text-lg font-medium">Dashboard</span>
+          <nav className="flex flex-col gap-1 px-2 mt-1">
+            <a className="flex items-center gap-2 px-3 py-1.5 text-[#5d6871] hover:bg-gray-100 rounded transition-all" href="#">
+              <img src="/space_dashboard.png" alt="dashboard" className="w-5 h-5 opacity-80" />
+              <span className="text-base">Dashboard</span>
             </a>
-            {/* My Tasks */}
-            <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">
-              <img src="/task_alt.png" alt="tasks" className="w-5 h-5" />
-              <span className="text-lg font-medium">My Tasks</span>
+            <a className="flex items-center gap-2 px-3 py-1.5 text-[#5d6871] hover:bg-gray-100 rounded transition-all" href="#">
+              <img src="/task_alt.png" alt="tasks" className="w-5 h-5 opacity-80" />
+              <span className="text-base">My Tasks</span>
             </a>
-            {/* Conversations */}
-            <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">
-              <img src="/all_inbox.png" alt="conversations" className="w-5 h-5" />
-              <span className="text-lg font-medium">Conversations</span>
+            <a className="flex items-center gap-2 px-3 py-1.5 text-[#5d6871] hover:bg-gray-100 rounded transition-all" href="#">
+              <img src="/all_inbox.png" alt="conversations" className="w-5 h-5 opacity-80" />
+              <span className="text-base">Conversations</span>
             </a>
-            {/* All Articles */}
-            <div className="mt-2">
+            
+            <div className="mt-1">
               <button 
                 onClick={() => setView('all-articles')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all ${view === 'all-articles' ? 'bg-[#f0f5ff]' : 'text-gray-600 hover:bg-gray-100'}`}
-                style={{ color: view === 'all-articles' ? brandBlue : '' }}
+                className={`w-full flex items-center gap-2 px-3 py-1.5 rounded transition-all ${view === 'all-articles' || view === 'article-details' ? 'bg-[#e1e6ff] text-[#35424d]' : 'text-[#5d6871] hover:bg-gray-100'}`}
               >
                 <img src="/article.png" alt="articles" className="w-5 h-5" />
-                <span className="text-lg font-medium">All Articles</span>
+                <span className="text-base">All Articles</span>
               </button>
-              <div className="flex flex-col ml-3 mt-1.5 border-l-2 gap-1" style={{ borderColor: brandBlue }}>
+              <div className="flex flex-col ml-4 mt-1 border-l border-[#c2c6ca]">
                 <button 
                   onClick={() => setView('article-details')}
-                  className={`flex items-center gap-3 px-6 py-2 transition-all ${view === 'article-details' ? 'bg-[#f0f5ff] font-semibold' : 'text-gray-600 hover:bg-gray-100'}`}
-                  style={{ color: view === 'article-details' ? brandBlue : '' }}
+                  className={`flex items-center gap-2 px-3 py-1.5 transition-all rounded-r-[4px] ${view === 'article-details' ? 'bg-[#e1e6ff] border-l-2 border-[#1c40ca] font-semibold text-[#35424d] -ml-[2px]' : 'text-[#5d6871] hover:bg-gray-100'}`}
                 >
-                  <img src="/progress_activity.png" alt="in-progress" className="w-4.5 h-4.5" />
-                  <span className="text-lg">In-progress</span>
+                  <img src="/progress_activity.png" alt="in-progress" className="w-4 h-4 opacity-70" />
+                  <span className="text-base">In-progress</span>
                 </button>
-                <button className="flex items-center gap-3 px-6 py-2 text-gray-600 hover:bg-gray-100 transition-all">
-                  <img src="/check_circle.png" alt="published" className="w-4.5 h-4.5" />
-                  <span className="text-lg">Published</span>
+                <button className="flex items-center gap-2 px-3 py-1.5 text-[#5d6871] hover:bg-gray-100 transition-all">
+                  <img src="/check_circle.png" alt="published" className="w-4 h-4 opacity-70" />
+                  <span className="text-base">Published</span>
                 </button>
               </div>
             </div>
-            {/* All Issues */}
-            <div className="mt-2">
-              <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">
-                <img src="/book_4.png" alt="issues" className="w-5 h-5" />
-                <span className="text-lg font-medium">All Issues</span>
+
+            <div className="mt-1">
+              <a className="flex items-center gap-2 px-3 py-1.5 text-[#5d6871] hover:bg-gray-100 rounded transition-all" href="#">
+                <img src="/book_4.png" alt="issues" className="w-5 h-5 opacity-80" />
+                <span className="text-base">All Issues</span>
               </a>
-              <div className="flex flex-col ml-3 mt-1.5 border-l-2 border-transparent gap-1">
-                <button className="flex items-center gap-3 px-6 py-2 text-gray-600 hover:bg-gray-100 transition-all">
-                  <img src="/progress_activity.png" alt="in-progress" className="w-4.5 h-4.5" />
-                  <span className="text-lg">In-progress</span>
+              <div className="flex flex-col ml-4 mt-1 border-l border-[#c2c6ca]">
+                <button className="flex items-center gap-2 px-3 py-1.5 text-[#5d6871] hover:bg-gray-100 transition-all">
+                  <img src="/progress_activity.png" alt="in-progress" className="w-4 h-4 opacity-70" />
+                  <span className="text-base">In-progress</span>
                 </button>
-                <button className="flex items-center gap-3 px-6 py-2 text-gray-600 hover:bg-gray-100 transition-all">
-                  <img src="/check_circle.png" alt="published" className="w-4.5 h-4.5" />
-                  <span className="text-lg">Published</span>
+                <button className="flex items-center gap-2 px-3 py-1.5 text-[#5d6871] hover:bg-gray-100 transition-all">
+                  <img src="/check_circle.png" alt="published" className="w-4 h-4 opacity-70" />
+                  <span className="text-base">Published</span>
                 </button>
               </div>
             </div>
           </nav>
         </aside>
 
-        {/* Main Content Area - Fluid */}
-        <main className="flex-1 overflow-hidden bg-[#f9f9fa] relative border-t border-gray-200">
+        {/* Main Content Area */}
+        <main className="flex-1 overflow-hidden bg-white relative">
           <div className="h-full flex flex-col">
             {view === 'all-articles' ? (
-              /* Articles Table View - Fluid Width */
-              <div className="p-8 overflow-y-auto h-full">
+              /* Articles Table View */
+              <div className="px-10 py-8 overflow-y-auto h-full">
                 <div className="w-full">
-                  <div className="flex flex-col gap-4 mb-6 w-full">
-                    <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                  <div className="flex flex-col gap-4 mb-4 w-full">
+                    <h2 className="text-lg font-bold text-[#35424d] flex items-center gap-1">
                       Articles In-progress
                       <img src="/info.png" alt="info" className="w-4 h-4 cursor-pointer" />
                     </h2>
                     
                     <div className="flex justify-between items-center h-8 w-full">
-                      {/* Search Area */}
-                      <div 
-                        className="flex flex-row items-center px-3 bg-white border border-[#AEB3B7] rounded-[4px] w-[246px] h-[32px] box-border"
-                      >
+                      <div className="flex flex-row items-center px-3 bg-white border border-[#AEB3B7] rounded-[4px] w-[246px] h-8 box-border">
                         <input 
-                          className="flex-1 text-sm bg-transparent border-none outline-none placeholder:text-gray-400 h-full" 
+                          className="flex-1 text-base bg-transparent border-none outline-none placeholder:text-[#AEB3B7] h-full" 
                           placeholder="Search" 
                           type="text"
                         />
-                        <svg 
-                          className="w-4 h-4 text-gray-400 shrink-0" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            strokeWidth="2" 
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                          />
+                        <svg className="w-5 h-5 text-[#AEB3B7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                       </div>
 
-                      {/* Filters and Journal */}
-                      <div className="flex items-center gap-6">
-                        <div className="flex items-center gap-2 text-sm text-gray-900">
-                          Journal: <span className="font-bold">All</span>
-                          <div className="w-4 h-4 flex items-center justify-center">
-                            <img src="/dropdown.png" alt="dropdown" className="w-2.5 h-auto" />
-                          </div>
+                      <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-0.5 px-2 py-1.5 hover:bg-gray-100 rounded-[4px] cursor-pointer text-[13px] text-[#35424d]">
+                          <span className="font-semibold">Journal:</span>
+                          <span className="font-normal">All</span>
+                          <img src="/dropdown.png" alt="dropdown" className="w-4 h-4 ml-0.5" />
                         </div>
-                        <button style={{ color: brandBlue }} className="flex items-center gap-2 font-bold text-sm">
+                        <button className="flex items-center gap-0.5 px-2 py-1.5 text-[#1c40ca] font-semibold text-[13px] hover:bg-blue-50 rounded-[4px]">
                           <img src="/filter.png" alt="filters" className="w-5 h-5" />
                           More Filters
                         </button>
@@ -159,50 +155,53 @@ const PublisherCentral: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Table Container */}
-                  <div className="border border-gray-200 rounded overflow-hidden bg-white shadow-sm">
+                  <div className="border border-[#e3e4e5] rounded-[4px] overflow-hidden bg-white shadow-sm">
                     <div className="overflow-x-auto">
                       <table className="w-full text-left border-collapse">
                         <thead>
-                          <tr className="bg-gray-50 border-b border-gray-200 text-[11px] font-bold text-gray-600 uppercase tracking-wider">
-                            <th className="px-4 py-3.5">Journal</th>
-                            <th className="px-4 py-3.5">Article ID</th>
-                            <th className="px-4 py-3.5">Article Due Date</th>
-                            <th className="px-4 py-3.5">Milestone</th>
-                            <th className="px-4 py-3.5">Days in Milestone</th>
-                            <th className="px-4 py-3.5">Milestone ETA</th>
-                            <th className="px-4 py-3.5">Overall Progress</th>
-                            <th className="px-4 py-3.5 w-10"></th>
+                          <tr className="bg-[#f6f7f7] border-b border-[#e3e4e5] text-[13px] font-semibold text-[#5d6871]">
+                            <th className="px-4 py-3 whitespace-nowrap">Journal</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Article ID</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Article Due Date</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Milestone</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Days in Milestone</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Milestone ETA</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Overall Progress</th>
+                            <th className="px-4 py-3 w-10"></th>
+                            <th className="px-4 py-3 w-10"></th>
                           </tr>
                         </thead>
                         <tbody className="bg-white">
-                          <tr className="border-b border-gray-100 text-sm text-gray-800 hover:bg-gray-50 transition-colors cursor-pointer" onClick={() => setView('article-details')}>
-                            <td className="px-4 py-5 font-medium">AN</td>
-                            <td className="px-4 py-5 font-medium">AN4321</td>
-                            <td className="px-4 py-5">15/01/2026 11:00</td>
-                            <td className="px-4 py-5">
-                              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dcfce7] text-[#166534] border border-[#bbf7d0] text-xs font-semibold">
-                                <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                          <tr 
+                            className="border-b border-[#f6f7f7] text-[13px] text-[#35424d] hover:bg-gray-50 transition-colors cursor-pointer group" 
+                            onClick={() => setView('article-details')}
+                          >
+                            <td className="px-4 py-4">AN</td>
+                            <td className="px-4 py-4">AN4321</td>
+                            <td className="px-4 py-4">15/01/2026 11:00</td>
+                            <td className="px-4 py-4">
+                              <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-[#dafbe8] text-[#005728] border border-[#8bdfb2] text-[13px] font-semibold">
+                                <span className="w-2 h-2 rounded-full bg-[#005728] opacity-60"></span>
                                 Copyediting Review
                               </span>
                             </td>
-                            <td className="px-4 py-5 font-medium">11 Days</td>
-                            <td className="px-4 py-5 text-gray-500">29/12/2025 12:10</td>
-                            <td className="px-4 py-5">
-                              <div className="flex items-center gap-4">
-                                <div className="bg-gray-200 h-1.5 w-24 rounded-full overflow-hidden border border-gray-300">
-                                  <div style={{ backgroundColor: brandBlue }} className="h-full w-[70%]"></div>
-                                </div>
+                            <td className="px-4 py-4">11 Days</td>
+                            <td className="px-4 py-4">29/12/2025 12:10</td>
+                            <td className="px-4 py-4">
+                              <div className="border border-[#2853f8] p-[3px] rounded-[6px] w-[80px]">
+                                <div style={{ backgroundColor: brandBlue }} className="h-1 w-[35%] rounded-[6px]"></div>
                               </div>
                             </td>
-                            <td className="px-4 py-5 text-right">
-                              <div className="flex items-center gap-2 text-xs text-gray-500 font-medium">
-                                <img src="/article.png" alt="pending" className="w-4 h-4 opacity-70" />
+                            <td className="px-4 py-4">
+                              <div className="flex items-center gap-1 text-[13px] text-[#35424d] italic whitespace-nowrap">
+                                <img src="/π.png" alt="flag" className="h-4 w-4 opacity-70" />
                                 Action pending on you
-                                <button className="text-gray-400 hover:text-gray-600 transition-colors ml-2">
-                                  <img src="/actions.png" alt="actions" className="h-4 w-auto" />
-                                </button>
                               </div>
+                            </td>
+                            <td className="px-4 py-4 text-right">
+                              <button className="p-1 text-gray-400 hover:text-gray-600 transition-colors">
+                                <img src="/actions.png" alt="actions" className="w-5 h-5 opacity-70" />
+                              </button>
                             </td>
                           </tr>
                         </tbody>
@@ -212,221 +211,316 @@ const PublisherCentral: React.FC = () => {
                 </div>
               </div>
             ) : (
-              /* Article Details View - Fully Fluid */
+              /* Article Details View */
               <div className="flex flex-col h-full w-full bg-white overflow-hidden">
-                {/* Header Frame - Spans width */}
-                <header className="h-[72px] w-full flex flex-col items-start pt-2 pr-8 pb-3 pl-8 gap-1 border-b border-[#E3E4E5] flex-none box-border">
-                  <nav className="text-xs text-gray-500 flex items-center gap-2">
-                    <button onClick={() => setView('all-articles')} style={{ color: brandBlue }} className="hover:underline">All Articles</button>
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
-                    <span className="text-gray-500">In-progress</span>
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
-                    <span className="font-semibold text-gray-900">AN4321</span>
-                  </nav>
-                  <div className="flex justify-between items-center w-full">
-                  <h1 className="text-lg font-bold text-gray-500 truncate flex-1">
-                    Widening educational inequalities in mortality in more recent birth-cohorts:...
-                  </h1>
-                  <div className="flex items-center gap-4">                      <button style={{ color: brandBlue }} className="flex items-center gap-1.5 font-semibold text-sm hover:underline">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-                        Stakeholder FAQs
+                {/* Header Frame */}
+                <header className="border-b border-[#e3e4e5] flex flex-col gap-[8px] items-start pb-[12px] px-[16px] pt-[8px] shrink-0 w-full">
+                  {/* Breadcrumbs */}
+                  <div className="flex gap-[4px] items-center text-[13px]">
+                    <button 
+                      onClick={() => setView('all-articles')}
+                      className="text-[#5d6871] hover:text-[#1c40ca] transition-colors"
+                    >
+                      All Articles
+                    </button>
+                    <img src="/dropdown.png" alt="" className="w-3.5 h-3.5 -rotate-90 opacity-60" />
+                    <span className="text-[#5d6871]">In-progress</span>
+                    <img src="/dropdown.png" alt="" className="w-3.5 h-3.5 -rotate-90 opacity-60" />
+                    <span className="font-semibold text-[#35424d]">AN4321</span>
+                  </div>
+                  
+                  {/* Title and Actions */}
+                  <div className="flex items-end justify-between w-full">
+                    <h1 className="text-[18px] font-semibold text-[#5d6871] truncate max-w-[700px]">
+                      Widening educational inequalities in mortality in more recent birth-cohorts: a study of 14 European countries
+                    </h1>
+                    <div className="flex gap-[8px] items-start">
+                      <button className="flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] hover:bg-blue-50 transition-all">
+                        <img src="/info.png" alt="" className="w-4 h-4" />
+                        <span className="text-[#1c40ca] font-semibold text-[13px]">Stakeholder FAQs</span>
                       </button>
-                      <button style={{ color: brandBlue }} className="flex items-center gap-1.5 font-semibold text-sm hover:underline">
-                        New Conversation
-                        <div className="w-3.5 h-3.5 flex items-center justify-center">
-                          <img src="/dropdown.png" alt="dropdown" className="w-2.5 h-auto" />
-                        </div>
+                      <button className="flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] hover:bg-blue-50 transition-all">
+                        <span className="text-[#1c40ca] font-semibold text-[13px]">New Conversation</span>
+                        <img src="/dropdown.png" alt="" className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 </header>
 
-                {/* Scrollable Content Area */}
-                <div className="flex-1 overflow-y-auto flex flex-col items-start gap-4 px-8 w-full">
-                  {/* Article Details Grid */}
-                  <section className="flex flex-col items-start p-0 pt-6 pb-6 w-full border-b border-[#ECEEEE] flex-none box-border">
-                    <div className="flex justify-between items-center w-full mb-6">
-                      <h2 className="text-lg font-bold text-gray-900">Article Details</h2>
-                      <button style={{ color: brandBlue }} className="font-semibold flex items-center gap-2 hover:underline text-sm">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-                        Edit Details
+                {/* Scrollable Content */}
+                <div className="flex-1 overflow-y-auto px-[16px] py-[12px] flex flex-col gap-[24px]">
+                  {/* Article Details Section */}
+                  <div className="border-b border-[#eceeee] flex flex-col gap-[4px] pb-[16px] w-full">
+                    <div className="flex items-center justify-between py-[2px]">
+                      <h2 className="text-[16px] font-semibold text-[#35424d]">Article Details</h2>
+                      <button className="flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] hover:bg-blue-50 transition-all">
+                        <img src="/edit_note.png" alt="" className="w-4 h-4" />
+                        <span className="text-[#1c40ca] font-semibold text-[13px]">Edit Details</span>
                       </button>
                     </div>
-                    <div className="grid grid-cols-4 gap-x-8 gap-y-1 w-full">
-                      <div className="space-y-3">
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">DOI</span>
-                          <a style={{ color: brandBlue }} className="hover:underline font-normal text-base truncate" href="#">10.1176/appi.prcp</a>
+                    
+                    {/* Details Grid */}
+                    <div className="grid grid-cols-4 gap-x-[40px] gap-y-[12px] px-[8px] py-[12px]">
+                      {/* Column 1 */}
+                      <div className="flex flex-col gap-[12px]">
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">DOI</span>
+                          <a href="#" className="text-[#1c40ca] underline truncate">10.1176/appi.prcp</a>
                         </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Journal ID</span>
-                          <span className="font-normal text-base">AC</span>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Journal ID</span>
+                          <span className="text-[#35424d]">AC</span>
                         </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Issue ID</span>
-                          <span className="font-normal text-base">12</span>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Issue ID</span>
+                          <span className="text-[#35424d]">12</span>
                         </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Vol/Issue</span>
-                          <span className="font-normal text-base">12/35</span>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Vol/Issue</span>
+                          <span className="text-[#35424d]">12/35</span>
                         </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Typeset Pages</span>
-                          <span className="font-normal text-base">10</span>
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Article Category</span>
-                          <span className="font-normal text-base">Initial Check</span>
-                        </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Copyediting Level</span>
-                          <span className="font-normal text-base">L1</span>
-                        </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Total Tables</span>
-                          <span className="font-normal text-base">2</span>
-                        </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Total Figures</span>
-                          <span className="font-normal text-base">2</span>
-                        </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Total Suppl. Mtl</span>
-                          <span className="font-normal text-base">19</span>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Typeset Pages</span>
+                          <span className="text-[#35424d]">10</span>
                         </div>
                       </div>
-                      <div className="space-y-3">
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Workflow</span>
-                          <span className="font-normal text-base">1</span>
+
+                      {/* Column 2 */}
+                      <div className="flex flex-col gap-[12px]">
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[100px] shrink-0">Article Category</span>
+                          <span className="text-[#35424d]">Initial Check</span>
                         </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Days in Prod.</span>
-                          <span className="font-normal text-base">10 Days</span>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[100px] shrink-0">Copyediting Level</span>
+                          <span className="text-[#35424d]">L1</span>
                         </div>
-                        <div className="flex justify-start items-center">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Status</span>
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#dcfce7] text-[#166534] border border-[#bbf7d0] w-fit text-[11px] font-medium">
-                            <span className="w-1 h-1 bg-green-600 rounded-full"></span>
-                            In-progress
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[100px] shrink-0">Total Tables</span>
+                          <span className="text-[#35424d]">2</span>
+                        </div>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[100px] shrink-0">Total Figures</span>
+                          <span className="text-[#35424d]">2</span>
+                        </div>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[100px] shrink-0">Total Suppl. Mtl</span>
+                          <span className="text-[#35424d]">19</span>
+                        </div>
+                      </div>
+
+                      {/* Column 3 */}
+                      <div className="flex flex-col gap-[12px]">
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Workflow</span>
+                          <span className="text-[#35424d]">1</span>
+                        </div>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Days in Prod.</span>
+                          <span className="text-[#35424d]">10 Days</span>
+                        </div>
+                        <div className="flex gap-[4px] items-center text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Status</span>
+                          <div className="bg-[#dafbe8] border border-[#8bdfb2] flex gap-[4px] items-center px-[8px] py-[2px] rounded-full">
+                            <span className="w-2 h-2 rounded-full bg-[#005728] opacity-60"></span>
+                            <span className="text-[#005728] font-semibold text-[11px]">In-progress</span>
                           </div>
                         </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Billing Status</span>
-                          <span className="font-normal text-base">Unbilled</span>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Billing Status</span>
+                          <span className="text-[#35424d]">Unbilled</span>
                         </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Embargo date</span>
-                          <span className="font-normal text-base">15/01/2026</span>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Embargo date</span>
+                          <span className="text-[#35424d]">15/01/2026</span>
                         </div>
                       </div>
-                      <div className="space-y-3">
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Corr. Author</span>
-                          <span className="font-normal text-base">Dylan Field</span>
+
+                      {/* Column 4 */}
+                      <div className="flex flex-col gap-[12px]">
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Corr. Author</span>
+                          <span className="text-[#35424d]">Dylan Field</span>
                         </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Co- Author</span>
-                          <span className="font-normal text-base">John Brewis, Harv... <span style={{ color: brandBlue }} className="hover:underline cursor-pointer font-bold">+ 5</span></span>
+                        <div className="flex gap-[4px] text-[13px]">
+                          <span className="text-[#5d6871] w-[80px] shrink-0">Co- Author</span>
+                          <div className="flex gap-[4px] items-baseline overflow-hidden">
+                            <span className="text-[#35424d] truncate">John Brewis, Harvey Brut</span>
+                            <a href="#" className="text-[#1c40ca] underline whitespace-nowrap">+ 5 more</a>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </section>
+                  </div>
 
                   {/* Progress Section */}
-                  <section className="flex flex-col items-start p-0 pt-2 pb-12 w-3/5 flex-none">
-                    <h2 className="text-lg font-bold text-gray-900 mb-8">Progress</h2>
-
-                    <div className="w-full space-y-0 relative">
+                  <div className="flex flex-col gap-[12px] w-full max-w-[600px]">
+                    <h2 className="text-[16px] font-semibold text-[#35424d]">Progress</h2>
+                    <div className="flex flex-col gap-[16px] px-[6px]">
                       {/* Step 1 */}
-                      <div className="flex gap-6 pb-12 relative z-10">
-                        <div className="flex flex-col items-center">
-                          <img src="/check_circle_1.png" alt="completed" className="w-8 h-8" />
+                      <div className="flex gap-[8px] items-start pb-[4px]">
+                        <div className="py-[8px]">
+                          <img src="/check_circle.png" alt="" className="w-6 h-6" />
                         </div>
-                        <div className="flex-1 pt-0.5">
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <h3 className="font-bold text-lg">Graphics</h3>
-                              <p className="text-sm text-gray-500">Status: <span className="text-gray-700 font-semibold">Completed on-time</span></p>
-                            </div>
-                            <div className="text-right text-sm text-gray-500 font-medium">
-                              26/12/2025 11:00 - 28/12/2025 10:00 <span className="mx-1">•</span> 3 Days
+                        <div className="flex-1 flex flex-col gap-[4px]">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[16px] text-[#2a353e]">Graphics</span>
+                            <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871]">
+                              <span>26/12/2025 11:00 - 28/12/2025 10:00</span>
+                              <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
+                              <span>3 Days</span>
                             </div>
                           </div>
+                          <p className="text-[13px] text-[#5d6871]">
+                            Status: <span className="text-[#35424d]">Completed on-time</span>
+                          </p>
                         </div>
                       </div>
 
                       {/* Step 2 */}
-                      <div className="flex gap-6 pb-12 relative z-10">
-                        <div className="flex flex-col items-center">
-                          <img src="/check_circle_1.png" alt="completed" className="w-8 h-8" />
+                      <div className="flex gap-[8px] items-start pb-[4px]">
+                        <div className="py-[8px]">
+                          <img src="/check_circle.png" alt="" className="w-6 h-6" />
                         </div>
-                        <div className="flex-1 pt-0.5">
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <h3 className="font-bold text-lg">Copyediting</h3>
-                              <p className="text-sm text-gray-500">Status: <span className="text-gray-700 font-semibold">Completed on-time</span></p>
-                            </div>
-                            <div className="text-right text-sm text-gray-500 font-medium">
-                              26/12/2025 11:00 - 28/12/2025 24:01 <span className="mx-1">•</span> 2 Days
+                        <div className="flex-1 flex flex-col gap-[4px]">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[16px] text-[#2a353e]">Copyediting</span>
+                            <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871]">
+                              <span>26/12/2025 11:00 - 28/12/2025 24:01</span>
+                              <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
+                              <span>2 Days</span>
                             </div>
                           </div>
+                          <p className="text-[13px] text-[#5d6871]">
+                            Status: <span className="text-[#35424d]">Completed on-time</span>
+                          </p>
                         </div>
                       </div>
 
-                      {/* Step 3 - Current */}
-                      <div className="flex gap-6 relative z-10">
-                        <div className="flex flex-col items-center">
-                          <img src="/mode_standy.png" alt="in-progress" className="w-8 h-8" />
+                      {/* Step 3 - Current/Approved */}
+                      <div className="flex gap-[8px] items-start pb-[4px]">
+                        <div className="py-[8px]">
+                          <img 
+                            src={isApproved ? "/check_circle.png" : "/mode_standy.png"} 
+                            alt="" 
+                            className="w-6 h-6" 
+                          />
                         </div>
-                        <div className="flex-1 pt-0.5">
-                          <div className="flex justify-between mb-4">
-                            <div>
-                              <h3 className="font-bold text-lg">Copyediting Review</h3>
-                              <p className="text-sm text-gray-500">Due on: <span className="text-gray-700 font-semibold">29/12/2025 12:10</span></p>
-                            </div>
-                            <div className="text-right text-sm italic font-medium text-gray-500">
-                              28/12/2025 24:01 - In-progress
-                            </div>
-                          </div>
-                          {/* Action Banner */}
-                          <div 
-                            style={{ backgroundColor: '#F0F7FF', borderColor: '#93BEEB' }} 
-                            className="border rounded-[4px] py-2 pr-4 pl-3 flex items-center h-[52px] gap-6"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="shrink-0 w-5 h-5 flex items-center justify-center rounded-full" style={{ backgroundColor: '#93BEEB' }}>
-                                <span className="text-white font-bold text-xs">!</span>
-                              </div>
-                              <span className="font-bold text-[#5D6871]">Pending for Action</span>
-                            </div>
-                            <div className="flex items-center gap-4 ml-auto">
-                              <button style={{ color: brandBlue }} className="p-1 hover:bg-blue-100 rounded transition-colors flex items-center justify-center">
-                                <img src="/dowload.png" alt="download" className="h-6 w-auto" />
-                              </button>
-                              <button 
-                                style={{ color: brandBlue, borderColor: brandBlue, backgroundColor: 'white' }} 
-                                className="border px-6 py-2 rounded font-bold flex items-center gap-2 hover:bg-blue-50 transition-all"
-                              >
-                                Action
-                                <div className="w-4 h-4 flex items-center justify-center">
-                                  <img src="/dropdown.png" alt="dropdown" className="w-2.5 h-auto" />
+                        <div className="flex-1 flex flex-col gap-[12px]">
+                          <div className="flex flex-col gap-[4px]">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[16px] text-[#2a353e]">Copyediting Review</span>
+                              {!isApproved ? (
+                                <p className="text-[13px] text-[#5d6871]">
+                                  28/12/2025 24:01 - <span className="italic">In-progress</span>
+                                </p>
+                              ) : (
+                                <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871]">
+                                  <span>28/12/2025 12:01 - 29/12/2025 11:00</span>
+                                  <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
+                                  <span>1 Day</span>
                                 </div>
-                              </button>
+                              )}
                             </div>
+                            {!isApproved ? (
+                              <p className="text-[13px] text-[#5d6871]">
+                                <span className="text-[#868e94]">Due on:</span> 29/12/2025 12:10
+                              </p>
+                            ) : (
+                              <div className="flex flex-col gap-[7px]">
+                                <p className="text-[13px] text-[#5d6871]">
+                                  Status: <span className="text-[#35424d]">Completed on-time</span>
+                                </p>
+                                <div className="flex gap-[4px] items-start text-[13px] text-[#5d6871]">
+                                  <span>Approved by</span>
+                                  <div className="flex gap-[4px] items-center">
+                                    <div className="w-4 h-4 rounded-full bg-[#35424d] text-white flex items-center justify-center font-semibold text-[9px]">
+                                      JD
+                                    </div>
+                                    <span>Jane Doe</span>
+                                  </div>
+                                  <span>29/12/2025 10:04</span>
+                                </div>
+                              </div>
+                            )}
                           </div>
+                          
+                          {/* Action Banner (only shown when not approved) */}
+                          {!isApproved && (
+                            <div className="bg-[#f0f7ff] border border-[#93beeb] flex items-center justify-between pl-[12px] pr-[16px] py-[8px] rounded-[4px] relative">
+                              <div className="flex gap-[4px] items-center">
+                                <img src="/info.png" alt="" className="w-4 h-4" />
+                                <span className="text-[14px] font-semibold text-[#5d6871]">Pending for Action</span>
+                              </div>
+                              <div className="flex gap-[8px] items-center">
+                                <button className="p-1 hover:bg-[#dcfce7] rounded-[4px] transition-colors">
+                                  <img src="/dowload.png" alt="" className="w-6 h-6" />
+                                </button>
+                                <div className="relative">
+                                  <button 
+                                    onClick={() => setIsActionMenuOpen(!isActionMenuOpen)}
+                                    className="bg-[#cce5ff] border-2 border-[#2277d3] text-[#2277d3] flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] font-semibold text-[16px] hover:bg-[#b3d7ff] transition-all"
+                                  >
+                                    Action
+                                    <img src="/dropdown.png" alt="" className="w-4 h-4 rotate-[-90deg]" />
+                                  </button>
+                                  
+                                  {isActionMenuOpen && (
+                                    <div className="absolute top-full mt-1 right-0 bg-white content-stretch flex flex-col items-start overflow-clip rounded-[4px] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.16),0px_2px_4px_0px_rgba(0,0,0,0.12)] w-[200px] z-50">
+                                      <div className="content-stretch flex flex-col items-start py-[1px] relative shrink-0 w-full">
+                                        <button 
+                                          className="bg-[#edf0fd] content-stretch flex flex-col gap-[2px] items-start pl-[12px] pr-[16px] py-[8px] relative shrink-0 w-full hover:bg-[#e1e6ff] transition-colors"
+                                          onClick={handleApprove}
+                                        >
+                                          <div className="content-stretch flex gap-[8px] h-[20px] items-center relative shrink-0 w-full">
+                                            <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative">
+                                              <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] leading-[16px] text-left">
+                                                Approve (No Correction)
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </button>
+                                        <button 
+                                          className="bg-white content-stretch flex flex-col gap-[2px] items-start pl-[12px] pr-[16px] py-[8px] relative shrink-0 w-full hover:bg-gray-50 transition-colors"
+                                          onClick={() => setIsActionMenuOpen(false)}
+                                        >
+                                          <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
+                                            <div className="content-stretch flex flex-[1_0_0] h-[20px] items-center min-w-px relative">
+                                              <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] leading-[16px] text-left">
+                                                Upload Corrections
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
-                  </section>
+                  </div>
                 </div>
               </div>
             )}
           </div>
         </main>
       </div>
+
+      {/* Success Snackbar (Toast) */}
+      {isApproved && (
+        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 ml-[106px] bg-[#dafbe8] border border-[#8bdfb2] flex items-center px-4 py-2.5 rounded-[4px] shadow-md z-[100] animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <div className="flex gap-2 items-center">
+            <img src="/check_circle.png" alt="" className="w-6 h-6" />
+            <p className="font-semibold text-[#007a39] text-[13px]">
+              Copyediting has been approved by you for the Article AN4321.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

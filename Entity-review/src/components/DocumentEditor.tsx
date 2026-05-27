@@ -14,15 +14,16 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
   };
 
   return (
-    <section className="flex-1 overflow-y-auto bg-white relative custom-scrollbar p-12" data-purpose="DocumentEditor">
-      {/* Side navigation arrow */}
-      <button className="absolute left-4 top-4 p-2 border rounded hover:bg-gray-50 text-gray-400">
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+    <section className="flex-1 bg-white relative flex flex-col h-full overflow-hidden" data-purpose="DocumentEditor">
+      {/* Side navigation arrow - now truly hovering */}
+      <button className="absolute left-6 top-6 z-20 p-2.5 bg-white border border-gray-100 rounded-full shadow-xl hover:shadow-2xl hover:bg-gray-50 text-gray-500 transition-all duration-300 group">
+        <svg className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5"></path>
         </svg>
       </button>
 
-      <div className="max-w-3xl mx-auto pl-24 space-y-8">
+      <div className="flex-1 overflow-y-auto p-12 custom-scrollbar">
+        <div className="max-w-3xl mx-auto pl-24 space-y-8">
         
         {/* Article Title */}
         <div className="relative group">
@@ -302,7 +303,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
             <p>Ferroptosis, in general, is a kind of inflammatory cell death associated with the production, following tissue injury or tumor therapy, of lipid oxidation products (e.g., <span className={getEntityClass('4hne')}>4HNE</span>, oxPLs, <span id="target-entity-ltb4" className={getEntityClass('ltb4')}>LTB4</span>, <span id="target-entity-ltc4" className={getEntityClass('ltc4')}>LTC4</span>, LTD4, and <span id="target-entity-pge2" className={getEntityClass('pge2')}>PGE2</span>) or DAMPs (e.g., high mobility group box 1 (HMGB1) and DNA) [60]. For example, in aging and chronic disorders, the lipid peroxidation product <span className={getEntityClass('4hne')}>4HNE</span> is a pro-inflammatory mediator that activates the nuclear factor-κB (NF-κB) pathway. Ferroptotic cells secrete HMGB1, a classic DAMP linked to several types of cell death. Then, by means of the advanced glycosylation end-product-specific receptor (AGER/RAGE), a pattern-recognition receptor, this DAMP triggers the NF-κB pathway in innate immunity, leading to the inflammation of peripheral macrophages [61]. It might be advantageous to treat inflammatory illnesses by concentrating on DAMP signaling linked to lipid metabolism.</p>
           </div>
         </div>
-
+        </div>
       </div>
     </section>
   );

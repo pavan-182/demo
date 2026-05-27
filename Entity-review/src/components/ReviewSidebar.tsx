@@ -65,7 +65,7 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
       <div className="px-6 pt-4 pb-2 border-b border-[#F1F3F5] shrink-0">
         <div className="flex items-center justify-between mb-1">
           <button className="flex items-center text-[10px] font-bold text-[#868E94] uppercase tracking-widest gap-1">
-            {isComplete ? 'STEP 10 OF 10' : 'STEP 8 OF 10'} 
+            {isComplete ? 'STEP 10 OF 10' : 'STEP 10 OF 10'} 
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" strokeWidth="2"></path></svg>
           </button>
         </div>
@@ -76,7 +76,7 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
         className="flex items-center justify-between px-4 pt-1 pb-2 h-[52px] bg-white shrink-0 z-10"
         style={{ boxShadow: '0px 1px 0px rgba(183, 183, 183, 0.75)', boxSizing: 'border-box' }}
       >
-        <h2 className="text-xl font-bold text-[#35424D]">Review Chemical Entities</h2>
+        <h2 className="text-xl font-bold text-[#35424D]">Review Entities</h2>
         <div className="flex gap-2">
           <svg className="w-4 h-4 text-[#868E94] cursor-pointer hover:text-[#35424D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeWidth="2"></path></svg>
         </div>

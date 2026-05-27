@@ -9,6 +9,33 @@ const PublisherCentral: React.FC = () => {
   // Theme Constants
   const brandBlue = "#1c40ca";
 
+  const articleData = {
+    id: "100913",
+    title: "Ferroptosis as the new approach to cancer therapy",
+    authors: "Oluwafemi Adeleke Ojo a,e,*, Susan Grant b, Pearl Ifunanya Nwafor-Ezeh a, Tobiloba Christiana Maduakolam-Aniobi b, Tolulope Isaiah Akinborode c, Emmanuel Henry Ezenabor a, Adebola Busola Ojo d",
+    doi: "10.1016/j.ctarc.2025.100913",
+    journal: "Current Oncology Reports",
+    journalId: "CTARC",
+    issueId: "43",
+    volIssue: "43 (2025)",
+    typesetPages: "9",
+    category: "Review Article",
+    ceLevel: "L1",
+    status: "In-progress",
+    milestone: "Copyediting Review",
+    nextMilestone: "Author Proof Review",
+    dueDate: "29/12/2025 12:10",
+    daysInProd: "10 Days",
+    billing: "Unbilled",
+    embargo: "25/03/2025",
+    corrAuthor: "Oluwafemi Adeleke Ojo",
+    coAuthors: "Susan Grant, Pearl Ifunanya Nwafor-Ezeh, Tobiloba Christiana Maduakolam-Aniobi, Tolulope Isaiah Akinborode, Emmanuel Henry Ezenabor, Adebola Busola Ojo",
+    tables: "1",
+    figures: "2",
+    supplMtl: "0",
+    workflow: "1"
+  };
+
   const handleApprove = () => {
     setIsApproved(true);
     setShowToast(true);
@@ -45,9 +72,6 @@ const PublisherCentral: React.FC = () => {
             </div>
             
             <div className="flex items-center gap-3 px-3 py-1.5 border border-[#d7d9db] rounded-[4px]">
-              <div className="w-4 h-6 relative flex items-center justify-center">
-                <img src="/π.png" alt="flag" className="w-full h-auto object-contain" />
-              </div>
               <div className="w-6 h-6 rounded-full bg-[#35424d] text-white flex items-center justify-center font-semibold text-[13px]">
                 JD
               </div>
@@ -133,25 +157,27 @@ const PublisherCentral: React.FC = () => {
                     </h2>
                     
                     <div className="flex justify-between items-center h-8 w-full">
-                      <div className="flex flex-row items-center px-3 bg-white border border-[#AEB3B7] rounded-[4px] w-[246px] h-8 box-border">
+                      <div className="flex flex-row items-center px-3 bg-white border border-[#AEB3B7] rounded-[4px] w-[246px] h-8 box-border relative">
                         <input 
-                          className="flex-1 text-base bg-transparent border-none outline-none placeholder:text-[#AEB3B7] h-full" 
+                          className="flex-1 text-base bg-transparent border-none outline-none placeholder:text-[#AEB3B7] h-full pr-8" 
                           placeholder="Search" 
                           type="text"
                         />
-                        <svg className="w-5 h-5 text-[#AEB3B7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                        <img src="/search.png" alt="search" className="w-5 h-5 opacity-70 absolute right-2" />
                       </div>
 
                       <div className="flex items-center gap-1">
                         <div className="flex items-center gap-0.5 px-2 py-1.5 hover:bg-gray-100 rounded-[4px] cursor-pointer text-[13px] text-[#35424d]">
                           <span className="font-semibold">Journal:</span>
                           <span className="font-normal">All</span>
-                          <img src="/dropdown.png" alt="dropdown" className="w-4 h-4 ml-0.5" />
+                          <div className="w-3 h-3 flex items-center justify-center ml-0.5">
+                            <img src="/dropdown.png" alt="dropdown" className="h-[6px] w-auto object-contain" />
+                          </div>
                         </div>
                         <button className="flex items-center gap-0.5 px-2 py-1.5 text-[#1c40ca] font-semibold text-[13px] hover:bg-blue-50 rounded-[4px]">
-                          <img src="/filter.png" alt="filters" className="w-5 h-5" />
+                          <div className="w-4 h-4 flex items-center justify-center">
+                            <img src="/filter.png" alt="filters" className="h-[12px] w-auto object-contain" />
+                          </div>
                           More Filters
                         </button>
                       </div>
@@ -170,8 +196,7 @@ const PublisherCentral: React.FC = () => {
                             <th className="px-4 py-3 whitespace-nowrap">Days in Milestone</th>
                             <th className="px-4 py-3 whitespace-nowrap">Milestone ETA</th>
                             <th className="px-4 py-3 whitespace-nowrap">Overall Progress</th>
-                            <th className="px-4 py-3 w-10"></th>
-                            <th className="px-4 py-3 w-10"></th>
+                            <th className="px-4 py-3 text-right"></th>
                           </tr>
                         </thead>
                         <tbody className="bg-white">
@@ -179,32 +204,33 @@ const PublisherCentral: React.FC = () => {
                             className="border-b border-[#f6f7f7] text-[13px] text-[#35424d] hover:bg-gray-50 transition-colors cursor-pointer group" 
                             onClick={() => setView('article-details')}
                           >
-                            <td className="px-4 py-4">AN</td>
-                            <td className="px-4 py-4">AN4321</td>
+                            <td className="px-4 py-4">{articleData.journalId}</td>
+                            <td className="px-4 py-4 font-semibold">{articleData.id}</td>
                             <td className="px-4 py-4">15/01/2026 11:00</td>
                             <td className="px-4 py-4">
-                              <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-[#dafbe8] text-[#005728] border border-[#8bdfb2] text-[13px] font-semibold">
-                                <span className="w-2 h-2 rounded-full bg-[#005728] opacity-60"></span>
-                                Copyediting Review
+                              <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border bg-[#dafbe8] text-[#005728] border-[#8bdfb2]`}>
+                                <span className={`w-2 h-2 rounded-full opacity-60 bg-[#005728]`}></span>
+                                {isApproved ? articleData.nextMilestone : articleData.milestone}
                               </span>
                             </td>
-                            <td className="px-4 py-4">11 Days</td>
-                            <td className="px-4 py-4">29/12/2025 12:10</td>
+                            <td className="px-4 py-4">{articleData.daysInProd}</td>
+                            <td className="px-4 py-4">{isApproved ? "01/10/2026 12:10" : articleData.dueDate}</td>
                             <td className="px-4 py-4">
                               <div className="border border-[#2853f8] p-[3px] rounded-[6px] w-[80px]">
-                                <div style={{ backgroundColor: brandBlue }} className="h-1 w-[35%] rounded-[6px]"></div>
-                              </div>
-                            </td>
-                            <td className="px-4 py-4">
-                              <div className="flex items-center gap-1 text-[13px] text-[#35424d] italic whitespace-nowrap">
-                                <img src="/π.png" alt="flag" className="h-4 w-4 opacity-70" />
-                                Action pending on you
+                                <div style={{ backgroundColor: brandBlue }} className={`h-1 rounded-[6px] transition-all duration-1000 ${isApproved ? 'w-[60%]' : 'w-[35%]'}`}></div>
                               </div>
                             </td>
                             <td className="px-4 py-4 text-right">
-                              <button className="p-1 text-gray-400 hover:text-gray-600 transition-colors">
-                                <img src="/actions.png" alt="actions" className="w-5 h-5 opacity-70" />
-                              </button>
+                              <div className="flex items-center justify-end gap-3 min-w-[200px]">
+                                {!isApproved && (
+                                  <div className="flex items-center gap-1 text-[13px] text-[#35424d] italic whitespace-nowrap">
+                                    Action pending on you
+                                  </div>
+                                )}
+                                <button className="flex items-center justify-center hover:bg-gray-100 rounded-[4px] transition-all w-5 h-5 shrink-0">
+                                  <img src="/actions.png" alt="actions" className="h-[14px] w-auto opacity-70 object-contain" />
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         </tbody>
@@ -226,25 +252,33 @@ const PublisherCentral: React.FC = () => {
                     >
                       All Articles
                     </button>
-                    <img src="/dropdown.png" alt="" className="w-3.5 h-3.5 -rotate-90 opacity-60" />
+                    <div className="w-4 h-4 flex items-center justify-center">
+                      <svg className="w-[5px] h-2 opacity-60" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L4 4L1 7" stroke="#5D6871" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
                     <span className="text-[#5d6871]">In-progress</span>
-                    <img src="/dropdown.png" alt="" className="w-3.5 h-3.5 -rotate-90 opacity-60" />
-                    <span className="font-semibold text-[#35424d]">AN4321</span>
+                    <div className="w-4 h-4 flex items-center justify-center">
+                      <svg className="w-[5px] h-2 opacity-60" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L4 4L1 7" stroke="#5D6871" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <span className="font-semibold text-[#35424d]">{articleData.id}</span>
                   </div>
                   
                   {/* Title and Actions */}
                   <div className="flex items-end justify-between w-full">
-                    <h1 className="text-[18px] font-semibold text-[#5d6871] truncate max-w-[700px]">
-                      Widening educational inequalities in mortality in more recent birth-cohorts: a study of 14 European countries
+                    <h1 className="text-[18px] font-semibold text-[#5d6871] truncate max-w-[700px]" title={articleData.title}>
+                      {articleData.title}
                     </h1>
                     <div className="flex gap-[8px] items-start">
                       <button className="flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] hover:bg-blue-50 transition-all">
-                        <img src="/info.png" alt="" className="w-4 h-4" />
+                        <img src="/live_help.svg" alt="" className="w-4 h-4" />
                         <span className="text-[#1c40ca] font-semibold text-[13px]">Stakeholder FAQs</span>
                       </button>
                       <button className="flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] hover:bg-blue-50 transition-all">
                         <span className="text-[#1c40ca] font-semibold text-[13px]">New Conversation</span>
-                        <img src="/dropdown.png" alt="" className="w-4 h-4" />
+                        <img src="/arrow_drop_down.png" alt="" className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
@@ -257,7 +291,7 @@ const PublisherCentral: React.FC = () => {
                     <div className="flex items-center justify-between py-[2px]">
                       <h2 className="text-[16px] font-semibold text-[#35424d]">Article Details</h2>
                       <button className="flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] hover:bg-blue-50 transition-all">
-                        <img src="/edit_note.png" alt="" className="w-4 h-4" />
+                        <img src="/edit.png" alt="" className="w-4 h-4" />
                         <span className="text-[#1c40ca] font-semibold text-[13px]">Edit Details</span>
                       </button>
                     </div>
@@ -268,23 +302,23 @@ const PublisherCentral: React.FC = () => {
                       <div className="flex flex-col gap-[12px]">
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">DOI</span>
-                          <a href="#" className="text-[#1c40ca] underline truncate">10.1176/appi.prcp</a>
+                          <a href="#" className="text-[#1c40ca] underline truncate">{articleData.doi}</a>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Journal ID</span>
-                          <span className="text-[#35424d]">AC</span>
+                          <span className="text-[#35424d]">{articleData.journalId}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Issue ID</span>
-                          <span className="text-[#35424d]">12</span>
+                          <span className="text-[#35424d]">{articleData.issueId}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Vol/Issue</span>
-                          <span className="text-[#35424d]">12/35</span>
+                          <span className="text-[#35424d]">{articleData.volIssue}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Typeset Pages</span>
-                          <span className="text-[#35424d]">10</span>
+                          <span className="text-[#35424d]">{articleData.typesetPages}</span>
                         </div>
                       </div>
 
@@ -292,23 +326,23 @@ const PublisherCentral: React.FC = () => {
                       <div className="flex flex-col gap-[12px]">
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[100px] shrink-0">Article Category</span>
-                          <span className="text-[#35424d]">Initial Check</span>
+                          <span className="text-[#35424d]">{articleData.category}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[100px] shrink-0">Copyediting Level</span>
-                          <span className="text-[#35424d]">L1</span>
+                          <span className="text-[#35424d]">{articleData.ceLevel}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[100px] shrink-0">Total Tables</span>
-                          <span className="text-[#35424d]">2</span>
+                          <span className="text-[#35424d]">{articleData.tables}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[100px] shrink-0">Total Figures</span>
-                          <span className="text-[#35424d]">2</span>
+                          <span className="text-[#35424d]">{articleData.figures}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[100px] shrink-0">Total Suppl. Mtl</span>
-                          <span className="text-[#35424d]">19</span>
+                          <span className="text-[#35424d]">{articleData.supplMtl}</span>
                         </div>
                       </div>
 
@@ -316,26 +350,26 @@ const PublisherCentral: React.FC = () => {
                       <div className="flex flex-col gap-[12px]">
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Workflow</span>
-                          <span className="text-[#35424d]">1</span>
+                          <span className="text-[#35424d]">{articleData.workflow}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Days in Prod.</span>
-                          <span className="text-[#35424d]">10 Days</span>
+                          <span className="text-[#35424d]">{articleData.daysInProd}</span>
                         </div>
                         <div className="flex gap-[4px] items-center text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Status</span>
                           <div className="bg-[#dafbe8] border border-[#8bdfb2] flex gap-[4px] items-center px-[8px] py-[2px] rounded-full">
                             <span className="w-2 h-2 rounded-full bg-[#005728] opacity-60"></span>
-                            <span className="text-[#005728] font-semibold text-[11px]">In-progress</span>
+                            <span className="text-[#005728] font-semibold text-[11px]">{articleData.status}</span>
                           </div>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Billing Status</span>
-                          <span className="text-[#35424d]">Unbilled</span>
+                          <span className="text-[#35424d]">{articleData.billing}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Embargo date</span>
-                          <span className="text-[#35424d]">15/01/2026</span>
+                          <span className="text-[#35424d]">{articleData.embargo}</span>
                         </div>
                       </div>
 
@@ -343,13 +377,12 @@ const PublisherCentral: React.FC = () => {
                       <div className="flex flex-col gap-[12px]">
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Corr. Author</span>
-                          <span className="text-[#35424d]">Dylan Field</span>
+                          <span className="text-[#35424d]">{articleData.corrAuthor}</span>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Co- Author</span>
                           <div className="flex gap-[4px] items-baseline overflow-hidden">
-                            <span className="text-[#35424d] truncate">John Brewis, Harvey Brut</span>
-                            <a href="#" className="text-[#1c40ca] underline whitespace-nowrap">+ 5 more</a>
+                            <span className="text-[#35424d] truncate">{articleData.coAuthors}</span>
                           </div>
                         </div>
                       </div>
@@ -363,7 +396,7 @@ const PublisherCentral: React.FC = () => {
                       {/* Step 1 */}
                       <div className="flex gap-[8px] items-start pb-[4px]">
                         <div className="py-[8px]">
-                          <img src="/check_circle.png" alt="" className="w-6 h-6" />
+                          <img src="/blue_check.png" alt="" className="w-6 h-6" />
                         </div>
                         <div className="flex-1 flex flex-col gap-[4px]">
                           <div className="flex items-center justify-between">
@@ -383,7 +416,7 @@ const PublisherCentral: React.FC = () => {
                       {/* Step 2 */}
                       <div className="flex gap-[8px] items-start pb-[4px]">
                         <div className="py-[8px]">
-                          <img src="/check_circle.png" alt="" className="w-6 h-6" />
+                          <img src="/blue_check.png" alt="" className="w-6 h-6" />
                         </div>
                         <div className="flex-1 flex flex-col gap-[4px]">
                           <div className="flex items-center justify-between">
@@ -400,11 +433,11 @@ const PublisherCentral: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Step 3 - Current/Approved */}
+                      {/* Step 3 - Completed Copyediting Review */}
                       <div className="flex gap-[8px] items-start pb-[4px]">
                         <div className="py-[8px]">
                           <img 
-                            src={isApproved ? "/check_circle.png" : "/mode_standy.png"} 
+                            src={isApproved ? "/blue_check.png" : "/mode_standy.png"} 
                             alt="" 
                             className="w-6 h-6" 
                           />
@@ -412,7 +445,7 @@ const PublisherCentral: React.FC = () => {
                         <div className="flex-1 flex flex-col gap-[12px]">
                           <div className="flex flex-col gap-[4px]">
                             <div className="flex items-center justify-between">
-                              <span className="text-[16px] text-[#2a353e]">Copyediting Review</span>
+                              <span className="text-[16px] text-[#2a353e]">{articleData.milestone}</span>
                               {!isApproved ? (
                                 <p className="text-[13px] text-[#5d6871]">
                                   28/12/2025 24:01 - <span className="italic">In-progress</span>
@@ -427,7 +460,7 @@ const PublisherCentral: React.FC = () => {
                             </div>
                             {!isApproved ? (
                               <p className="text-[13px] text-[#5d6871]">
-                                <span className="text-[#868e94]">Due on:</span> 29/12/2025 12:10
+                                <span className="text-[#868e94]">Due on:</span> {articleData.dueDate}
                               </p>
                             ) : (
                               <div className="flex flex-col gap-[7px]">
@@ -452,7 +485,7 @@ const PublisherCentral: React.FC = () => {
                           {!isApproved && (
                             <div className="bg-[#f0f7ff] border border-[#93beeb] flex items-center justify-between pl-[12px] pr-[16px] py-[8px] rounded-[4px] relative">
                               <div className="flex gap-[4px] items-center">
-                                <img src="/info.png" alt="" className="w-4 h-4" />
+                                <img src="/info_blue.png" alt="" className="w-4 h-4" />
                                 <span className="text-[14px] font-semibold text-[#5d6871]">Pending for Action</span>
                               </div>
                               <div className="flex gap-[8px] items-center">
@@ -465,7 +498,7 @@ const PublisherCentral: React.FC = () => {
                                     className="bg-[#cce5ff] border-2 border-[#2277d3] text-[#2277d3] flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] font-semibold text-[16px] hover:bg-[#b3d7ff] transition-all"
                                   >
                                     Action
-                                    <img src="/dropdown.png" alt="" className="w-4 h-4 rotate-[-90deg]" />
+                                    <img src="/chevron_downward.png" alt="" className="w-4 h-4" />
                                   </button>
                                   
                                   {isActionMenuOpen && (
@@ -477,7 +510,7 @@ const PublisherCentral: React.FC = () => {
                                         >
                                           <div className="content-stretch flex gap-[8px] h-[20px] items-center relative shrink-0 w-full">
                                             <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative">
-                                              <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] leading-[16px] text-left">
+                                              <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] text-left">
                                                 Approve (No Correction)
                                               </p>
                                             </div>
@@ -489,7 +522,7 @@ const PublisherCentral: React.FC = () => {
                                         >
                                           <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
                                             <div className="content-stretch flex flex-[1_0_0] h-[20px] items-center min-w-px relative">
-                                              <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] leading-[16px] text-left">
+                                              <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] text-left">
                                                 Upload Corrections
                                               </p>
                                             </div>
@@ -504,6 +537,31 @@ const PublisherCentral: React.FC = () => {
                           )}
                         </div>
                       </div>
+
+                      {/* Step 4 - Next: Author Proof Review */}
+                      {isApproved && (
+                        <div className="flex gap-[8px] items-start pb-[4px]">
+                          <div className="py-[8px]">
+                            <img src="/mode_standy.png" alt="" className="w-6 h-6" />
+                          </div>
+                          <div className="flex-1 flex flex-col gap-[4px] font-['Source_Sans_Pro',sans-serif]">
+                            <div className="flex items-center justify-between">
+                              <p className="text-[16px] text-[#2a353e]">
+                                {articleData.nextMilestone}
+                              </p>
+                              <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
+                                29/12/2025 11:00 - In-progress
+                              </p>
+                            </div>
+                            <p className="text-[13px] text-[#35424d]">
+                              Proofing In-progress by Author
+                            </p>
+                            <p className="text-[13px] text-[#5d6871]">
+                              <span className="text-[#868e94]">Expected completion:</span> 01/10/2026 01:00
+                            </p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -517,9 +575,9 @@ const PublisherCentral: React.FC = () => {
       {showToast && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 ml-[106px] bg-[#dafbe8] border border-[#8bdfb2] flex items-center px-4 py-2.5 rounded-[4px] shadow-md z-[100] animate-in fade-in slide-in-from-bottom-4 duration-300">
           <div className="flex gap-2 items-center">
-            <img src="/check_circle.png" alt="" className="w-6 h-6" />
+            <img src="/blue_check.png" alt="" className="w-6 h-6" />
             <p className="font-semibold text-[#007a39] text-[13px]">
-              Copyediting has been approved by you for the Article AN4321.
+              Copyediting has been approved by you for the Article {articleData.id}.
             </p>
           </div>
         </div>

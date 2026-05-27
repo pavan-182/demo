@@ -17,7 +17,7 @@ const PublisherCentral: React.FC = () => {
               <img src="/menu.png" alt="menu" className="w-8 h-8" />
             </button>
             <div className="flex items-center">
-              <img src="/PubClogo.png" alt="Publisher Central" className="h-8" />
+              <img src="/PubClogo.png" alt="Publisher Central" className="h-12" />
             </div>
           </div>
           <div className="flex items-center gap-6">
@@ -40,22 +40,25 @@ const PublisherCentral: React.FC = () => {
       {/* Main Container - Fluid Full Width */}
       <div className="flex flex-1 pt-[60px] overflow-hidden w-full">
         {/* Navigation Drawer - Flush Left */}
-        <aside className="w-[320px] h-full bg-white border-r border-gray-200 pt-4 flex flex-col z-40 shrink-0">
-          <nav className="flex flex-col gap-0.5 px-2">
+        <aside 
+          className="w-[320px] h-full bg-white py-2 flex flex-col z-40 shrink-0"
+          style={{ boxShadow: '1px 0px 0px #C2C6CA' }}
+        >
+          <nav className="flex flex-col gap-2.5 px-2">
             {/* Dashboard */}
             <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">
               <img src="/space_dashboard.png" alt="dashboard" className="w-5 h-5" />
-              <span className="text-sm font-medium">Dashboard</span>
+              <span className="text-lg font-medium">Dashboard</span>
             </a>
             {/* My Tasks */}
             <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">
               <img src="/task_alt.png" alt="tasks" className="w-5 h-5" />
-              <span className="text-sm font-medium">My Tasks</span>
+              <span className="text-lg font-medium">My Tasks</span>
             </a>
             {/* Conversations */}
             <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">
               <img src="/all_inbox.png" alt="conversations" className="w-5 h-5" />
-              <span className="text-sm font-medium">Conversations</span>
+              <span className="text-lg font-medium">Conversations</span>
             </a>
             {/* All Articles */}
             <div className="mt-2">
@@ -65,20 +68,20 @@ const PublisherCentral: React.FC = () => {
                 style={{ color: view === 'all-articles' ? brandBlue : '' }}
               >
                 <img src="/article.png" alt="articles" className="w-5 h-5" />
-                <span className="text-sm font-medium">All Articles</span>
+                <span className="text-lg font-medium">All Articles</span>
               </button>
-              <div className="flex flex-col ml-3 mt-0.5 border-l-2" style={{ borderColor: brandBlue }}>
+              <div className="flex flex-col ml-3 mt-1.5 border-l-2 gap-1" style={{ borderColor: brandBlue }}>
                 <button 
                   onClick={() => setView('article-details')}
                   className={`flex items-center gap-3 px-6 py-2 transition-all ${view === 'article-details' ? 'bg-[#f0f5ff] font-semibold' : 'text-gray-600 hover:bg-gray-100'}`}
                   style={{ color: view === 'article-details' ? brandBlue : '' }}
                 >
                   <img src="/progress_activity.png" alt="in-progress" className="w-4.5 h-4.5" />
-                  <span className="text-sm">In-progress</span>
+                  <span className="text-lg">In-progress</span>
                 </button>
                 <button className="flex items-center gap-3 px-6 py-2 text-gray-600 hover:bg-gray-100 transition-all">
                   <img src="/check_circle.png" alt="published" className="w-4.5 h-4.5" />
-                  <span className="text-sm">Published</span>
+                  <span className="text-lg">Published</span>
                 </button>
               </div>
             </div>
@@ -86,16 +89,16 @@ const PublisherCentral: React.FC = () => {
             <div className="mt-2">
               <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">
                 <img src="/book_4.png" alt="issues" className="w-5 h-5" />
-                <span className="text-sm font-medium">All Issues</span>
+                <span className="text-lg font-medium">All Issues</span>
               </a>
-              <div className="flex flex-col ml-3 mt-0.5 border-l-2 border-transparent">
+              <div className="flex flex-col ml-3 mt-1.5 border-l-2 border-transparent gap-1">
                 <button className="flex items-center gap-3 px-6 py-2 text-gray-600 hover:bg-gray-100 transition-all">
                   <img src="/progress_activity.png" alt="in-progress" className="w-4.5 h-4.5" />
-                  <span className="text-sm">In-progress</span>
+                  <span className="text-lg">In-progress</span>
                 </button>
                 <button className="flex items-center gap-3 px-6 py-2 text-gray-600 hover:bg-gray-100 transition-all">
                   <img src="/check_circle.png" alt="published" className="w-4.5 h-4.5" />
-                  <span className="text-sm">Published</span>
+                  <span className="text-lg">Published</span>
                 </button>
               </div>
             </div>

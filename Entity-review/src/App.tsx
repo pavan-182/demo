@@ -18,6 +18,7 @@ const App: React.FC = () => {
   const [activeEntityId, setActiveEntityId] = useState<string | null>(null);
   const [showDropdownId, setShowDropdownId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStep, setSubmitStep] = useState(0);
   const [showDashboard, setShowDashboard] = useState(false);
   const [connectors, setConnectors] = useState<Array<{
     id: string;
@@ -57,11 +58,17 @@ const App: React.FC = () => {
 
   const handleSubmit = () => {
     setIsSubmitting(true);
-    // Simulate network request
+    setSubmitStep(1);
+    
+    // Progress through steps
+    setTimeout(() => setSubmitStep(2), 1000);
+    setTimeout(() => setSubmitStep(3), 2000);
+    setTimeout(() => setSubmitStep(4), 3000);
+
     setTimeout(() => {
       setIsSubmitting(false);
       setShowDashboard(true);
-    }, 2000); // 2 second loading screen
+    }, 4000);
   };
 
   useEffect(() => {
@@ -177,10 +184,60 @@ const App: React.FC = () => {
       
       {/* Loading Overlay */}
       {isSubmitting && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/50 backdrop-blur-sm">
-          <div className="flex flex-col items-center">
-            <div className="w-16 h-16 border-4 border-blue-200 border-t-[#1C40CA] rounded-full animate-spin"></div>
-            <p className="mt-4 text-[#1C40CA] font-semibold tracking-wide">Submitting Review...</p>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/80 backdrop-blur-md">
+          <div className="flex flex-col items-center w-[400px]">
+            {/* Segmented Progress Bar Container */}
+            <div className="w-full h-8 border-[3px] border-[#3B17D3] rounded-full p-1 flex items-center mb-12">
+              <div className="flex-1 flex gap-1 h-full">
+                {/* Segment 1 */}
+                <div className={`h-full flex-1 rounded-l-full transition-colors duration-300 ${submitStep >= 1 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
+                {/* Segment 2 */}
+                <div className={`h-full flex-1 transition-colors duration-300 ${submitStep >= 2 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
+                {/* Segment 3 */}
+                <div className={`h-full flex-1 transition-colors duration-300 ${submitStep >= 3 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
+                {/* Segment 4 */}
+                <div className={`h-full flex-1 rounded-r-full transition-colors duration-300 ${submitStep >= 4 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
+              </div>
+            </div>
+
+            {/* Checklist */}
+            <div className="w-full space-y-4">
+              {/* Step 1 */}
+              <div className="flex items-center gap-3">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 ${submitStep > 1 ? 'bg-[#3B17D3] border-[#3B17D3]' : 'border-gray-300'}`}>
+                  {submitStep > 1 ? (
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  ) : submitStep === 1 ? (
+                    <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
+                  ) : null}
+                </div>
+                <span className={`text-[16px] ${submitStep >= 1 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Preparing reviewed entities</span>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex items-center gap-3">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 ${submitStep > 2 ? 'bg-[#3B17D3] border-[#3B17D3]' : 'border-gray-300'}`}>
+                  {submitStep > 2 ? (
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  ) : submitStep === 2 ? (
+                    <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
+                  ) : null}
+                </div>
+                <span className={`text-[16px] ${submitStep >= 2 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Cross-referencing external databases</span>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex items-center gap-3">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 ${submitStep > 3 ? 'bg-[#3B17D3] border-[#3B17D3]' : 'border-gray-300'}`}>
+                  {submitStep > 3 ? (
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  ) : submitStep === 3 ? (
+                    <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
+                  ) : null}
+                </div>
+                <span className={`text-[16px] ${submitStep >= 3 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Linking matching external IDs</span>
+              </div>
+            </div>
           </div>
         </div>
       )}

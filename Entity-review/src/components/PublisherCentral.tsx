@@ -112,35 +112,50 @@ const PublisherCentral: React.FC = () => {
               /* Articles Table View - Fluid Width */
               <div className="p-8 overflow-y-auto h-full">
                 <div className="w-full">
-                  <div className="flex justify-between items-center mb-6">
+                  <div className="flex flex-col gap-4 mb-6 w-full">
                     <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
                       Articles In-progress
                       <img src="/info.png" alt="info" className="w-4 h-4 cursor-pointer" />
                     </h2>
-                    <div className="flex items-center gap-6">
-                      <div className="flex items-center gap-2 text-sm text-gray-900">
-                        Journal: <span className="font-bold">All</span>
-                        <div className="w-4 h-4 flex items-center justify-center">
-                          <img src="/dropdown.png" alt="dropdown" className="w-2.5 h-auto" />
-                        </div>
+                    
+                    <div className="flex justify-between items-center h-8 w-full">
+                      {/* Search Area */}
+                      <div 
+                        className="flex flex-row items-center px-3 bg-white border border-[#AEB3B7] rounded-[4px] w-[246px] h-[32px] box-border"
+                      >
+                        <input 
+                          className="flex-1 text-sm bg-transparent border-none outline-none placeholder:text-gray-400 h-full" 
+                          placeholder="Search" 
+                          type="text"
+                        />
+                        <svg 
+                          className="w-4 h-4 text-gray-400 shrink-0" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth="2" 
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                          />
+                        </svg>
                       </div>
-                      <button style={{ color: brandBlue }} className="flex items-center gap-2 font-bold text-sm">
-                        <img src="/filter.png" alt="filters" className="w-5 h-5" />
-                        More Filters
-                      </button>
-                    </div>
-                  </div>
 
-                  {/* Search Area */}
-                  <div className="mb-4">
-                    <div className="relative w-full">
-                      <input 
-                        className="w-full pl-3 pr-10 py-2 border border-gray-300 rounded bg-white text-sm focus:outline-none focus:ring-1" 
-                        style={{ borderColor: brandBlue, '--tw-ring-color': brandBlue } as any}
-                        placeholder="Search" 
-                        type="text"
-                      />
-                      <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">search</span>
+                      {/* Filters and Journal */}
+                      <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-2 text-sm text-gray-900">
+                          Journal: <span className="font-bold">All</span>
+                          <div className="w-4 h-4 flex items-center justify-center">
+                            <img src="/dropdown.png" alt="dropdown" className="w-2.5 h-auto" />
+                          </div>
+                        </div>
+                        <button style={{ color: brandBlue }} className="flex items-center gap-2 font-bold text-sm">
+                          <img src="/filter.png" alt="filters" className="w-5 h-5" />
+                          More Filters
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -209,11 +224,10 @@ const PublisherCentral: React.FC = () => {
                     <span className="font-semibold text-gray-900">AN4321</span>
                   </nav>
                   <div className="flex justify-between items-center w-full">
-                    <h1 className="text-lg font-bold text-gray-900 truncate flex-1">
-                      Widening educational inequalities in mortality in more recent birth-cohorts:...
-                    </h1>
-                    <div className="flex items-center gap-4">
-                      <button style={{ color: brandBlue }} className="flex items-center gap-1.5 font-semibold text-sm hover:underline">
+                  <h1 className="text-lg font-bold text-gray-500 truncate flex-1">
+                    Widening educational inequalities in mortality in more recent birth-cohorts:...
+                  </h1>
+                  <div className="flex items-center gap-4">                      <button style={{ color: brandBlue }} className="flex items-center gap-1.5 font-semibold text-sm hover:underline">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
                         Stakeholder FAQs
                       </button>
@@ -241,94 +255,91 @@ const PublisherCentral: React.FC = () => {
                     <div className="grid grid-cols-4 gap-x-8 gap-y-1 w-full">
                       <div className="space-y-3">
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">DOI</span>
-                          <a style={{ color: brandBlue }} className="hover:underline font-normal text-sm truncate" href="#">10.1176/appi.prcp</a>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">DOI</span>
+                          <a style={{ color: brandBlue }} className="hover:underline font-normal text-base truncate" href="#">10.1176/appi.prcp</a>
                         </div>
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Journal ID</span>
-                          <span className="font-normal text-sm">AC</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Journal ID</span>
+                          <span className="font-normal text-base">AC</span>
                         </div>
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Issue ID</span>
-                          <span className="font-normal text-sm">12</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Issue ID</span>
+                          <span className="font-normal text-base">12</span>
                         </div>
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Vol/Issue</span>
-                          <span className="font-normal text-sm">12/35</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Vol/Issue</span>
+                          <span className="font-normal text-base">12/35</span>
                         </div>
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Typeset Pages</span>
-                          <span className="font-normal text-sm">10</span>
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Article Category</span>
-                          <span className="font-normal text-sm">Initial Check</span>
-                        </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Copyediting Level</span>
-                          <span className="font-normal text-sm">L1</span>
-                        </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Total Tables</span>
-                          <span className="font-normal text-sm">2</span>
-                        </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Total Figures</span>
-                          <span className="font-normal text-sm">2</span>
-                        </div>
-                        <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-32">Total Suppl. Mtl</span>
-                          <span className="font-normal text-sm">19</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Typeset Pages</span>
+                          <span className="font-normal text-base">10</span>
                         </div>
                       </div>
                       <div className="space-y-3">
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Workflow</span>
-                          <span className="font-normal text-sm">1</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Article Category</span>
+                          <span className="font-normal text-base">Initial Check</span>
                         </div>
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Days in Prod.</span>
-                          <span className="font-normal text-sm">10 Days</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Copyediting Level</span>
+                          <span className="font-normal text-base">L1</span>
+                        </div>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Total Tables</span>
+                          <span className="font-normal text-base">2</span>
+                        </div>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Total Figures</span>
+                          <span className="font-normal text-base">2</span>
+                        </div>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-40">Total Suppl. Mtl</span>
+                          <span className="font-normal text-base">19</span>
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Workflow</span>
+                          <span className="font-normal text-base">1</span>
+                        </div>
+                        <div className="flex justify-start items-baseline">
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Days in Prod.</span>
+                          <span className="font-normal text-base">10 Days</span>
                         </div>
                         <div className="flex justify-start items-center">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Status</span>
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#dcfce7] text-[#166534] border border-[#bbf7d0] w-fit text-[10px] font-medium">
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Status</span>
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#dcfce7] text-[#166534] border border-[#bbf7d0] w-fit text-[11px] font-medium">
                             <span className="w-1 h-1 bg-green-600 rounded-full"></span>
                             In-progress
                           </div>
                         </div>
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Billing Status</span>
-                          <span className="font-normal text-sm">Unbilled</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Billing Status</span>
+                          <span className="font-normal text-base">Unbilled</span>
                         </div>
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Embargo date</span>
-                          <span className="font-normal text-sm">15/01/2026</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Embargo date</span>
+                          <span className="font-normal text-base">15/01/2026</span>
                         </div>
                       </div>
                       <div className="space-y-3">
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Corr. Author</span>
-                          <span className="font-normal text-sm">Dylan Field</span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Corr. Author</span>
+                          <span className="font-normal text-base">Dylan Field</span>
                         </div>
                         <div className="flex justify-start items-baseline">
-                          <span className="text-gray-500 text-xs font-medium shrink-0 w-24">Co- Author</span>
-                          <span className="font-normal text-sm">John Brewis, Harv... <span style={{ color: brandBlue }} className="hover:underline cursor-pointer font-bold">+ 5</span></span>
+                          <span className="text-gray-500 text-sm font-medium shrink-0 w-32">Co- Author</span>
+                          <span className="font-normal text-base">John Brewis, Harv... <span style={{ color: brandBlue }} className="hover:underline cursor-pointer font-bold">+ 5</span></span>
                         </div>
                       </div>
                     </div>
                   </section>
 
                   {/* Progress Section */}
-                  <section className="flex flex-col items-start p-0 pt-2 pb-12 w-3/4 flex-none">
+                  <section className="flex flex-col items-start p-0 pt-2 pb-12 w-3/5 flex-none">
                     <h2 className="text-lg font-bold text-gray-900 mb-8">Progress</h2>
-                    
-                    <div className="w-full space-y-0 relative">
-                      {/* Vertical Connector track - spanning icon centers */}
-                      <div className="absolute left-[15px] top-[16px] w-[1px] h-[160px] bg-gray-200 z-0"></div>
 
+                    <div className="w-full space-y-0 relative">
                       {/* Step 1 */}
                       <div className="flex gap-6 pb-12 relative z-10">
                         <div className="flex flex-col items-center">
@@ -381,19 +392,27 @@ const PublisherCentral: React.FC = () => {
                             </div>
                           </div>
                           {/* Action Banner */}
-                          <div style={{ backgroundColor: brandBlueLight }} className="border border-blue-100 rounded-lg p-5 flex items-center justify-between">
-                            <div className="flex items-center gap-3" style={{ color: brandBlue }}>
-                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
-                              <span className="font-bold">Pending for Action</span>
+                          <div 
+                            style={{ backgroundColor: '#F0F7FF', borderColor: '#93BEEB' }} 
+                            className="border rounded-[4px] py-2 pr-4 pl-3 flex items-center h-[52px] gap-6"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="shrink-0 w-5 h-5 flex items-center justify-center rounded-full" style={{ backgroundColor: '#93BEEB' }}>
+                                <span className="text-white font-bold text-xs">!</span>
+                              </div>
+                              <span className="font-bold text-[#5D6871]">Pending for Action</span>
                             </div>
-                            <div className="flex items-center gap-4">
-                              <button style={{ color: brandBlue }} className="p-2 hover:bg-blue-100 rounded transition-colors">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+                            <div className="flex items-center gap-4 ml-auto">
+                              <button style={{ color: brandBlue }} className="p-1 hover:bg-blue-100 rounded transition-colors flex items-center justify-center">
+                                <img src="/dowload.png" alt="download" className="h-6 w-auto" />
                               </button>
-                              <button style={{ backgroundColor: brandBlue }} className="text-white px-6 py-2 rounded font-bold flex items-center gap-2 hover:opacity-90 transition-all shadow-md">
+                              <button 
+                                style={{ color: brandBlue, borderColor: brandBlue, backgroundColor: 'white' }} 
+                                className="border px-6 py-2 rounded font-bold flex items-center gap-2 hover:bg-blue-50 transition-all"
+                              >
                                 Action
                                 <div className="w-4 h-4 flex items-center justify-center">
-                                  <img src="/dropdown.png" alt="dropdown" className="w-2.5 h-auto invert" />
+                                  <img src="/dropdown.png" alt="dropdown" className="w-2.5 h-auto" />
                                 </div>
                               </button>
                             </div>

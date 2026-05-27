@@ -4,16 +4,19 @@ const PublisherCentral: React.FC = () => {
   const [view, setView] = useState<'all-articles' | 'article-details'>('all-articles');
   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   // Theme Constants
   const brandBlue = "#1c40ca";
 
   const handleApprove = () => {
     setIsApproved(true);
+    setShowToast(true);
     setIsActionMenuOpen(false);
-    // Automatically hide toast after 5 seconds
+    
+    // Hide toast after 5 seconds, but keep isApproved true
     setTimeout(() => {
-      // Logic to hide toast if needed, but for now we'll keep the state
+      setShowToast(false);
     }, 5000);
   };
 
@@ -511,7 +514,7 @@ const PublisherCentral: React.FC = () => {
       </div>
 
       {/* Success Snackbar (Toast) */}
-      {isApproved && (
+      {showToast && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 ml-[106px] bg-[#dafbe8] border border-[#8bdfb2] flex items-center px-4 py-2.5 rounded-[4px] shadow-md z-[100] animate-in fade-in slide-in-from-bottom-4 duration-300">
           <div className="flex gap-2 items-center">
             <img src="/check_circle.png" alt="" className="w-6 h-6" />

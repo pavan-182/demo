@@ -40,7 +40,7 @@ const PublisherCentral: React.FC = () => {
       {/* Main Container - Fluid Full Width */}
       <div className="flex flex-1 pt-[60px] overflow-hidden w-full">
         {/* Navigation Drawer - Flush Left */}
-        <aside className="w-[212px] h-full bg-white border-r border-gray-200 pt-4 flex flex-col z-40 shrink-0">
+        <aside className="w-[320px] h-full bg-white border-r border-gray-200 pt-4 flex flex-col z-40 shrink-0">
           <nav className="flex flex-col gap-0.5 px-2">
             {/* Dashboard */}
             <a className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded transition-all" href="#">

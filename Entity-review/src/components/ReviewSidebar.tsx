@@ -45,7 +45,7 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
   const isComplete = unacknowledged.length === 0;
 
   return (
-    <aside className="w-[420px] bg-white border-l border-[#C2C6CA] flex flex-col overflow-hidden shrink-0 sidebar-shadow font-source relative" data-purpose="ReviewSidebar">
+    <aside className="w-[500px] bg-white border-l border-[#C2C6CA] flex flex-col overflow-hidden shrink-0 sidebar-shadow font-source relative" data-purpose="ReviewSidebar">
       {/* Rectangle 2 (Top Progress Bar) */}
       <div 
         style={{

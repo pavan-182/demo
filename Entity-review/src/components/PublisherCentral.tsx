@@ -139,8 +139,8 @@ const PublisherCentral: React.FC = () => {
             
             <div className="mt-1">
               <button 
-                onClick={() => setView('all-articles')}
-                className={`w-full flex items-center gap-2 px-3 py-1.5 rounded transition-all ${view === 'all-articles' || view === 'article-details' ? 'bg-[#e1e6ff] text-[#35424d]' : 'text-[#5d6871] hover:bg-gray-100'}`}
+                onClick={() => setView(isPapApproved ? 'published-articles' : 'all-articles')}
+                className={`w-full flex items-center gap-2 px-3 py-1.5 rounded transition-all ${view === 'all-articles' || view === 'article-details' || view === 'published-articles' ? 'bg-[#e1e6ff] text-[#35424d]' : 'text-[#5d6871] hover:bg-gray-100'}`}
               >
                 <img src="/article.png" alt="articles" className="w-5 h-5" />
                 <span className="text-base">All Articles</span>
@@ -148,14 +148,14 @@ const PublisherCentral: React.FC = () => {
               <div className="flex flex-col ml-4 mt-1 border-l border-[#c2c6ca]">
                 <button 
                   onClick={() => setView('all-articles')}
-                  className={`flex items-center gap-2 px-3 py-1.5 transition-all rounded-r-[4px] ${view === 'all-articles' || view === 'article-details' ? 'bg-[#e1e6ff] border-l-2 border-[#1c40ca] font-semibold text-[#35424d] -ml-[2px]' : 'text-[#5d6871] hover:bg-gray-100'}`}
+                  className={`flex items-center gap-2 px-3 py-1.5 transition-all rounded-r-[4px] ${(view === 'all-articles' || (view === 'article-details' && !isPapApproved)) ? 'bg-[#e1e6ff] border-l-2 border-[#1c40ca] font-semibold text-[#35424d] -ml-[2px]' : 'text-[#5d6871] hover:bg-gray-100'}`}
                 >
                   <img src="/progress_activity.png" alt="in-progress" className="w-4 h-4 opacity-70" />
                   <span className="text-base">In-progress</span>
                 </button>
                 <button 
                   onClick={() => setView('published-articles')}
-                  className={`flex items-center gap-2 px-3 py-1.5 transition-all rounded-r-[4px] ${view === 'published-articles' ? 'bg-[#e1e6ff] border-l-2 border-[#1c40ca] font-semibold text-[#35424d] -ml-[2px]' : 'text-[#5d6871] hover:bg-gray-100'}`}
+                  className={`flex items-center gap-2 px-3 py-1.5 transition-all rounded-r-[4px] ${(view === 'published-articles' || (view === 'article-details' && isPapApproved)) ? 'bg-[#e1e6ff] border-l-2 border-[#1c40ca] font-semibold text-[#35424d] -ml-[2px]' : 'text-[#5d6871] hover:bg-gray-100'}`}
                 >
                   <img src="/check_circle.png" alt="published" className="w-4 h-4 opacity-70" />
                   <span className="text-base">Published</span>
@@ -335,6 +335,7 @@ const PublisherCentral: React.FC = () => {
                           {isPapApproved && (
                             <tr 
                               className="border-b border-[#f6f7f7] text-[13px] text-[#35424d] hover:bg-gray-100 transition-colors cursor-pointer group" 
+                              onClick={() => setView('article-details')}
                             >
                               <td className="px-4 py-4">{articleData.journalId}</td>
                               <td className="px-4 py-4 font-semibold">{articleData.id}</td>
@@ -362,17 +363,17 @@ const PublisherCentral: React.FC = () => {
                   {/* Breadcrumbs */}
                   <div className="flex gap-[4px] items-center text-[13px]">
                     <button 
-                      onClick={() => setView('all-articles')}
+                      onClick={() => setView(isPapApproved ? 'published-articles' : 'all-articles')}
                       className="text-[#5d6871] hover:text-[#1c40ca] transition-colors"
                     >
-                      All Articles
+                      {isPapApproved ? 'All Published Articles' : 'All Articles'}
                     </button>
                     <div className="w-4 h-4 flex items-center justify-center">
                       <svg className="w-[5px] h-2 opacity-60" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1 1L4 4L1 7" stroke="#5D6871" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <span className="text-[#5d6871]">In-progress</span>
+                    <span className="text-[#5d6871]">{isPapApproved ? 'Published' : 'In-progress'}</span>
                     <div className="w-4 h-4 flex items-center justify-center">
                       <svg className="w-[5px] h-2 opacity-60" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1 1L4 4L1 7" stroke="#5D6871" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

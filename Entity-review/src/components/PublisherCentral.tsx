@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import BeaconLoader from './BeaconLoader';
 
 const PublisherCentral: React.FC = () => {
-  const [view, setView] = useState<'all-articles' | 'article-details'>('all-articles');
+  const [view, setView] = useState<'all-articles' | 'article-details' | 'published-articles'>('all-articles');
   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
   const [isPeActionMenuOpen, setIsPeActionMenuOpen] = useState(false);
+  const [isPapActionMenuOpen, setIsPapActionMenuOpen] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
   const [isPeApproved, setIsPeApproved] = useState(false);
+  const [isPapApproved, setIsPapApproved] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [peReviewStarted, setPeReviewStarted] = useState(false);
@@ -58,11 +60,23 @@ const PublisherCentral: React.FC = () => {
     setIsLoading(true);
     setIsPeActionMenuOpen(false);
     
-    // Show loader for 6 seconds (allowing a few steps to show)
+    // Show loader for 12 seconds (2s per step * 5 steps + padding)
     setTimeout(() => {
       setIsLoading(false);
       setIsPeApproved(true);
-    }, 6000);
+    }, 12000);
+  };
+
+  const handlePapApprove = () => {
+    setIsPapActionMenuOpen(false);
+    setIsPapApproved(true);
+    setToastMessage(`Article ${articleData.id} has been moved to published status.`);
+    setShowToast(true);
+    
+    // Hide toast after 5 seconds
+    setTimeout(() => {
+      setShowToast(false);
+    }, 5000);
   };
 
   const handleStartPeReview = () => {
@@ -133,13 +147,16 @@ const PublisherCentral: React.FC = () => {
               </button>
               <div className="flex flex-col ml-4 mt-1 border-l border-[#c2c6ca]">
                 <button 
-                  onClick={() => setView('article-details')}
-                  className={`flex items-center gap-2 px-3 py-1.5 transition-all rounded-r-[4px] ${view === 'article-details' ? 'bg-[#e1e6ff] border-l-2 border-[#1c40ca] font-semibold text-[#35424d] -ml-[2px]' : 'text-[#5d6871] hover:bg-gray-100'}`}
+                  onClick={() => setView('all-articles')}
+                  className={`flex items-center gap-2 px-3 py-1.5 transition-all rounded-r-[4px] ${view === 'all-articles' || view === 'article-details' ? 'bg-[#e1e6ff] border-l-2 border-[#1c40ca] font-semibold text-[#35424d] -ml-[2px]' : 'text-[#5d6871] hover:bg-gray-100'}`}
                 >
                   <img src="/progress_activity.png" alt="in-progress" className="w-4 h-4 opacity-70" />
                   <span className="text-base">In-progress</span>
                 </button>
-                <button className="flex items-center gap-2 px-3 py-1.5 text-[#5d6871] hover:bg-gray-100 transition-all">
+                <button 
+                  onClick={() => setView('published-articles')}
+                  className={`flex items-center gap-2 px-3 py-1.5 transition-all rounded-r-[4px] ${view === 'published-articles' ? 'bg-[#e1e6ff] border-l-2 border-[#1c40ca] font-semibold text-[#35424d] -ml-[2px]' : 'text-[#5d6871] hover:bg-gray-100'}`}
+                >
                   <img src="/check_circle.png" alt="published" className="w-4 h-4 opacity-70" />
                   <span className="text-base">Published</span>
                 </button>
@@ -222,39 +239,115 @@ const PublisherCentral: React.FC = () => {
                           </tr>
                         </thead>
                         <tbody className="bg-white">
-                          <tr 
-                            className="border-b border-[#f6f7f7] text-[13px] text-[#35424d] hover:bg-gray-50 transition-colors cursor-pointer group" 
-                            onClick={() => setView('article-details')}
-                          >
-                            <td className="px-4 py-4">{articleData.journalId}</td>
-                            <td className="px-4 py-4 font-semibold">{articleData.id}</td>
-                            <td className="px-4 py-4">15/01/2026 11:00</td>
-                            <td className="px-4 py-4">
-                              <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border ${isPeApproved ? 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]' : (isApproved ? 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]' : 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]')}`}>
-                                <span className={`w-2 h-2 rounded-full opacity-60 bg-[#005728]`}></span>
-                                {isPeApproved ? 'Revises' : (isApproved ? articleData.nextMilestone : articleData.milestone)}
-                              </span>
-                            </td>
-                            <td className="px-4 py-4">{articleData.daysInProd}</td>
-                            <td className="px-4 py-4">{isPeApproved ? "01/10/2026 11:00" : (isApproved ? (peReviewStarted ? "10/01/2026 12:10" : "01/10/2026 12:10") : articleData.dueDate)}</td>
-                            <td className="px-4 py-4">
-                              <div className="border border-[#2853f8] p-[3px] rounded-[6px] w-[80px]">
-                                <div style={{ backgroundColor: brandBlue }} className={`h-1 rounded-[6px] transition-all duration-1000 ${isPeApproved ? 'w-[75%]' : (peReviewStarted ? 'w-[65%]' : (isApproved ? 'w-[50%]' : 'w-[35%]' ))}`}></div>
-                              </div>
-                            </td>
-                            <td className="px-4 py-4 text-right">
-                              <div className="flex items-center justify-end gap-3 min-w-[200px]">
-                                {!isPeApproved && (
-                                  <div className="flex items-center gap-1 text-[13px] text-[#35424d] italic whitespace-nowrap">
-                                    Action pending on you
-                                  </div>
-                                )}
-                                <button className="flex items-center justify-center hover:bg-gray-100 rounded-[4px] transition-all w-5 h-5 shrink-0">
-                                  <img src="/actions.png" alt="actions" className="h-[14px] w-auto opacity-70 object-contain" />
-                                </button>
-                              </div>
-                            </td>
+                          {!isPapApproved && (
+                            <tr 
+                              className="border-b border-[#f6f7f7] text-[13px] text-[#35424d] hover:bg-gray-50 transition-colors cursor-pointer group" 
+                              onClick={() => setView('article-details')}
+                            >
+                              <td className="px-4 py-4">{articleData.journalId}</td>
+                              <td className="px-4 py-4 font-semibold">{articleData.id}</td>
+                              <td className="px-4 py-4">15/01/2026 11:00</td>
+                              <td className="px-4 py-4">
+                                <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border ${isPeApproved ? 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]' : (isApproved ? 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]' : 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]')}`}>
+                                  <span className={`w-2 h-2 rounded-full opacity-60 bg-[#005728]`}></span>
+                                  {isPeApproved ? 'PAP' : (isApproved ? articleData.nextMilestone : articleData.milestone)}
+                                </span>
+                              </td>
+                              <td className="px-4 py-4">{isPeApproved ? "1 Day" : articleData.daysInProd}</td>
+                              <td className="px-4 py-4">{isPeApproved ? "15/01/2026 12:10" : (isApproved ? (peReviewStarted ? "10/01/2026 12:10" : "01/10/2026 12:10") : articleData.dueDate)}</td>
+                              <td className="px-4 py-4">
+                                <div className="border border-[#2853f8] p-[3px] rounded-[6px] w-[80px]">
+                                  <div style={{ backgroundColor: brandBlue }} className={`h-1 rounded-[6px] transition-all duration-1000 ${isPapApproved ? 'w-full' : (isPeApproved ? 'w-[75%]' : (peReviewStarted ? 'w-[65%]' : (isApproved ? 'w-[50%]' : 'w-[35%]' )))}`}></div>
+                                </div>
+                              </td>
+                              <td className="px-4 py-4 text-right">
+                                <div className="flex items-center justify-end gap-3 min-w-[200px]">
+                                  {!isPeApproved && (
+                                    <div className="flex items-center gap-1 text-[13px] text-[#35424d] italic whitespace-nowrap">
+                                      Action pending on you
+                                    </div>
+                                  )}
+                                  <button className="flex items-center justify-center hover:bg-gray-100 rounded-[4px] transition-all w-5 h-5 shrink-0">
+                                    <img src="/actions.png" alt="actions" className="h-[14px] w-auto opacity-70 object-contain" />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : view === 'published-articles' ? (
+              /* Published Articles Table View */
+              <div className="px-10 py-8 overflow-y-auto h-full">
+                <div className="w-full">
+                  <div className="flex flex-col gap-4 mb-4 w-full">
+                    <h2 className="text-lg font-bold text-[#35424d] flex items-center gap-1">
+                      Articles Published
+                      <img src="/info.png" alt="info" className="w-4 h-4 cursor-pointer" />
+                    </h2>
+
+                    <div className="flex justify-between items-center h-8 w-full">
+                      <div className="flex flex-row items-center px-3 bg-white border border-[#AEB3B7] rounded-[4px] w-[246px] h-8 box-border relative">
+                        <input
+                          className="flex-1 text-base bg-transparent border-none outline-none placeholder:text-[#AEB3B7] h-full pr-8"
+                          placeholder="Search"
+                          type="text"
+                        />
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                          <img src="/search.png" alt="search" className="w-6 h-6" />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1 px-2 py-1.5 cursor-pointer hover:bg-gray-100 rounded">
+                          <span className="text-[13px] font-semibold">Journal:</span>
+                          <span className="text-[13px]">All</span>
+                          <img src="/arrow_drop_down.png" alt="" className="w-4 h-4" />
+                        </div>
+                        <button className="flex items-center gap-1 text-[#1c40ca] text-[13px] font-semibold hover:underline">
+                          <div className="w-4 h-4 flex items-center justify-center">
+                            <img src="/filter.png" alt="filters" className="h-[12px] w-auto object-contain" />
+                          </div>
+                          More Filters
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border border-[#e3e4e5] rounded-[4px] overflow-hidden bg-white shadow-sm">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="bg-[#f6f7f7] border-b border-[#e3e4e5] text-[13px] font-semibold text-[#5d6871]">
+                            <th className="px-4 py-3 whitespace-nowrap">Journal ID</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Article ID</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Last processed Stage</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Submitted On</th>
+                            <th className="px-4 py-3 whitespace-nowrap">Completed On</th>
+                            <th className="px-4 py-3 text-right"></th>
                           </tr>
+                        </thead>
+                        <tbody className="bg-white">
+                          {isPapApproved && (
+                            <tr 
+                              className="border-b border-[#f6f7f7] text-[13px] text-[#35424d] hover:bg-gray-100 transition-colors cursor-pointer group" 
+                            >
+                              <td className="px-4 py-4">{articleData.journalId}</td>
+                              <td className="px-4 py-4 font-semibold">{articleData.id}</td>
+                              <td className="px-4 py-4">PAP</td>
+                              <td className="px-4 py-4">26/12/2025 11:00</td>
+                              <td className="px-4 py-4">15/01/2026 11:00</td>
+                              <td className="px-4 py-4 text-right">
+                                <button className="p-1 hover:bg-gray-200 rounded transition-colors">
+                                  <img src="/actions.png" alt="actions" className="h-4 w-4 opacity-70" />
+                                </button>
+                              </td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>
@@ -382,7 +475,7 @@ const PublisherCentral: React.FC = () => {
                           <span className="text-[#5d6871] w-[80px] shrink-0">Status</span>
                           <div className="bg-[#dafbe8] border border-[#8bdfb2] flex gap-[4px] items-center px-[8px] py-[2px] rounded-full">
                             <span className="w-2 h-2 rounded-full bg-[#005728] opacity-60"></span>
-                            <span className="text-[#005728] font-semibold text-[11px]">{articleData.status}</span>
+                            <span className="text-[#005728] font-semibold text-[11px]">{isPapApproved ? 'Published' : articleData.status}</span>
                           </div>
                         </div>
                         <div className="flex gap-[4px] text-[13px]">
@@ -693,22 +786,105 @@ const PublisherCentral: React.FC = () => {
                         </div>
                       )}
 
-                      {/* Step 6 - Revises (only shown when PE Review is completed) */}
+                      {/* Step 6 - PAP (only shown when PE Review is completed) */}
                       {isPeApproved && (
                         <div className="flex gap-[8px] items-start pb-[4px]">
                           <div className="py-[8px]">
-                            <img src="/mode_standy.png" alt="" className="w-6 h-6" />
+                            <img src={isPapApproved ? "/blue_check.png" : "/mode_standy.png"} alt="" className="w-6 h-6" />
                           </div>
-                          <div className="flex-1 flex flex-col gap-[4px] font-['Source_Sans_Pro',sans-serif]">
-                            <div className="flex items-center justify-between">
-                              <p className="text-[16px] text-[#2a353e]">Revises</p>
-                              <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
-                                01/10/2026 11:00 - <span className="italic">In-progress</span>
-                              </p>
+                          <div className="flex-1 flex flex-col gap-[8px]">
+                            <div className="flex flex-col gap-[4px] font-['Source_Sans_Pro',sans-serif]">
+                              <div className="flex items-center justify-between">
+                                <p className="text-[16px] text-[#2a353e]">PAP</p>
+                                {!isPapApproved ? (
+                                  <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
+                                    13/01/2026 11:00 - <span className="italic">In-progress</span>
+                                  </p>
+                                ) : (
+                                  <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871]">
+                                    <span>13/01/2026 11:00 - 15/01/2026 11:00</span>
+                                    <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
+                                    <span>2 Days</span>
+                                  </div>
+                                )}
+                              </div>
+                              {!isPapApproved ? (
+                                <p className="text-[13px] text-[#868e94]">
+                                  Estimated completion: <span className="text-[#35424d]">15/01/2026 12:10</span>
+                                </p>
+                              ) : (
+                                <div className="flex flex-col gap-[7px]">
+                                  <p className="text-[13px] text-[#5d6871]">
+                                    Status: <span className="text-[#35424d]">Completed on-time</span>
+                                  </p>
+                                  <div className="flex gap-[4px] items-start text-[13px] text-[#5d6871]">
+                                    <span>Approved by</span>
+                                    <div className="flex gap-[4px] items-center">
+                                      <div className="w-4 h-4 rounded-full bg-[#35424d] text-white flex items-center justify-center font-semibold text-[9px]">
+                                        JD
+                                      </div>
+                                      <span>Jane Doe</span>
+                                    </div>
+                                    <span>15/01/2026 15:14</span>
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                            <p className="text-[13px] text-[#5d6871]">
-                              <span className="text-[#868e94]">Estimated completion:</span> 11/01/2026 01:00
-                            </p>
+
+                            {/* Action Banner for PAP */}
+                            {!isPapApproved && (
+                              <div className="bg-[#f0f7ff] border border-[#93beeb] flex items-center justify-between pl-[12px] pr-[16px] py-[8px] rounded-[4px] relative">
+                                <div className="flex gap-[4px] items-center">
+                                  <img src="/info_blue.png" alt="" className="w-4 h-4" />
+                                  <span className="text-[14px] font-semibold text-[#5d6871]">Pending for Action</span>
+                                </div>
+                                <div className="flex gap-[8px] items-center">
+                                  <button className="p-1 hover:bg-[#dcfce7] rounded-[4px] transition-colors">
+                                    <img src="/dowload.png" alt="" className="w-6 h-6" />
+                                  </button>
+                                  <div className="relative">
+                                    <button 
+                                      onClick={() => setIsPapActionMenuOpen(!isPapActionMenuOpen)}
+                                      className="bg-[#cce5ff] border-2 border-[#2277d3] text-[#2277d3] flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] font-semibold text-[16px] hover:bg-[#b3d7ff] transition-all"
+                                    >
+                                      Action
+                                      <img src="/chevron_downward.png" alt="" className="w-4 h-4" />
+                                    </button>
+                                    
+                                    {isPapActionMenuOpen && (
+                                      <div className="absolute top-full mt-1 right-0 bg-white content-stretch flex flex-col items-start overflow-clip rounded-[4px] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.16),0px_2px_4px_0px_rgba(0,0,0,0.12)] w-[200px] z-50">
+                                        <div className="content-stretch flex flex-col items-start py-[1px] relative shrink-0 w-full">
+                                          <button 
+                                            className="bg-[#edf0fd] content-stretch flex flex-col gap-[2px] items-start pl-[12px] pr-[16px] py-[8px] relative shrink-0 w-full hover:bg-[#e1e6ff] transition-colors"
+                                            onClick={handlePapApprove}
+                                          >
+                                            <div className="content-stretch flex gap-[8px] h-[20px] items-center relative shrink-0 w-full">
+                                              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative">
+                                                <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] text-left">
+                                                  Approve (No Correction)
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </button>
+                                          <button 
+                                            className="bg-white content-stretch flex flex-col gap-[2px] items-start pl-[12px] pr-[16px] py-[8px] relative shrink-0 w-full hover:bg-gray-50 transition-colors"
+                                            onClick={() => setIsPapActionMenuOpen(false)}
+                                          >
+                                            <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
+                                              <div className="content-stretch flex flex-[1_0_0] h-[20px] items-center min-w-px relative">
+                                                <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] text-left">
+                                                  Upload Corrections
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}

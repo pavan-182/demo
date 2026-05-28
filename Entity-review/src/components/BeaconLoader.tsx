@@ -14,7 +14,7 @@ const BeaconLoader: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % (steps.length + 1));
-    }, 1200);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);

@@ -61,9 +61,8 @@ const App: React.FC = () => {
     setSubmitStep(1);
     
     // Progress through steps
-    setTimeout(() => setSubmitStep(2), 1000);
-    setTimeout(() => setSubmitStep(3), 2000);
-    setTimeout(() => setSubmitStep(4), 3000);
+    setTimeout(() => setSubmitStep(2), 1500);
+    setTimeout(() => setSubmitStep(3), 3000);
 
     setTimeout(() => {
       setIsSubmitting(false);
@@ -192,11 +191,7 @@ const App: React.FC = () => {
                 {/* Segment 1 */}
                 <div className={`h-full flex-1 rounded-l-full transition-colors duration-300 ${submitStep >= 1 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
                 {/* Segment 2 */}
-                <div className={`h-full flex-1 transition-colors duration-300 ${submitStep >= 2 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
-                {/* Segment 3 */}
-                <div className={`h-full flex-1 transition-colors duration-300 ${submitStep >= 3 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
-                {/* Segment 4 */}
-                <div className={`h-full flex-1 rounded-r-full transition-colors duration-300 ${submitStep >= 4 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
+                <div className={`h-full flex-1 rounded-r-full transition-colors duration-300 ${submitStep >= 2 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
               </div>
             </div>
 
@@ -211,7 +206,7 @@ const App: React.FC = () => {
                     <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
                   ) : null}
                 </div>
-                <span className={`text-[16px] ${submitStep >= 1 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Preparing reviewed entities</span>
+                <span className={`text-[16px] ${submitStep >= 1 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Cross referencing external databases</span>
               </div>
 
               {/* Step 2 */}
@@ -223,19 +218,7 @@ const App: React.FC = () => {
                     <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
                   ) : null}
                 </div>
-                <span className={`text-[16px] ${submitStep >= 2 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Cross-referencing external databases</span>
-              </div>
-
-              {/* Step 3 */}
-              <div className="flex items-center gap-3">
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 ${submitStep > 3 ? 'bg-[#3B17D3] border-[#3B17D3]' : 'border-gray-300'}`}>
-                  {submitStep > 3 ? (
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg>
-                  ) : submitStep === 3 ? (
-                    <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
-                  ) : null}
-                </div>
-                <span className={`text-[16px] ${submitStep >= 3 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Linking matching external IDs</span>
+                <span className={`text-[16px] ${submitStep >= 2 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Linking entities to external IDs</span>
               </div>
             </div>
           </div>

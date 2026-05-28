@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 const steps = [
-  "Parsing & Chunking...",
-  "Adding Contextual Prefixes...",
-  "Deriving Figure & Table Findings...",
-  "Extracting Relationships...",
+  "Parsing & chunking...",
+  "Adding contextual prefixes...",
+  "Deriving figure & table findings...",
+  "Extracting relationships...",
   "Transforming to structured AI ready schema..."
 ];
 

@@ -127,7 +127,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 1.1 Tumors */}
         <div className="relative group mt-12">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONB</span>
           <h2 className="text-xl font-bold text-gray-900 mb-4">1.1. Tumors</h2>
         </div>
         <div className="relative group">
@@ -148,7 +148,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 1.2 Types of cancer */}
         <div className="relative group mt-12">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONB</span>
           <h2 className="text-xl font-bold text-gray-900 mb-4">1.2. Types of cancer</h2>
         </div>
         <div className="relative group">
@@ -170,7 +170,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 1.3 Causes of cancer */}
         <div className="relative group mt-12">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONB</span>
           <h2 className="text-xl font-bold text-gray-900 mb-4">1.3. Causes of cancer</h2>
         </div>
         <div className="relative group">
@@ -203,7 +203,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 2.1 Mechanisms of applying targeted therapy */}
         <div className="relative group mt-12">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONB</span>
           <h2 className="text-xl font-bold text-gray-900 mb-4">2.1. Mechanisms of applying targeted therapy</h2>
         </div>
         <div className="relative group">
@@ -218,7 +218,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 2.2 Unprogrammed cell death */}
         <div className="relative group mt-12">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONB</span>
           <h2 className="text-xl font-bold text-gray-900 mb-4">2.2. Unprogrammed cell death</h2>
         </div>
         <div className="relative group">
@@ -247,13 +247,13 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 3.1 Hallmarks of ferroptosis */}
         <div className="relative group mt-12">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONB</span>
           <h2 className="text-xl font-bold text-gray-900 mb-4">3.1. Hallmarks of ferroptosis</h2>
         </div>
 
         {/* Section 3.1.1 Morphological features */}
         <div className="relative group mt-8">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONC</span>
           <h3 className="text-lg font-bold text-gray-800 mb-2">3.1.1. Morphological features</h3>
         </div>
         <div className="relative group">
@@ -266,7 +266,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 3.1.2 Biochemical features */}
         <div className="relative group mt-8">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONC</span>
           <h3 className="text-lg font-bold text-gray-800 mb-2">3.1.2. Biochemical features</h3>
         </div>
         <div className="relative group">
@@ -280,7 +280,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 3.1.3 Genetic features */}
         <div className="relative group mt-8">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONC</span>
           <h3 className="text-lg font-bold text-gray-800 mb-2">3.1.3. Genetic features</h3>
         </div>
         <div className="relative group">
@@ -293,7 +293,7 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
 
         {/* Section 3.1.4 Immune features */}
         <div className="relative group mt-8">
-          <span className="absolute -left-24 top-1 doc-tag">SECTIONA</span>
+          <span className="absolute -left-24 top-1 doc-tag">SECTIONC</span>
           <h3 className="text-lg font-bold text-gray-800 mb-2">3.1.4. Immune features</h3>
         </div>
         <div className="relative group">

@@ -575,7 +575,7 @@ const PublisherCentral: React.FC = () => {
       {showToast && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 ml-[106px] bg-[#dafbe8] border border-[#8bdfb2] flex items-center px-4 py-2.5 rounded-[4px] shadow-md z-[100] animate-in fade-in slide-in-from-bottom-4 duration-300">
           <div className="flex gap-2 items-center">
-            <img src="/check_circle.png" alt="" className="w-6 h-6" />
+            <img src="/check_circle_GREEN.png" alt="" className="w-6 h-6" />
             <p className="font-semibold text-[#007a39] text-[13px]">
               Copyediting has been approved by you for the Article {articleData.id}.
             </p>

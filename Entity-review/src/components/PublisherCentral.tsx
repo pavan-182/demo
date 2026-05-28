@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import BeaconLoader from './BeaconLoader';
 
 const PublisherCentral: React.FC = () => {
   const [view, setView] = useState<'all-articles' | 'article-details'>('all-articles');
   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
+  const [isPeActionMenuOpen, setIsPeActionMenuOpen] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
+  const [isPeApproved, setIsPeApproved] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [peReviewStarted, setPeReviewStarted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Theme Constants
   const brandBlue = "#1c40ca";
@@ -38,6 +44,7 @@ const PublisherCentral: React.FC = () => {
 
   const handleApprove = () => {
     setIsApproved(true);
+    setToastMessage(`Copyediting has been approved by you for the Article ${articleData.id}.`);
     setShowToast(true);
     setIsActionMenuOpen(false);
     
@@ -45,6 +52,21 @@ const PublisherCentral: React.FC = () => {
     setTimeout(() => {
       setShowToast(false);
     }, 5000);
+  };
+
+  const handlePeApprove = () => {
+    setIsLoading(true);
+    setIsPeActionMenuOpen(false);
+    
+    // Show loader for 6 seconds (allowing a few steps to show)
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsPeApproved(true);
+    }, 6000);
+  };
+
+  const handleStartPeReview = () => {
+    setPeReviewStarted(true);
   };
 
   return (
@@ -208,21 +230,21 @@ const PublisherCentral: React.FC = () => {
                             <td className="px-4 py-4 font-semibold">{articleData.id}</td>
                             <td className="px-4 py-4">15/01/2026 11:00</td>
                             <td className="px-4 py-4">
-                              <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border bg-[#dafbe8] text-[#005728] border-[#8bdfb2]`}>
+                              <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border ${isPeApproved ? 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]' : (isApproved ? 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]' : 'bg-[#dafbe8] text-[#005728] border-[#8bdfb2]')}`}>
                                 <span className={`w-2 h-2 rounded-full opacity-60 bg-[#005728]`}></span>
-                                {isApproved ? articleData.nextMilestone : articleData.milestone}
+                                {isPeApproved ? 'Revises' : (isApproved ? articleData.nextMilestone : articleData.milestone)}
                               </span>
                             </td>
                             <td className="px-4 py-4">{articleData.daysInProd}</td>
-                            <td className="px-4 py-4">{isApproved ? "01/10/2026 12:10" : articleData.dueDate}</td>
+                            <td className="px-4 py-4">{isPeApproved ? "01/10/2026 11:00" : (isApproved ? (peReviewStarted ? "10/01/2026 12:10" : "01/10/2026 12:10") : articleData.dueDate)}</td>
                             <td className="px-4 py-4">
                               <div className="border border-[#2853f8] p-[3px] rounded-[6px] w-[80px]">
-                                <div style={{ backgroundColor: brandBlue }} className={`h-1 rounded-[6px] transition-all duration-1000 ${isApproved ? 'w-[60%]' : 'w-[35%]'}`}></div>
+                                <div style={{ backgroundColor: brandBlue }} className={`h-1 rounded-[6px] transition-all duration-1000 ${isPeApproved ? 'w-[75%]' : (peReviewStarted ? 'w-[65%]' : (isApproved ? 'w-[50%]' : 'w-[35%]' ))}`}></div>
                               </div>
                             </td>
                             <td className="px-4 py-4 text-right">
                               <div className="flex items-center justify-end gap-3 min-w-[200px]">
-                                {!isApproved && (
+                                {!isPeApproved && (
                                   <div className="flex items-center gap-1 text-[13px] text-[#35424d] italic whitespace-nowrap">
                                     Action pending on you
                                   </div>
@@ -540,9 +562,12 @@ const PublisherCentral: React.FC = () => {
 
                       {/* Step 4 - Next: Author Proof Review */}
                       {isApproved && (
-                        <div className="flex gap-[8px] items-start pb-[4px]">
+                        <div 
+                          className={`flex gap-[8px] items-start pb-[4px] ${!peReviewStarted ? 'cursor-pointer hover:bg-blue-50 transition-colors rounded-r-[4px] -mr-4 pr-4' : ''}`}
+                          onClick={!peReviewStarted ? handleStartPeReview : undefined}
+                        >
                           <div className="py-[8px]">
-                            <img src="/mode_standy.png" alt="" className="w-6 h-6" />
+                            <img src={peReviewStarted ? "/blue_check.png" : "/mode_standy.png"} alt="" className="w-6 h-6" />
                           </div>
                           <div className="flex-1 flex flex-col gap-[4px] font-['Source_Sans_Pro',sans-serif]">
                             <div className="flex items-center justify-between">
@@ -550,14 +575,139 @@ const PublisherCentral: React.FC = () => {
                                 {articleData.nextMilestone}
                               </p>
                               <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
-                                29/12/2025 11:00 - In-progress
+                                {peReviewStarted ? "29/12/2025 - 01/10/2026" : "29/12/2025 11:00 - In-progress"}
                               </p>
                             </div>
                             <p className="text-[13px] text-[#35424d]">
-                              Proofing In-progress by Author
+                              {peReviewStarted ? "Status: Completed on-time" : "Proofing In-progress by Author"}
                             </p>
+                            {!peReviewStarted && (
+                              <p className="text-[13px] text-[#5d6871]">
+                                <span className="text-[#868e94]">Expected completion:</span> 01/10/2026 01:00
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Step 5 - PE Review (only shown when Author Proof is completed) */}
+                      {peReviewStarted && (
+                        <div className="flex gap-[8px] items-start pb-[4px]">
+                          <div className="py-[8px]">
+                            <img src={isPeApproved ? "/blue_check.png" : "/mode_standy.png"} alt="" className="w-6 h-6" />
+                          </div>
+                          <div className="flex-1 flex flex-col gap-[12px]">
+                            <div className="flex flex-col gap-[4px] font-['Source_Sans_Pro',sans-serif]">
+                              <div className="flex items-center justify-between">
+                                <p className="text-[16px] text-[#2a353e]">PE Review</p>
+                                {!isPeApproved ? (
+                                  <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
+                                    01/10/2026 11:00 - <span className="italic">In-progress</span>
+                                  </p>
+                                ) : (
+                                  <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871]">
+                                    <span>01/10/2026 11:00 - 10/01/2026 11:00</span>
+                                    <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
+                                    <span>1 Day</span>
+                                  </div>
+                                )}
+                              </div>
+                              {!isPeApproved ? (
+                                <p className="text-[13px] text-[#5d6871]">
+                                  <span className="text-[#868e94]">Estimated completion:</span> 10/01/2026 01:00
+                                </p>
+                              ) : (
+                                <div className="flex flex-col gap-[7px]">
+                                  <p className="text-[13px] text-[#5d6871]">
+                                    Status: <span className="text-[#35424d]">Completed on-time</span>
+                                  </p>
+                                  <div className="flex gap-[4px] items-start text-[13px] text-[#5d6871]">
+                                    <span>Approved by</span>
+                                    <div className="flex gap-[4px] items-center">
+                                      <div className="w-4 h-4 rounded-full bg-[#35424d] text-white flex items-center justify-center font-semibold text-[9px]">
+                                        JD
+                                      </div>
+                                      <span>Jane Doe</span>
+                                    </div>
+                                    <span>01/10/2026 12:04</span>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Action Banner for PE Review (only shown when not approved) */}
+                            {!isPeApproved && (
+                              <div className="bg-[#f0f7ff] border border-[#93beeb] flex items-center justify-between pl-[12px] pr-[16px] py-[8px] rounded-[4px] relative">
+                                <div className="flex gap-[4px] items-center">
+                                  <img src="/info_blue.png" alt="" className="w-4 h-4" />
+                                  <span className="text-[14px] font-semibold text-[#5d6871]">Pending for Action</span>
+                                </div>
+                                <div className="flex gap-[8px] items-center">
+                                  <button className="p-1 hover:bg-[#dcfce7] rounded-[4px] transition-colors">
+                                    <img src="/dowload.png" alt="" className="w-6 h-6" />
+                                  </button>
+                                  <div className="relative">
+                                    <button 
+                                      onClick={() => setIsPeActionMenuOpen(!isPeActionMenuOpen)}
+                                      className="bg-[#cce5ff] border-2 border-[#2277d3] text-[#2277d3] flex gap-[4px] items-center px-[8px] py-[6px] rounded-[4px] font-semibold text-[16px] hover:bg-[#b3d7ff] transition-all"
+                                    >
+                                      Action
+                                      <img src="/chevron_downward.png" alt="" className="w-4 h-4" />
+                                    </button>
+                                    
+                                    {isPeActionMenuOpen && (
+                                      <div className="absolute top-full mt-1 right-0 bg-white content-stretch flex flex-col items-start overflow-clip rounded-[4px] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.16),0px_2px_4px_0px_rgba(0,0,0,0.12)] w-[200px] z-50">
+                                        <div className="content-stretch flex flex-col items-start py-[1px] relative shrink-0 w-full">
+                                          <button 
+                                            className="bg-[#edf0fd] content-stretch flex flex-col gap-[2px] items-start pl-[12px] pr-[16px] py-[8px] relative shrink-0 w-full hover:bg-[#e1e6ff] transition-colors"
+                                            onClick={handlePeApprove}
+                                          >
+                                            <div className="content-stretch flex gap-[8px] h-[20px] items-center relative shrink-0 w-full">
+                                              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative">
+                                                <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] text-left">
+                                                  Approve (No Correction)
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </button>
+                                          <button 
+                                            className="bg-white content-stretch flex flex-col gap-[2px] items-start pl-[12px] pr-[16px] py-[8px] relative shrink-0 w-full hover:bg-gray-50 transition-colors"
+                                            onClick={() => setIsPeActionMenuOpen(false)}
+                                          >
+                                            <div className="content-stretch flex gap-[8px] items-center relative shrink-0 w-full">
+                                              <div className="content-stretch flex flex-[1_0_0] h-[20px] items-center min-w-px relative">
+                                                <p className="font-['Source_Sans_Pro',sans-serif] text-[#35424d] text-[13px] text-left">
+                                                  Upload Corrections
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Step 6 - Revises (only shown when PE Review is completed) */}
+                      {isPeApproved && (
+                        <div className="flex gap-[8px] items-start pb-[4px]">
+                          <div className="py-[8px]">
+                            <img src="/mode_standy.png" alt="" className="w-6 h-6" />
+                          </div>
+                          <div className="flex-1 flex flex-col gap-[4px] font-['Source_Sans_Pro',sans-serif]">
+                            <div className="flex items-center justify-between">
+                              <p className="text-[16px] text-[#2a353e]">Revises</p>
+                              <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
+                                01/10/2026 11:00 - <span className="italic">In-progress</span>
+                              </p>
+                            </div>
                             <p className="text-[13px] text-[#5d6871]">
-                              <span className="text-[#868e94]">Expected completion:</span> 01/10/2026 01:00
+                              <span className="text-[#868e94]">Estimated completion:</span> 11/01/2026 01:00
                             </p>
                           </div>
                         </div>
@@ -577,11 +727,14 @@ const PublisherCentral: React.FC = () => {
           <div className="flex gap-2 items-center">
             <img src="/check_circle_GREEN.png" alt="" className="w-6 h-6" />
             <p className="font-semibold text-[#007a39] text-[13px]">
-              Copyediting has been approved by you for the Article {articleData.id}.
+              {toastMessage}
             </p>
           </div>
         </div>
       )}
+
+      {/* Loading Overlay */}
+      {isLoading && <BeaconLoader />}
     </div>
   );
 };

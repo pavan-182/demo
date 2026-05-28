@@ -163,7 +163,7 @@ const Header: React.FC = () => {
           <div className="flex items-center gap-4 w-[103px] h-6 shrink-0">
             <div className="flex items-center w-[63px] h-6 rounded hover:bg-gray-100 cursor-pointer transition-colors group">
               <div className="flex items-center justify-center px-1 gap-[10px] w-[47px] h-6">
-                <img src="/text_100%.png" alt="100%" className="w-[45px] h-[24px] object-contain" />
+                <img src="/text_100.png" alt="100%" className="w-[45px] h-[24px] object-contain" />
               </div>
               <svg className="w-4 h-4 text-[#5D6871]" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M7 10l5 5 5-5z"></path>

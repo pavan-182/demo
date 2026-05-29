@@ -14,6 +14,7 @@ const PublisherCentral: React.FC = () => {
   const [peReviewStarted, setPeReviewStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPackageModal, setShowPackageModal] = useState(false);
+  const [papCompletionDate, setPapCompletionDate] = useState<string | null>(null);
 
   // Theme Constants
   const brandBlue = "#1c40ca";
@@ -69,6 +70,10 @@ const PublisherCentral: React.FC = () => {
   };
 
   const handlePapApprove = () => {
+    const now = new Date();
+    const formattedDate = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    setPapCompletionDate(formattedDate);
+    
     setIsPapActionMenuOpen(false);
     setIsPapApproved(true);
     setToastMessage(`Article ${articleData.id} has been moved to published status.`);
@@ -339,10 +344,10 @@ const PublisherCentral: React.FC = () => {
                               onClick={() => setView('article-details')}
                             >
                               <td className="px-4 py-4">{articleData.journalId}</td>
-                              <td className="px-4 py-4 font-semibold">{articleData.id}</td>
+                              <td className="px-4 py-4">{articleData.id}</td>
                               <td className="px-4 py-4">PAP</td>
                               <td className="px-4 py-4">26/12/2025 11:00</td>
-                              <td className="px-4 py-4">15/01/2026 11:00</td>
+                              <td className="px-4 py-4">{papCompletionDate || "15/01/2026 11:00"}</td>
                               <td className="px-4 py-4 text-right">
                                 <button className="flex items-center justify-center hover:bg-gray-100 rounded-[4px] transition-all w-5 h-5 shrink-0">
                                   <img src="/actions.png" alt="actions" className="h-[14px] w-auto opacity-70 object-contain" />

@@ -60,14 +60,14 @@ const App: React.FC = () => {
     setIsSubmitting(true);
     setSubmitStep(1);
     
-    // Progress through steps
-    setTimeout(() => setSubmitStep(2), 1500);
-    setTimeout(() => setSubmitStep(3), 3000);
+    // Progress through steps (2s delay each)
+    setTimeout(() => setSubmitStep(2), 2000);
+    setTimeout(() => setSubmitStep(3), 4000);
 
     setTimeout(() => {
       setIsSubmitting(false);
       setShowDashboard(true);
-    }, 4000);
+    }, 5000);
   };
 
   useEffect(() => {

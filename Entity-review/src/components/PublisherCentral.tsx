@@ -13,6 +13,7 @@ const PublisherCentral: React.FC = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [peReviewStarted, setPeReviewStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPackageModal, setShowPackageModal] = useState(false);
 
   // Theme Constants
   const brandBlue = "#1c40ca";
@@ -73,10 +74,10 @@ const PublisherCentral: React.FC = () => {
     setToastMessage(`Article ${articleData.id} has been moved to published status.`);
     setShowToast(true);
     
-    // Hide toast after 5 seconds
+    // Hide toast after 10 seconds for PAP approval
     setTimeout(() => {
       setShowToast(false);
-    }, 5000);
+    }, 10000);
   };
 
   const handleStartPeReview = () => {
@@ -343,11 +344,10 @@ const PublisherCentral: React.FC = () => {
                               <td className="px-4 py-4">26/12/2025 11:00</td>
                               <td className="px-4 py-4">15/01/2026 11:00</td>
                               <td className="px-4 py-4 text-right">
-                                <button className="p-1 hover:bg-gray-200 rounded transition-colors">
-                                  <img src="/actions.png" alt="actions" className="h-4 w-4 opacity-70" />
+                                <button className="flex items-center justify-center hover:bg-gray-100 rounded-[4px] transition-all w-5 h-5 shrink-0">
+                                  <img src="/actions.png" alt="actions" className="h-[14px] w-auto opacity-70 object-contain" />
                                 </button>
-                              </td>
-                            </tr>
+                              </td>                            </tr>
                           )}
                         </tbody>
                       </table>
@@ -901,11 +901,86 @@ const PublisherCentral: React.FC = () => {
       {/* Success Snackbar (Toast) */}
       {showToast && (
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 ml-[106px] bg-[#dafbe8] border border-[#8bdfb2] flex items-center px-4 py-2.5 rounded-[4px] shadow-md z-[100] animate-in fade-in slide-in-from-bottom-4 duration-300">
-          <div className="flex gap-2 items-center">
-            <img src="/check_circle_GREEN.png" alt="" className="w-6 h-6" />
-            <p className="font-semibold text-[#007a39] text-[13px]">
-              {toastMessage}
-            </p>
+          <div className="flex gap-4 items-center">
+            <div className="flex gap-2 items-center">
+              <img src="/check_circle_GREEN.png" alt="" className="w-6 h-6" />
+              <p className="font-semibold text-[#007a39] text-[13px]">
+                {toastMessage}
+              </p>
+            </div>
+            {isPapApproved && toastMessage.includes('published status') && (
+              <button 
+                onClick={() => {
+                  setShowPackageModal(true);
+                  setShowToast(false);
+                }}
+                className="bg-[#007a39] text-white text-[12px] font-bold px-3 py-1 rounded hover:bg-[#006630] transition-colors"
+              >
+                View Package
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Package Viewer Modal */}
+      {showPackageModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white w-[600px] rounded-lg shadow-xl flex flex-col overflow-hidden max-h-[80vh] animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center bg-[#F8F9FA]">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-[#35424D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <h3 className="font-bold text-[#35424D]">Package: @package/CTARC_100913</h3>
+              </div>
+              <button onClick={() => setShowPackageModal(false)} className="text-gray-400 hover:text-gray-600">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-4">
+              <div className="grid grid-cols-1 gap-2">
+                {[
+                  { name: 'CTARC_100913.jsonld', size: '223 KB', type: 'JSON-LD' },
+                  { name: 'CTARC_100913.xml', size: '214 KB', type: 'XML' },
+                  { name: 'CTARC_100913.pdf', size: '1.2 MB', type: 'PDF' }
+                ].map((file) => (
+                  <div key={file.name} className="flex items-center justify-between p-3 border border-gray-100 rounded-md hover:bg-gray-50 transition-colors group">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-blue-50 rounded flex items-center justify-center">
+                        <img src="/article.png" alt="" className="w-6 h-6 opacity-70" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm text-[#35424D]">{file.name}</p>
+                        <p className="text-xs text-gray-500">{file.type} • {file.size}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <a 
+                        href={`/package/${file.name}`}
+                        download={file.name}
+                        className="p-2 hover:bg-green-100 rounded text-green-600 transition-colors flex items-center justify-center" 
+                        title="Download"
+                      >
+                        <img src="/dowload.png" alt="Download" className="w-5 h-5" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end">
+              <button 
+                onClick={() => setShowPackageModal(false)}
+                className="px-6 py-2 bg-[#35424D] text-white rounded text-[13px] font-semibold hover:bg-[#2A343D] transition-colors"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

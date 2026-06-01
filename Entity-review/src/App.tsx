@@ -7,55 +7,55 @@ import type { Entity } from './components/ReviewSidebar';
 import './App.css';
 
 const INITIAL_ENTITIES: Entity[] = [
-  { id: 'pge2', name: 'PGE2', type: 'protein', status: 'unacknowledged', isAuto: false },
-  { id: '4hne', name: '4-hydroxynonenal (4HNE)', type: 'gene', status: 'unacknowledged', isAuto: false },
-  { id: 'ltb4', name: 'LTB4', type: 'ion', status: 'unacknowledged', isAuto: false },
-  { id: 'ltc4', name: 'LTC4', type: 'complex', status: 'unacknowledged', isAuto: false },
-  { id: 'ferroptosis', name: 'Ferroptosis', type: 'biological process', status: 'auto-approved', isAuto: true },
-  { id: 'apoptosis', name: 'Apoptosis', type: 'biological process', status: 'auto-approved', isAuto: true },
-  { id: 'cancer', name: 'Cancer', type: 'disease', status: 'auto-approved', isAuto: true },
-  { id: 'gpx4', name: 'GPX4', type: 'protein', status: 'auto-approved', isAuto: true },
-  { id: 'system_xc', name: 'system Xc-', type: 'protein complex / transporter', status: 'auto-approved', isAuto: true },
-  { id: 'slc7a11', name: 'SLC7A11', type: 'gene/protein', status: 'auto-approved', isAuto: true },
-  { id: 'slc3a2', name: 'SLC3A2', type: 'gene/protein', status: 'auto-approved', isAuto: true },
-  { id: 'gsh', name: 'GSH', type: 'metabolite', status: 'auto-approved', isAuto: true },
-  { id: 'ros', name: 'ROS', type: 'reactive species', status: 'auto-approved', isAuto: true },
-  { id: 'iron', name: 'iron', type: 'element', status: 'auto-approved', isAuto: true },
-  { id: 'mda', name: 'MDA', type: 'metabolite', status: 'auto-approved', isAuto: true },
-  { id: 'alox', name: 'ALOX', type: 'enzyme', status: 'auto-approved', isAuto: true },
-  { id: 'phd', name: 'PHD', type: 'enzyme', status: 'auto-approved', isAuto: true },
-  { id: 'pufas', name: 'PUFAs', type: 'lipid class', status: 'auto-approved', isAuto: true },
-  { id: 'phospholipids', name: 'phospholipids', type: 'lipid', status: 'auto-approved', isAuto: true },
-  { id: 'cardiolipin', name: 'cardiolipin', type: 'lipid', status: 'auto-approved', isAuto: true },
-  { id: 'phosphatidylcholine', name: 'phosphatidylcholine', type: 'lipid', status: 'auto-approved', isAuto: true },
-  { id: 'phosphatidylethanolamine', name: 'phosphatidylethanolamine (PE)', type: 'lipid', status: 'auto-approved', isAuto: true },
-  { id: 'ptgs2_cox2', name: 'PTGS2 / COX2', type: 'enzyme', status: 'auto-approved', isAuto: true },
-  { id: 'acsl4', name: 'ACSL4', type: 'gene/protein', status: 'auto-approved', isAuto: true },
-  { id: 'nfe2l2_nrf2', name: 'NFE2L2 / NRF2', type: 'gene/protein', status: 'auto-approved', isAuto: true },
-  { id: 'escrt_iii', name: 'ESCRT-III', type: 'protein complex', status: 'auto-approved', isAuto: true },
-  { id: 'hmgb1', name: 'HMGB1', type: 'protein', status: 'auto-approved', isAuto: true },
-  { id: 'rage', name: 'RAGE', type: 'receptor protein', status: 'auto-approved', isAuto: true },
-  { id: 'nf_kb', name: 'NF-B', type: 'transcription factor', status: 'auto-approved', isAuto: true },
-  { id: 'p53', name: 'p53', type: 'protein', status: 'auto-approved', isAuto: true },
-  { id: 'sat1', name: 'SAT1', type: 'gene/protein', status: 'auto-approved', isAuto: true },
-  { id: 'alox15', name: 'ALOX15', type: 'gene/protein', status: 'auto-approved', isAuto: true },
-  { id: 'ireb2', name: 'IREB2', type: 'gene/protein', status: 'auto-approved', isAuto: true },
-  { id: 'ferritin', name: 'ferritin', type: 'protein', status: 'auto-approved', isAuto: true },
-  { id: 'transferrin', name: 'transferrin', type: 'protein', status: 'auto-approved', isAuto: true },
-  { id: 'erastin', name: 'erastin', type: 'drug', status: 'auto-approved', isAuto: true },
-  { id: 'rsl3', name: 'RSL3', type: 'drug', status: 'auto-approved', isAuto: true },
-  { id: 'sorafenib', name: 'sorafenib', type: 'drug', status: 'auto-approved', isAuto: true },
-  { id: 'sulfasalazine', name: 'sulfasalazine', type: 'drug', status: 'auto-approved', isAuto: true },
-  { id: 'artesunate', name: 'artesunate', type: 'drug', status: 'auto-approved', isAuto: true },
-  { id: 'doxorubicin', name: 'doxorubicin', type: 'drug', status: 'auto-approved', isAuto: true },
-  { id: 'melanoma', name: 'melanoma', type: 'disease', status: 'auto-approved', isAuto: true },
-  { id: 'pancreatic_cancer', name: 'pancreatic cancer', type: 'disease', status: 'auto-approved', isAuto: true },
-  { id: 'prostate_cancer', name: 'prostate cancer', type: 'disease', status: 'auto-approved', isAuto: true },
-  { id: 'nsclc', name: 'non-small cell lung cancer', type: 'disease', status: 'auto-approved', isAuto: true },
-  { id: 'breast_cancer', name: 'breast cancer', type: 'disease', status: 'auto-approved', isAuto: true },
-  { id: 'colon_cancer', name: 'colon cancer', type: 'disease', status: 'auto-approved', isAuto: true },
-  { id: 'leukemia', name: 'leukemia', type: 'disease', status: 'auto-approved', isAuto: true },
-  { id: 'lymphoma', name: 'lymphoma', type: 'disease', status: 'auto-approved', isAuto: true },
+  { id: 'pge2', name: 'PGE2', type: 'protein', status: 'unacknowledged' },
+  { id: '4hne', name: '4-hydroxynonenal (4HNE)', type: 'gene', status: 'unacknowledged' },
+  { id: 'ltb4', name: 'LTB4', type: 'ion', status: 'unacknowledged' },
+  { id: 'ltc4', name: 'LTC4', type: 'complex', status: 'unacknowledged' },
+  { id: 'ferroptosis', name: 'Ferroptosis', type: 'biological process', status: 'auto-approved' },
+  { id: 'apoptosis', name: 'Apoptosis', type: 'biological process', status: 'auto-approved' },
+  { id: 'cancer', name: 'Cancer', type: 'disease', status: 'auto-approved' },
+  { id: 'gpx4', name: 'GPX4', type: 'protein', status: 'auto-approved' },
+  { id: 'system_xc', name: 'system Xc-', type: 'protein complex / transporter', status: 'auto-approved' },
+  { id: 'slc7a11', name: 'SLC7A11', type: 'gene/protein', status: 'auto-approved' },
+  { id: 'slc3a2', name: 'SLC3A2', type: 'gene/protein', status: 'auto-approved' },
+  { id: 'gsh', name: 'GSH', type: 'metabolite', status: 'auto-approved' },
+  { id: 'ros', name: 'ROS', type: 'reactive species', status: 'auto-approved' },
+  { id: 'iron', name: 'iron', type: 'element', status: 'auto-approved' },
+  { id: 'mda', name: 'MDA', type: 'metabolite', status: 'auto-approved' },
+  { id: 'alox', name: 'ALOX', type: 'enzyme', status: 'auto-approved' },
+  { id: 'phd', name: 'PHD', type: 'enzyme', status: 'auto-approved' },
+  { id: 'pufas', name: 'PUFAs', type: 'lipid class', status: 'auto-approved' },
+  { id: 'phospholipids', name: 'phospholipids', type: 'lipid', status: 'auto-approved' },
+  { id: 'cardiolipin', name: 'cardiolipin', type: 'lipid', status: 'auto-approved' },
+  { id: 'phosphatidylcholine', name: 'phosphatidylcholine', type: 'lipid', status: 'auto-approved' },
+  { id: 'phosphatidylethanolamine', name: 'phosphatidylethanolamine (PE)', type: 'lipid', status: 'auto-approved' },
+  { id: 'ptgs2_cox2', name: 'PTGS2 / COX2', type: 'enzyme', status: 'auto-approved' },
+  { id: 'acsl4', name: 'ACSL4', type: 'gene/protein', status: 'auto-approved' },
+  { id: 'nfe2l2_nrf2', name: 'NFE2L2 / NRF2', type: 'gene/protein', status: 'auto-approved' },
+  { id: 'escrt_iii', name: 'ESCRT-III', type: 'protein complex', status: 'auto-approved' },
+  { id: 'hmgb1', name: 'HMGB1', type: 'protein', status: 'auto-approved' },
+  { id: 'rage', name: 'RAGE', type: 'receptor protein', status: 'auto-approved' },
+  { id: 'nf_kb', name: 'NF-B', type: 'transcription factor', status: 'auto-approved' },
+  { id: 'p53', name: 'p53', type: 'protein', status: 'auto-approved' },
+  { id: 'sat1', name: 'SAT1', type: 'gene/protein', status: 'auto-approved' },
+  { id: 'alox15', name: 'ALOX15', type: 'gene/protein', status: 'auto-approved' },
+  { id: 'ireb2', name: 'IREB2', type: 'gene/protein', status: 'auto-approved' },
+  { id: 'ferritin', name: 'ferritin', type: 'protein', status: 'auto-approved' },
+  { id: 'transferrin', name: 'transferrin', type: 'protein', status: 'auto-approved' },
+  { id: 'erastin', name: 'erastin', type: 'drug', status: 'auto-approved' },
+  { id: 'rsl3', name: 'RSL3', type: 'drug', status: 'auto-approved' },
+  { id: 'sorafenib', name: 'sorafenib', type: 'drug', status: 'auto-approved' },
+  { id: 'sulfasalazine', name: 'sulfasalazine', type: 'drug', status: 'auto-approved' },
+  { id: 'artesunate', name: 'artesunate', type: 'drug', status: 'auto-approved' },
+  { id: 'doxorubicin', name: 'doxorubicin', type: 'drug', status: 'auto-approved' },
+  { id: 'melanoma', name: name.includes('melanoma') ? 'melanoma' : 'melanoma', type: 'disease', status: 'auto-approved' },
+  { id: 'pancreatic_cancer', name: 'pancreatic cancer', type: 'disease', status: 'auto-approved' },
+  { id: 'prostate_cancer', name: 'prostate cancer', type: 'disease', status: 'auto-approved' },
+  { id: 'nsclc', name: 'non-small cell lung cancer', type: 'disease', status: 'auto-approved' },
+  { id: 'breast_cancer', name: 'breast cancer', type: 'disease', status: 'auto-approved' },
+  { id: 'colon_cancer', name: 'colon cancer', type: 'disease', status: 'auto-approved' },
+  { id: 'leukemia', name: 'leukemia', type: 'disease', status: 'auto-approved' },
+  { id: 'lymphoma', name: 'lymphoma', type: 'disease', status: 'auto-approved' },
 ];
 
 const App: React.FC = () => {
@@ -92,19 +92,7 @@ const App: React.FC = () => {
   };
 
   const handleRevert = (id: string) => {
-    setEntities(prev => prev.map(e => {
-      if (e.id === id) {
-        // If it was originally an auto-approved item, return it to that state
-        // Otherwise return it to unacknowledged
-        const original = INITIAL_ENTITIES.find(init => init.id === id);
-        return { 
-          ...e, 
-          status: e.isAuto ? 'auto-approved' : 'unacknowledged',
-          type: original ? original.type : e.type // Also reset the type to original
-        };
-      }
-      return e;
-    }));
+    setEntities(prev => prev.map(e => e.id === id ? { ...e, status: 'unacknowledged' } : e));
     setActiveEntityId(id);
     setShowDropdownId(null);
   };

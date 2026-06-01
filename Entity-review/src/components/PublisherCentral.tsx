@@ -15,6 +15,9 @@ const PublisherCentral: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPackageModal, setShowPackageModal] = useState(false);
   const [papCompletionDate, setPapCompletionDate] = useState<string | null>(null);
+  const [ceCompletionDate, setCeCompletionDate] = useState<string | null>(null);
+  const [peCompletionDate, setPeCompletionDate] = useState<string | null>(null);
+  const [apCompletionDate, setApCompletionDate] = useState<string | null>(null);
 
   // Theme Constants
   const brandBlue = "#1c40ca";
@@ -46,7 +49,14 @@ const PublisherCentral: React.FC = () => {
     workflow: "1"
   };
 
+  const getNowFormatted = () => {
+    const now = new Date();
+    return `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+  };
+
   const handleApprove = () => {
+    setCeCompletionDate(getNowFormatted());
+    
     setIsApproved(true);
     setToastMessage(`Copyediting has been approved by you for the Article ${articleData.id}.`);
     setShowToast(true);
@@ -62,6 +72,8 @@ const PublisherCentral: React.FC = () => {
     setIsLoading(true);
     setIsPeActionMenuOpen(false);
     
+    setPeCompletionDate(getNowFormatted());
+    
     // Show loader for 12 seconds (2s per step * 5 steps + padding)
     setTimeout(() => {
       setIsLoading(false);
@@ -70,9 +82,7 @@ const PublisherCentral: React.FC = () => {
   };
 
   const handlePapApprove = () => {
-    const now = new Date();
-    const formattedDate = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-    setPapCompletionDate(formattedDate);
+    setPapCompletionDate(getNowFormatted());
     
     setIsPapActionMenuOpen(false);
     setIsPapApproved(true);
@@ -86,6 +96,7 @@ const PublisherCentral: React.FC = () => {
   };
 
   const handleStartPeReview = () => {
+    setApCompletionDate(getNowFormatted());
     setPeReviewStarted(true);
   };
 
@@ -347,7 +358,7 @@ const PublisherCentral: React.FC = () => {
                               <td className="px-4 py-4">{articleData.id}</td>
                               <td className="px-4 py-4">PAP</td>
                               <td className="px-4 py-4">26/12/2025 11:00</td>
-                              <td className="px-4 py-4">{papCompletionDate || "15/01/2026 11:00"}</td>
+                              <td className="px-4 py-4">{papCompletionDate}</td>
                               <td className="px-4 py-4 text-right">
                                 <button className="flex items-center justify-center hover:bg-gray-100 rounded-[4px] transition-all w-5 h-5 shrink-0">
                                   <img src="/actions.png" alt="actions" className="h-[14px] w-auto opacity-70 object-contain" />
@@ -573,9 +584,9 @@ const PublisherCentral: React.FC = () => {
                                 </p>
                               ) : (
                                 <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871]">
-                                  <span>28/12/2025 12:01 - 29/12/2025 11:00</span>
+                                  <span>28/12/2025 12:01 - {ceCompletionDate}</span>
                                   <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
-                                  <span>1 Day</span>
+                                  <span>{ceCompletionDate?.includes('2026') ? 'Today' : '1 Day'}</span>
                                 </div>
                               )}
                             </div>
@@ -596,7 +607,7 @@ const PublisherCentral: React.FC = () => {
                                     </div>
                                     <span>Jane Doe</span>
                                   </div>
-                                  <span>29/12/2025 10:04</span>
+                                  <span>{ceCompletionDate}</span>
                                 </div>
                               </div>
                             )}
@@ -674,7 +685,7 @@ const PublisherCentral: React.FC = () => {
                                 {articleData.nextMilestone}
                               </p>
                               <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
-                                {peReviewStarted ? "29/12/2025 - 01/10/2026" : "29/12/2025 11:00 - In-progress"}
+                                {peReviewStarted ? `${ceCompletionDate} - ${apCompletionDate}` : `${ceCompletionDate} - In-progress`}
                               </p>
                             </div>
                             <p className="text-[13px] text-[#35424d]">
@@ -682,7 +693,7 @@ const PublisherCentral: React.FC = () => {
                             </p>
                             {!peReviewStarted && (
                               <p className="text-[13px] text-[#5d6871]">
-                                <span className="text-[#868e94]">Expected completion:</span> 01/10/2026 01:00
+                                <span className="text-[#868e94]">Expected completion:</span> {getNowFormatted()}
                               </p>
                             )}
                           </div>
@@ -701,19 +712,19 @@ const PublisherCentral: React.FC = () => {
                                 <p className="text-[16px] text-[#2a353e]">PE Review</p>
                                 {!isPeApproved ? (
                                   <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
-                                    01/10/2026 11:00 - <span className="italic">In-progress</span>
+                                    {apCompletionDate} - <span className="italic">In-progress</span>
                                   </p>
                                 ) : (
                                   <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871]">
-                                    <span>01/10/2026 11:00 - 10/01/2026 11:00</span>
+                                    <span>{apCompletionDate} - {peCompletionDate}</span>
                                     <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
-                                    <span>1 Day</span>
+                                    <span>Today</span>
                                   </div>
                                 )}
                               </div>
                               {!isPeApproved ? (
                                 <p className="text-[13px] text-[#5d6871]">
-                                  <span className="text-[#868e94]">Estimated completion:</span> 10/01/2026 01:00
+                                  <span className="text-[#868e94]">Estimated completion:</span> {getNowFormatted()}
                                 </p>
                               ) : (
                                 <div className="flex flex-col gap-[7px]">
@@ -728,10 +739,10 @@ const PublisherCentral: React.FC = () => {
                                       </div>
                                       <span>Jane Doe</span>
                                     </div>
-                                    <span>01/10/2026 12:04</span>
-                                  </div>
-                                </div>
-                              )}
+                                    <span>{peCompletionDate}</span>
+                                    </div>
+                                    </div>
+                                    )}
                             </div>
 
                             {/* Action Banner for PE Review (only shown when not approved) */}
@@ -804,19 +815,19 @@ const PublisherCentral: React.FC = () => {
                                 <p className="text-[16px] text-[#2a353e]">PAP</p>
                                 {!isPapApproved ? (
                                   <p className="text-[13px] text-[#5d6871] whitespace-nowrap">
-                                    13/01/2026 11:00 - <span className="italic">In-progress</span>
+                                    {peCompletionDate} - <span className="italic">In-progress</span>
                                   </p>
                                 ) : (
                                   <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871]">
-                                    <span>13/01/2026 11:00 - 15/01/2026 11:00</span>
+                                    <span>{peCompletionDate} - {papCompletionDate}</span>
                                     <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
-                                    <span>2 Days</span>
+                                    <span>Today</span>
                                   </div>
                                 )}
                               </div>
                               {!isPapApproved ? (
                                 <p className="text-[13px] text-[#868e94]">
-                                  Estimated completion: <span className="text-[#35424d]">15/01/2026 12:10</span>
+                                  Estimated completion: <span className="text-[#35424d]">{getNowFormatted()}</span>
                                 </p>
                               ) : (
                                 <div className="flex flex-col gap-[7px]">
@@ -831,7 +842,7 @@ const PublisherCentral: React.FC = () => {
                                       </div>
                                       <span>Jane Doe</span>
                                     </div>
-                                    <span>15/01/2026 15:14</span>
+                                    <span>{papCompletionDate}</span>
                                   </div>
                                 </div>
                               )}

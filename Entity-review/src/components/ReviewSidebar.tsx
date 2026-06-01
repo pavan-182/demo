@@ -36,7 +36,6 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
   activeEntityId, 
   onEntityClick, 
   onAccept, 
-  onRevert,
   onChangeType,
   toggleDropdown,
   showDropdownId,

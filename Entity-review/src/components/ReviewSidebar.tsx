@@ -90,53 +90,34 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
       </div>
 
       {/* KPI Cards Section */}
-      <div className="flex bg-white border-b border-[#F1F3F5] py-4 px-2 shrink-0">
-        {/* Total Entities */}
-        <div className="flex-1 flex flex-col items-center justify-center border-r border-gray-100">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-6 h-6 flex items-center justify-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="7" stroke="#4A148C" strokeWidth="2"/>
-                <path d="M11 8V14M8 11H14" stroke="#4A148C" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M20 20L16 16" stroke="#4A148C" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <span className="text-2xl font-bold text-[#212121]">{entities.length}</span>
+      <div className="px-4 py-4 shrink-0">
+        <div className="flex bg-white border border-[#f0f0f0] rounded-[8px] overflow-hidden shadow-sm">
+          {/* Entities Identified */}
+          <div className="flex-1 flex flex-col items-start pl-[16px] pr-[20px] py-[8px] border-r border-[#f0f0f0]">
+            <span className="text-[13px] text-[#35424D] uppercase tracking-[-0.13px] font-sans">Entities Identified</span>
+            <span className="text-[18px] font-semibold text-[#20282E] tracking-[-0.18px] font-sans">{entities.length}</span>
           </div>
-          <span className="text-[11px] font-bold text-[#1C40CA]">entities identified</span>
-        </div>
 
-        {/* Requires Review (Middle) */}
-        <div className="flex-1 flex flex-col items-center justify-center border-r border-gray-100">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-6 h-6 flex items-center justify-center relative">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="7" stroke="#FF6D00" strokeWidth="2"/>
-                <path d="M20 20L16 16" stroke="#FF6D00" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center -translate-x-0.5 -translate-y-0.5">
-                <div className="bg-[#FF6D00] text-white rounded-full w-3.5 h-3.5 flex items-center justify-center text-[10px] font-bold">!</div>
+          {/* Requires Review */}
+          <div className="flex-1 flex flex-col items-start pl-[16px] pr-[20px] py-[8px] border-r border-[#f0f0f0]">
+            <div className="flex items-center gap-[4px]">
+              <div className="w-[12px] h-[12px] flex items-center justify-center">
+                <img src="/requires_review.svg" alt="" className="w-full h-full" />
+              </div>
+              <span className="text-[13px] text-[#35424D] uppercase tracking-[-0.13px] font-sans">Requires Review</span>
+            </div>
+            <span className="text-[18px] font-semibold text-[#20282E] tracking-[-0.18px] font-sans">{unacknowledged.length}</span>
+          </div>
+
+          {/* Auto Corrected */}
+          <div className="flex-1 flex flex-col items-start pl-[16px] pr-[20px] py-[8px]">
+            <div className="flex items-center gap-[4px]">
+              <span className="text-[13px] text-[#35424D] uppercase tracking-[-0.13px] font-sans">Auto Corrected</span>
+              <div className="w-[12px] h-[12px] flex items-center justify-center">
+                <img src="/info.svg" alt="" className="w-full h-full" />
               </div>
             </div>
-            <span className="text-2xl font-bold text-[#212121]">{unacknowledged.length}</span>
-          </div>
-          <span className="text-[11px] font-bold text-[#1C40CA]">requires review</span>
-        </div>
-
-        {/* Auto Approved (Last) */}
-        <div className="flex-1 flex flex-col items-center justify-center px-1">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-6 h-6 flex items-center justify-center">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="10" cy="10" r="9" stroke="#00C853" strokeWidth="2"/>
-                <path d="M6 10L9 13L14 7" stroke="#00C853" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <span className="text-2xl font-bold text-[#212121]">{autoApproved.length}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="text-[11px] font-bold text-[#1C40CA]">auto approved</span>
-            <svg className="w-3 h-3 text-[#1C40CA]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeWidth="2"></path></svg>
+            <span className="text-[18px] font-semibold text-[#20282E] tracking-[-0.18px] font-sans">{autoApproved.length}</span>
           </div>
         </div>
       </div>
@@ -166,10 +147,10 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
             className="flex items-center justify-between border-b border-[#F1F3F5] pb-2 cursor-pointer group"
             onClick={() => setUnacknowledgedCollapsed(!unacknowledgedCollapsed)}
           >
-            <span className="font-bold text-sm text-[#35424D]">Unacknowledged ({unacknowledged.length})</span>
+            <span className="font-semibold text-[18px] text-[#35424D] tracking-[-0.09px]">Unacknowledged ({unacknowledged.length})</span>
             <div className="flex items-center gap-2 text-black">
               <svg 
-                className={`w-4 h-4 transition-transform duration-200 ${unacknowledgedCollapsed ? '' : 'rotate-180'}`} 
+                className={`w-6 h-6 transition-transform duration-200 ${unacknowledgedCollapsed ? '' : 'rotate-180'}`} 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -182,50 +163,36 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
 
         {/* Unacknowledged Cards */}
         {!unacknowledgedCollapsed && (
-          <div className="space-y-3">
+          <div className="space-y-2">
             {unacknowledged.map(entity => (
               <div key={entity.id}>
                 {activeEntityId === entity.id ? (
-                  <div className="bg-white rounded-lg border-2 border-[#1C40CA] p-4 shadow-lg relative overflow-visible animate-in zoom-in-95 duration-200" id={`review-card-${entity.id}`}>
-                    <div className="flex items-start gap-2 mb-4">
-                      <div className="shrink-0 mt-0.5 relative w-4 h-4">
-                        <svg 
-                          width="14" 
-                          height="16" 
-                          viewBox="0 0 14 16" 
-                          fill="none" 
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                          style={{
-                            width: '14px',
-                            height: '15.55px',
-                          }}
-                        >
-                          <path d="M7 0L14 3.8875V11.6625L7 15.55L0 11.6625V3.8875L7 0Z" fill="#E65100"/>
-                          <path d="M7 4V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                          <circle cx="7" cy="13" r="1" fill="white"/>
-                        </svg>
-                      </div>                    <p className="text-[12px] text-[#5D6871] leading-normal">
-                        We've tagged <span className="font-bold text-[#35424D]">'{entity.name}'</span> with entity type <span className="font-bold text-[#35424D]">'{entity.type}'</span>. Please check.
+                  <div className="bg-white rounded-[4px] border border-[#868E94] p-2 flex flex-col gap-3 relative overflow-visible animate-in zoom-in-95 duration-200" id={`review-card-${entity.id}`}>
+                    <div className="flex items-start gap-1">
+                      <div className="shrink-0 mt-1 relative w-4 h-4">
+                        <img src="/requires_review.svg" alt="" className="w-full h-full" />
+                      </div>
+                      <p className="text-[16px] text-[#35424D] leading-[22px]">
+                        We've tagged <span className="font-bold">{entity.name}</span> with entity type <span className="font-bold">{entity.type}</span>. Please check.
                       </p>
                     </div>
-                    <div className="flex items-center justify-end space-x-3">
+                    <div className="flex items-center justify-end space-x-2">
                       <div className="relative">
                         <button 
-                          className="dropdown-trigger text-[#1C40CA] text-[11px] font-bold flex items-center hover:bg-blue-50 px-2 py-1 rounded transition-colors"
+                          className="dropdown-trigger bg-[#e1e6ff] text-[#1C40CA] text-[13px] font-semibold flex items-center justify-center gap-1 p-2 w-[93px] h-8 rounded-[4px] transition-colors box-border"
                           onClick={(e) => { e.stopPropagation(); toggleDropdown(entity.id); }}
                         >
-                          Change to <span className="ml-1 text-[8px]">▼</span>
+                          Change to <span className="ml-1 text-[10px]">▼</span>
                         </button>
                         {showDropdownId === entity.id && (
                           <div 
-                            className="absolute top-full right-0 mt-1 w-[120px] bg-white z-[1000] py-2 flex flex-col items-start shadow-xl border border-gray-100"
+                            className="absolute top-full right-0 mt-1 w-[120px] bg-white z-[1000] py-2 flex flex-col items-start shadow-xl border border-gray-100 max-h-[160px] overflow-y-auto custom-scrollbar"
                             style={{ boxSizing: 'border-box' }}
                           >
                             {ENTITY_TYPES.map(t => (
                               <button 
                                 key={t}
-                                className={`w-full text-left px-4 py-1.5 text-[11px] hover:bg-gray-100 transition-colors ${entity.type.toLowerCase() === t.toLowerCase() ? 'font-bold bg-blue-50 text-[#1C40CA]' : 'text-[#5D6871]'}`}
+                                className={`w-full text-left px-4 py-1.5 text-[13px] hover:bg-gray-100 transition-colors ${entity.type.toLowerCase() === t.toLowerCase() ? 'font-bold bg-blue-50 text-[#1C40CA]' : 'text-[#5D6871]'}`}
                                 onClick={(e) => { e.stopPropagation(); onChangeType(entity.id, t); }}
                               >
                                 {t}
@@ -235,7 +202,7 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
                         )}
                       </div>
                       <button 
-                        className="bg-white border border-[#1C40CA] text-[#1C40CA] px-5 py-1.5 rounded text-[11px] font-bold hover:bg-[#1C40CA] hover:text-white transition-all shadow-sm"
+                        className="bg-white border-2 border-[#1C40CA] text-[#1C40CA] px-2 py-1 h-8 rounded-[4px] text-[13px] font-semibold hover:bg-blue-50 transition-all box-border"
                         onClick={(e) => { e.stopPropagation(); onAccept(entity.id); }}
                       >
                         Accept
@@ -244,29 +211,15 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
                   </div>
                 ) : (
                   <div 
-                    className="p-4 bg-white border border-[#F1F3F5] shadow-sm rounded-lg flex items-start gap-3 hover:border-orange-200 hover:shadow-md transition-all cursor-pointer group"
+                    className="p-2 bg-white border border-[#e3e4e5] rounded-[4px] flex items-start gap-1.5 hover:border-gray-400 transition-all cursor-pointer group"
                     onClick={() => onEntityClick(entity.id)}
                     id={`review-card-${entity.id}`}
                   >
-                    <div className="shrink-0 mt-1 relative w-4 h-4 group-hover:scale-110 transition-transform">
-                      <svg 
-                        width="14" 
-                        height="16" 
-                        viewBox="0 0 14 16" 
-                        fill="none" 
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                        style={{
-                          width: '14px',
-                          height: '15.55px',
-                        }}
-                      >
-                        <path d="M7 0L14 3.8875V11.6625L7 15.55L0 11.6625V3.8875L7 0Z" fill="#E65100"/>
-                        <path d="M7 4V10" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                        <circle cx="7" cy="13" r="1" fill="white"/>
-                      </svg>
-                    </div>                  <p className="text-[12px] text-[#5D6871] group-hover:text-[#35424D] transition-colors">
-                      We've tagged <span className="font-semibold">'{entity.name}'</span> with entity type ‘{entity.type}’. Please c...
+                    <div className="shrink-0 mt-1 relative w-4 h-4">
+                      <img src="/requires_review.svg" alt="" className="w-full h-full" />
+                    </div>
+                    <p className="text-[16px] text-[#5D6871] leading-[22px] truncate">
+                      We've tagged {entity.name} with entity type {entity.type}. Please c...
                     </p>
                   </div>
                 )}
@@ -276,74 +229,75 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
         )}
 
         {/* Auto Approved Section */}
-        {autoApproved.length > 0 && (
-          <div className="pt-4 border-t border-[#F1F3F5]">
-            <div 
-              className="flex items-center justify-between pb-2 mb-4 cursor-pointer group"
-              onClick={() => setAutoApprovedCollapsed(!autoApprovedCollapsed)}
+        <div className="pt-4">
+          <div 
+            className="flex items-center justify-between pb-2 cursor-pointer group"
+            onClick={() => setAutoApprovedCollapsed(!autoApprovedCollapsed)}
+          >
+            <span className="font-semibold text-[18px] text-[#35424D]">
+              Auto Corrected ({autoApproved.length})
+            </span>
+            <svg 
+              className={`w-6 h-6 transition-transform duration-200 ${autoApprovedCollapsed ? '' : 'rotate-180'}`} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
             >
-              <span className="font-bold text-sm text-[#35424D]">
-                Auto Approved ({autoApproved.length})
-              </span>
-              <svg 
-                className={`w-4 h-4 transition-transform duration-200 ${autoApprovedCollapsed ? '' : 'rotate-180'}`} 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path d="M19 9l-7 7-7-7" strokeWidth="2"></path>
-              </svg>
-            </div>
-            {!autoApprovedCollapsed && (
-              <div className="space-y-2">
-                {autoApproved.map(entity => (
-                  <div key={entity.id} className="p-3 bg-[#F0F7FF] rounded border border-[#E1E6FF] text-[11px] text-[#5D6871] flex items-center justify-between group/card animate-in fade-in slide-in-from-top-1">
-                    <span><span className="font-bold text-[#35424D]">{entity.name}</span> ({entity.type})</span>
-                    <div className="flex items-center gap-3">
-                      <div className="relative">
-                        <button 
-                          className="dropdown-trigger text-[#1C40CA] text-[10px] font-bold flex items-center hover:underline uppercase tracking-tight"
-                          onClick={(e) => { e.stopPropagation(); toggleDropdown(entity.id); }}
+              <path d="M19 9l-7 7-7-7" strokeWidth="2"></path>
+            </svg>
+          </div>
+          {!autoApprovedCollapsed && (
+            <div className="space-y-2">
+              {autoApproved.map(entity => (
+                <div key={entity.id} className="p-2 bg-white rounded border border-[#e3e4e5] flex flex-col gap-3 group/card animate-in fade-in slide-in-from-top-1">
+                  <div className="flex items-start gap-1.5 w-full">
+                    <p className="text-[16px] text-[#35424D] leading-[22px]">
+                      Entity type for <span className="font-bold">{entity.name}</span> has been identified as <span className="font-bold">{entity.type}</span>.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-end">
+                    <div className="relative">
+                      <button 
+                        className="dropdown-trigger bg-white text-[#1C40CA] text-[13px] font-semibold flex items-center justify-center gap-1 p-2 w-[93px] h-8 rounded-[4px] transition-colors hover:bg-blue-50 box-border"
+                        onClick={(e) => { e.stopPropagation(); toggleDropdown(entity.id); }}
+                      >
+                        Change to <span className="ml-1 text-[10px]">▼</span>
+                      </button>
+                      {showDropdownId === entity.id && (
+                        <div 
+                          className="absolute top-full right-0 mt-1 w-[120px] bg-white z-[1000] py-2 flex flex-col items-start shadow-xl border border-gray-100 max-h-[160px] overflow-y-auto custom-scrollbar"
+                          style={{ boxSizing: 'border-box' }}
                         >
-                          Change <span className="ml-1 text-[7px]">▼</span>
-                        </button>
-                        {showDropdownId === entity.id && (
-                          <div 
-                            className="absolute top-full right-0 mt-1 w-[120px] bg-white z-[1000] py-2 flex flex-col items-start shadow-xl border border-gray-100"
-                            style={{ boxSizing: 'border-box' }}
-                          >
-                            {ENTITY_TYPES.map(t => (
-                              <button 
-                                key={t}
-                                className={`w-full text-left px-4 py-1.5 text-[11px] hover:bg-gray-100 transition-colors ${entity.type.toLowerCase() === t.toLowerCase() ? 'font-bold bg-blue-50 text-[#1C40CA]' : 'text-[#5D6871]'}`}
-                                onClick={(e) => { e.stopPropagation(); onChangeType(entity.id, t); }}
-                              >
-                                {t}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <svg className="w-4 h-4 text-[#1C40CA]" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg>
+                          {ENTITY_TYPES.map(t => (
+                            <button 
+                              key={t}
+                              className={`w-full text-left px-4 py-1.5 text-[13px] hover:bg-gray-100 transition-colors ${entity.type.toLowerCase() === t.toLowerCase() ? 'font-bold bg-blue-50 text-[#1C40CA]' : 'text-[#5D6871]'}`}
+                              onClick={(e) => { e.stopPropagation(); onChangeType(entity.id, t); }}
+                            >
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Acknowledged Section */}
-        <div className={`pt-4 ${!isComplete ? 'border-t border-[#F1F3F5]' : ''}`}>
+        <div className="pt-4">
           <div 
-            className="flex items-center justify-between pb-2 mb-4 cursor-pointer group"
+            className="flex items-center justify-between pb-2 cursor-pointer group"
             onClick={() => setAcknowledgedCollapsed(!acknowledgedCollapsed)}
           >
-            <span className={`font-bold text-sm ${acknowledged.length > 0 ? 'text-[#35424D]' : 'text-[#868E94]'}`}>
+            <span className={`font-semibold text-[18px] ${acknowledged.length > 0 ? 'text-[#35424D]' : 'text-[#868E94]'}`}>
               Acknowledged ({acknowledged.length})
             </span>
             <svg 
-              className={`w-4 h-4 transition-transform duration-200 ${acknowledgedCollapsed ? '' : 'rotate-180'}`} 
+              className={`w-6 h-6 transition-transform duration-200 ${acknowledgedCollapsed ? '' : 'rotate-180'}`} 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -354,18 +308,39 @@ const ReviewSidebar: React.FC<ReviewSidebarProps> = ({
           {!acknowledgedCollapsed && (
             <div className="space-y-2">
               {acknowledged.map(entity => (
-                <div key={entity.id} className="p-3 bg-[#F8F9FA] rounded border border-[#F1F3F5] text-[11px] text-[#5D6871] flex items-center justify-between animate-in fade-in slide-in-from-top-1">
-                  <span><span className="font-bold text-[#35424D]">{entity.name}</span> ({entity.type})</span>
-                  <div className="flex items-center gap-3">
-                    <button 
-                      className="text-[#1C40CA] text-[10px] font-bold hover:underline uppercase tracking-tight"
-                      onClick={(e) => { e.stopPropagation(); onRevert(entity.id); }}
-                    >
-                      Revert
-                    </button>
-                    <div className="flex items-center gap-1">
-                      <span className="text-[9px] text-green-600 font-bold uppercase tracking-wider">Accepted</span>
-                      <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg>
+                <div key={entity.id} className="p-2 bg-white rounded border border-[#e3e4e5] flex flex-col gap-3 animate-in fade-in slide-in-from-top-1">
+                  <div className="flex items-start gap-1.5 w-full">
+                    <div className="shrink-0 mt-1 relative w-4 h-4">
+                      <img src="/acknowlege.svg" alt="" className="w-full h-full" />
+                    </div>
+                    <p className="text-[16px] text-[#35424D] leading-[22px]">
+                      You have confirmed <span className="font-bold">{entity.name}</span> with entity type <span className="font-bold">{entity.type}</span>.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-end">
+                    <div className="relative">
+                      <button 
+                        className="dropdown-trigger bg-white text-[#1C40CA] text-[13px] font-semibold flex items-center justify-center gap-1 p-2 w-[93px] h-8 rounded-[4px] transition-colors hover:bg-blue-50 box-border"
+                        onClick={(e) => { e.stopPropagation(); toggleDropdown(entity.id); }}
+                      >
+                        Change to <span className="ml-1 text-[10px]">▼</span>
+                      </button>
+                      {showDropdownId === entity.id && (
+                        <div 
+                          className="absolute top-full right-0 mt-1 w-[120px] bg-white z-[1000] py-2 flex flex-col items-start shadow-xl border border-gray-100 max-h-[160px] overflow-y-auto custom-scrollbar"
+                          style={{ boxSizing: 'border-box' }}
+                        >
+                          {ENTITY_TYPES.map(t => (
+                            <button 
+                              key={t}
+                              className={`w-full text-left px-4 py-1.5 text-[13px] hover:bg-gray-100 transition-colors ${entity.type.toLowerCase() === t.toLowerCase() ? 'font-bold bg-blue-50 text-[#1C40CA]' : 'text-[#5D6871]'}`}
+                              onClick={(e) => { e.stopPropagation(); onChangeType(entity.id, t); }}
+                            >
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

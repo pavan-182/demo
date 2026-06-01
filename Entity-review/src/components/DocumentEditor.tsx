@@ -8,9 +8,9 @@ const DocumentEditor: React.FC<DocumentEditorProps> = ({ activeEntityId }) => {
   const getEntityClass = (id: string) => {
     const isActive = activeEntityId === id;
     if (isActive) {
-      return "bg-[#FFF0E4] py-0.5 px-1 rounded-sm ring-1 ring-orange-200 shadow-sm transition-all duration-300";
+      return "bg-[#FFF0E4] py-0.5 px-1 rounded-sm ring-1 ring-orange-200 shadow-sm border-b-2 border-orange-400 transition-all duration-300";
     }
-    return "border-b-2 border-orange-400 font-medium cursor-pointer hover:bg-orange-50 transition-colors";
+    return "font-medium cursor-pointer hover:bg-orange-50 transition-colors";
   };
 
   return (

@@ -48,7 +48,7 @@ const INITIAL_ENTITIES: Entity[] = [
   { id: 'sulfasalazine', name: 'sulfasalazine', type: 'drug', status: 'auto-approved' },
   { id: 'artesunate', name: 'artesunate', type: 'drug', status: 'auto-approved' },
   { id: 'doxorubicin', name: 'doxorubicin', type: 'drug', status: 'auto-approved' },
-  { id: 'melanoma', name: name.includes('melanoma') ? 'melanoma' : 'melanoma', type: 'disease', status: 'auto-approved' },
+  { id: 'melanoma', name: 'melanoma', type: 'disease', status: 'auto-approved' },
   { id: 'pancreatic_cancer', name: 'pancreatic cancer', type: 'disease', status: 'auto-approved' },
   { id: 'prostate_cancer', name: 'prostate cancer', type: 'disease', status: 'auto-approved' },
   { id: 'nsclc', name: 'non-small cell lung cancer', type: 'disease', status: 'auto-approved' },

@@ -4,7 +4,7 @@ const DashboardEmptyState: React.FC<{ onUploadSuccess?: () => void }> = ({ onUpl
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   // Figma Assets (URLs from get_design_context)
-  const imgArticle1 = "https://www.figma.com/api/mcp/asset/68a123f7-3699-4e55-956e-8742a67b7089";
+  const imgArticle1 = "/image 45.svg";
   const imgUpload = "https://www.figma.com/api/mcp/asset/232f1281-b1a8-466f-8107-18aa2a32763c";
   const imgClose = "https://www.figma.com/api/mcp/asset/a75daf8a-a07a-4e4a-9637-88b5173400b1";
   const imgChevronForward = "https://www.figma.com/api/mcp/asset/6fe021f1-9567-4379-bf2b-948f33910452";
@@ -112,30 +112,29 @@ const DashboardEmptyState: React.FC<{ onUploadSuccess?: () => void }> = ({ onUpl
         </aside>
 
         <main className="flex-1 overflow-hidden bg-white relative flex flex-col items-center justify-center p-8">
-          <div className="flex flex-col items-center max-w-[343px] text-center gap-5">
+          <div className="flex flex-col items-center max-w-[600px] text-center gap-6">
             <img 
               src={imgArticle1} 
               alt="Article" 
-              className="w-[52px] h-[52px]"
+              className="w-[343px] h-[142px] object-contain"
             />
             
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1">
-                <h2 className="text-[20px] font-semibold text-[#2A353E] leading-[28px]">
-                  Get Started by uploading a manuscript
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
+                <h2 className="text-[28px] font-bold text-[#2A353E] leading-[36px]">
+                  Get Publish-Ready in clicks
                 </h2>
-                <div className="text-[13px] text-[#35424D] leading-tight">
-                  <p>Content will appear here once a manuscript is uploaded.</p>
-                  <p>Upload a manuscript to start tracking its progress and conversations.</p>
+                <div className="text-[16px] text-[#35424D] leading-relaxed">
+                  <p>Convert raw manuscripts into validated and typeset articles</p>
                 </div>
               </div>
 
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-4">
                 <button 
                   onClick={() => setShowUploadModal(true)}
-                  className="flex items-center gap-1 px-2 py-1.5 text-[#1C40CA] font-semibold text-[13px] rounded-[4px] hover:bg-blue-50 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-[#1C40CA] text-white font-semibold text-[15px] rounded-[4px] hover:bg-blue-700 shadow-md hover:shadow-lg transition-all"
                 >
-                  <img src={imgUpload} alt="" className="w-5 h-5" />
+                  <img src="/upload.png" alt="" className="w-5 h-5 brightness-0 invert" />
                   Upload Manuscript
                 </button>
               </div>

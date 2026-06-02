@@ -598,14 +598,14 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
 
                       {/* Copyediting Step */}
                       <div className={`flex gap-[8px] items-start pb-[4px] text-left ${!copyeditingCompleted ? 'cursor-pointer hover:bg-blue-50 transition-colors rounded-r-[4px] -mr-4 pr-4' : ''}`}
-                        onClick={!copyeditingCompleted ? onEditCentral : undefined}
+                        onClick={!copyeditingCompleted ? () => onEditCentral?.('query-review') : undefined}
                       >
                         <div className="py-[8px] text-left">
                           <img src={copyeditingCompleted ? "/blue_check.png" : "/mode_standy.png"} alt="" className="w-6 h-6" />
                         </div>
                         <div className="flex-1 flex flex-col gap-[4px] text-left">
                           <div className="flex items-center justify-between text-left">
-                            <span className={`text-[16px] ${!copyeditingCompleted ? 'text-[#1c40ca] font-semibold underline' : 'text-[#2a353e]'}`}>Copyediting</span>
+                            <span className="text-[16px] text-[#2a353e] text-left">Copyediting</span>
                             <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871] text-left">
                               <span>26/12/2025 11:00 - </span>
                               <span className="italic">In-progress</span>

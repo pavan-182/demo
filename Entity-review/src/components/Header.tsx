@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onPause?: () => void;
+  onSubmit?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onPause, onSubmit }) => {
   return (
     <header className="flex flex-col w-full bg-[#F8F8F8] border-b border-[#B7B7B7] [filter:drop-shadow(0px_1px_0px_#B7B7B7)] shrink-0 z-[1000]" style={{ height: '112px' }}>
       {/* Header/Top (40px) */}
@@ -74,13 +79,19 @@ const Header: React.FC = () => {
             </button>
           </div>
           <div className="flex items-center gap-4">
-            <button className="h-7 px-3 flex items-center gap-1 text-[#1C40CA] text-[13px] font-semibold hover:bg-blue-50 rounded transition-colors">
+            <button 
+              onClick={onPause}
+              className="h-7 px-3 flex items-center gap-1 text-[#1C40CA] text-[13px] font-semibold hover:bg-blue-50 rounded transition-colors"
+            >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"></path>
               </svg>
               Pause
             </button>
-            <button className="h-7 px-3 bg-[#1C40CA] text-white text-[13px] font-semibold rounded hover:bg-blue-700 transition-colors">
+            <button 
+              onClick={onSubmit}
+              className="h-7 px-3 bg-[#1C40CA] text-white text-[13px] font-semibold rounded hover:bg-blue-700 transition-colors"
+            >
               Submit
             </button>
           </div>

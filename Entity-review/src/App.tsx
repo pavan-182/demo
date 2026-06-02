@@ -4,6 +4,7 @@ import DocumentEditor from './components/DocumentEditor';
 import ReviewSidebar from './components/ReviewSidebar';
 import PublisherCentral from './components/PublisherCentral';
 import DashboardEmptyState from './components/DashboardEmptyState';
+import QueryReview from './components/QueryReview';
 import type { Entity } from './components/ReviewSidebar';
 import './App.css';
 
@@ -68,6 +69,7 @@ const App: React.FC = () => {
   const [showDashboard, setShowDashboard] = useState(true);
   const [isUploaded, setIsUploaded] = useState(false);
   const [justUploaded, setJustUploaded] = useState(false);
+  const [viewMode, setViewMode] = useState<'entity-review' | 'query-review'>('entity-review');
   
   // Progress states
   const [graphicsCompleted, setGraphicsCompleted] = useState(false);
@@ -115,24 +117,32 @@ const App: React.FC = () => {
     setShowDropdownId(null);
   };
 
-  const handleSubmit = () => {
+  const handleQuerySubmit = () => {
     setIsSubmitting(true);
     setSubmitStep(1);
     
-    // Progress through steps (2s delay each)
-    setTimeout(() => setSubmitStep(2), 2000);
-    setTimeout(() => setSubmitStep(3), 4000);
+    // Progress through steps
+    setTimeout(() => setSubmitStep(2), 1500);
+    setTimeout(() => setSubmitStep(3), 3000);
+    setTimeout(() => setSubmitStep(4), 4500);
 
     setTimeout(() => {
       setIsSubmitting(false);
-      setCopyeditingCompleted(true);
-      setShowDashboard(true);
-      setJustUploaded(true);
+      setViewMode('entity-review');
     }, 5000);
   };
 
+  const handleSubmit = () => {
+    setCopyeditingCompleted(true);
+    setShowDashboard(true);
+    setJustUploaded(true);
+  };
+
   useEffect(() => {
-    if (showDashboard || !isUploaded) return;
+    if (showDashboard || !isUploaded || viewMode !== 'entity-review') {
+      setConnectors([]);
+      return;
+    }
 
     const updateConnectors = () => {
       const activeEntity = entities.find(e => e.id === activeEntityId && e.status === 'unacknowledged');
@@ -198,7 +208,7 @@ const App: React.FC = () => {
       sidebar?.removeEventListener('scroll', handleUpdate);
       window.removeEventListener('click', handleGlobalClick);
     };
-  }, [activeEntityId, entities, showDashboard, isUploaded]);
+  }, [activeEntityId, entities, showDashboard, isUploaded, viewMode]);
 
   if (!isUploaded) {
     return <DashboardEmptyState onUploadSuccess={() => {
@@ -207,57 +217,77 @@ const App: React.FC = () => {
     }} />;
   }
 
-  if (showDashboard) {
+  const renderContent = () => {
+    if (showDashboard) {
+      return (
+        <PublisherCentral 
+          onEditCentral={(mode) => {
+            setViewMode(mode === 'query-review' ? 'query-review' : 'entity-review');
+            setShowDashboard(false);
+          }} 
+          graphicsCompleted={graphicsCompleted}
+          onCompleteGraphics={() => setGraphicsCompleted(true)}
+          copyeditingCompleted={copyeditingCompleted}
+          justUploaded={justUploaded}
+          onClearJustUploaded={() => setJustUploaded(false)}
+        />
+      );
+    }
+
+    if (viewMode === 'query-review') {
+      return (
+        <QueryReview 
+          onBack={() => setShowDashboard(true)}
+          onSubmit={handleQuerySubmit}
+        />
+      );
+    }
+
     return (
-      <PublisherCentral 
-        onEditCentral={() => setShowDashboard(false)} 
-        graphicsCompleted={graphicsCompleted}
-        onCompleteGraphics={() => setGraphicsCompleted(true)}
-        copyeditingCompleted={copyeditingCompleted}
-        justUploaded={justUploaded}
-        onClearJustUploaded={() => setJustUploaded(false)}
-      />
+      <div className="h-screen flex flex-col overflow-hidden bg-white text-on-surface font-sans text-left">
+        <Header onSubmit={handleSubmit} />
+        <main className="flex-1 flex overflow-hidden relative text-left">
+          <DocumentEditor activeEntityId={activeEntityId || undefined} />
+          <ReviewSidebar 
+            entities={entities} 
+            activeEntityId={activeEntityId}
+            onEntityClick={handleEntityClick}
+            onAccept={handleAccept}
+            onRevert={handleRevert}
+            onChangeType={handleChangeType}
+            toggleDropdown={toggleDropdown}
+            showDropdownId={showDropdownId}
+            onSubmit={handleSubmit}
+          />
+          
+          <svg className="fixed inset-0 pointer-events-none z-50 w-full h-full">
+            {connectors.map(conn => {
+              const color = "#E65100"; // Matching the hexagon color
+              return (
+                <React.Fragment key={conn.id}>
+                  <path 
+                    d={conn.pathData} 
+                    fill="none" 
+                    stroke={color} 
+                    strokeWidth="1.5"
+                    strokeDasharray="4 3"
+                    className="transition-all duration-300"
+                    opacity="0.85"
+                  />
+                  <circle cx={conn.startX} cy={conn.startY} r="3" fill={color} opacity="0.9" />
+                  <circle cx={conn.endX} cy={conn.endY} r="3" fill={color} opacity="0.9" />
+                </React.Fragment>
+              );
+            })}
+          </svg>
+        </main>
+      </div>
     );
-  }
+  };
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-white text-on-surface font-sans text-left">
-      <Header />
-      <main className="flex-1 flex overflow-hidden relative text-left">
-        <DocumentEditor activeEntityId={activeEntityId || undefined} />
-        <ReviewSidebar 
-          entities={entities} 
-          activeEntityId={activeEntityId}
-          onEntityClick={handleEntityClick}
-          onAccept={handleAccept}
-          onRevert={handleRevert}
-          onChangeType={handleChangeType}
-          toggleDropdown={toggleDropdown}
-          showDropdownId={showDropdownId}
-          onSubmit={handleSubmit}
-        />
-        
-        <svg className="fixed inset-0 pointer-events-none z-50 w-full h-full">
-          {connectors.map(conn => {
-            const color = "#E65100"; // Matching the hexagon color
-            return (
-              <React.Fragment key={conn.id}>
-                <path 
-                  d={conn.pathData} 
-                  fill="none" 
-                  stroke={color} 
-                  strokeWidth="1.5"
-                  strokeDasharray="4 3"
-                  className="transition-all duration-300"
-                  opacity="0.85"
-                />
-                <circle cx={conn.startX} cy={conn.startY} r="3" fill={color} opacity="0.9" />
-                <circle cx={conn.endX} cy={conn.endY} r="3" fill={color} opacity="0.9" />
-              </React.Fragment>
-            );
-          })}
-        </svg>
-      </main>
+    <>
+      {renderContent()}
       
       {/* Loading Overlay */}
       {isSubmitting && (
@@ -267,7 +297,8 @@ const App: React.FC = () => {
             <div className="w-full h-8 border-[3px] border-[#3B17D3] rounded-full p-1 flex items-center mb-12">
               <div className="flex-1 flex gap-1 h-full">
                 <div className={`h-full flex-1 rounded-l-full transition-colors duration-300 ${submitStep >= 1 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
-                <div className={`h-full flex-1 rounded-r-full transition-colors duration-300 ${submitStep >= 2 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
+                <div className={`h-full flex-1 transition-colors duration-300 ${submitStep >= 2 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
+                <div className={`h-full flex-1 rounded-r-full transition-colors duration-300 ${submitStep >= 3 ? 'bg-[#3B17D3]' : 'bg-[#E5E7EB]'}`} />
               </div>
             </div>
 
@@ -281,7 +312,7 @@ const App: React.FC = () => {
                     <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
                   ) : null}
                 </div>
-                <span className={`text-[16px] ${submitStep >= 1 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Cross referencing external databases</span>
+                <span className={`text-[16px] ${submitStep >= 1 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Tagging entities</span>
               </div>
 
               <div className="flex items-center gap-3">
@@ -292,13 +323,24 @@ const App: React.FC = () => {
                     <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
                   ) : null}
                 </div>
-                <span className={`text-[16px] ${submitStep >= 2 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Linking entities to external IDs</span>
+                <span className={`text-[16px] ${submitStep >= 2 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Cross referencing external databases</span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 ${submitStep > 3 ? 'bg-[#3B17D3] border-[#3B17D3]' : 'border-gray-300'}`}>
+                  {submitStep > 3 ? (
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  ) : submitStep === 3 ? (
+                    <div className="w-3 h-3 border-2 border-[#3B17D3] border-t-transparent rounded-full animate-spin"></div>
+                  ) : null}
+                </div>
+                <span className={`text-[16px] ${submitStep >= 3 ? 'text-[#1F2937] font-semibold' : 'text-gray-400'}`}>Linking entities to external IDs</span>
               </div>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

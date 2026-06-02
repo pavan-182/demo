@@ -5,7 +5,6 @@ const DashboardEmptyState: React.FC<{ onUploadSuccess?: () => void }> = ({ onUpl
 
   // Figma Assets (URLs from get_design_context)
   const imgArticle1 = "/image 45.svg";
-  const imgUpload = "https://www.figma.com/api/mcp/asset/232f1281-b1a8-466f-8107-18aa2a32763c";
   const imgClose = "https://www.figma.com/api/mcp/asset/a75daf8a-a07a-4e4a-9637-88b5173400b1";
   const imgChevronForward = "https://www.figma.com/api/mcp/asset/6fe021f1-9567-4379-bf2b-948f33910452";
   const imgUpload1 = "https://www.figma.com/api/mcp/asset/19bc0819-144d-410b-924c-85df66a76cf7";

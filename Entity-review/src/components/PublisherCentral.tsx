@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BeaconLoader from './BeaconLoader';
 
 interface PublisherCentralProps {
-  onEditCentral?: () => void;
+  onEditCentral?: (mode: string) => void;
   graphicsCompleted?: boolean;
   onCompleteGraphics?: () => void;
   copyeditingCompleted?: boolean;
@@ -34,9 +34,6 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
   const [ceCompletionDate, setCeCompletionDate] = useState<string | null>(null);
   const [peCompletionDate, setPeCompletionDate] = useState<string | null>(null);
   const [apCompletionDate, setApCompletionDate] = useState<string | null>(null);
-
-  // Theme Constants
-  const brandBlue = "#1c40ca";
 
   const articleData = {
     id: "100913",

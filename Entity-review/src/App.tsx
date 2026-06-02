@@ -221,7 +221,7 @@ const App: React.FC = () => {
     if (showDashboard) {
       return (
         <PublisherCentral 
-          onEditCentral={(mode) => {
+          onEditCentral={(mode: any) => {
             setViewMode(mode === 'query-review' ? 'query-review' : 'entity-review');
             setShowDashboard(false);
           }} 

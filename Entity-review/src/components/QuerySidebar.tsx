@@ -8,7 +8,11 @@ interface Query {
   status: 'active' | 'deleted';
 }
 
-const QuerySidebar: React.FC = () => {
+interface QuerySidebarProps {
+  onSubmit?: () => void;
+}
+
+const QuerySidebar: React.FC<QuerySidebarProps> = ({ onSubmit }) => {
   const [activeCollapsed, setActiveCollapsed] = React.useState(false);
   const [deletedCollapsed, setDeletedCollapsed] = React.useState(true);
   const [showFilter, setShowFilter] = React.useState(false);
@@ -38,7 +42,7 @@ const QuerySidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-[400px] bg-white border-l border-[#C2C6CA] flex flex-col overflow-hidden shrink-0 font-source relative">
+    <aside className="w-[400px] bg-white border-l border-[#C2C6CA] flex flex-col h-full overflow-hidden shrink-0 font-source relative">
       {/* Rectangle 2 (Top Progress Bar) */}
       <div 
         style={{
@@ -73,7 +77,7 @@ const QuerySidebar: React.FC = () => {
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-32">
         {/* Active Queries Section */}
         <div>
           <button 
@@ -118,18 +122,18 @@ const QuerySidebar: React.FC = () => {
 
               {/* Query Cards */}
               {queries.map((query) => (
-                <div key={query.id} className="bg-white border border-[#E3E4E5] rounded-[4px] p-4 space-y-2 hover:shadow-md transition-shadow relative">
-                  <div className="flex items-center gap-2">
+                <div key={query.id} className="bg-white border border-[#E3E4E5] rounded-[4px] p-4 space-y-2 hover:shadow-md transition-shadow relative text-left">
+                  <div className="flex items-center gap-2 text-left">
                     <div className="w-3 h-3 bg-orange-400 rounded-sm shrink-0"></div>
                     <span className="text-[11px] text-gray-400 font-medium uppercase tracking-wider">
                       {query.id} | {query.type} {query.source && ` - ${query.source}`}
                     </span>
                   </div>
-                  <p className="text-[14px] text-[#35424D] leading-relaxed">
+                  <p className="text-[14px] text-[#35424D] leading-relaxed text-left">
                     {query.text}
                   </p>
                   {query.id === 'Q3' && (
-                    <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-50 mt-4">
+                    <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-50 mt-4 text-left">
                       <button className="px-4 py-1.5 border-2 border-[#1C40CA] text-[#1C40CA] rounded-[4px] text-[13px] font-bold hover:bg-blue-50">
                         Edit
                       </button>
@@ -163,6 +167,17 @@ const QuerySidebar: React.FC = () => {
             </svg>
           </button>
         </div>
+      </div>
+
+      {/* Submit Footer Action */}
+      <div className="absolute bottom-0 left-0 w-full p-6 bg-white border-t border-[#F1F3F5] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] animate-in slide-in-from-bottom-4">
+        <button 
+          className="w-full bg-[#1C40CA] text-white py-3 rounded-lg font-bold shadow hover:bg-blue-800 transition-all flex items-center justify-center gap-2"
+          onClick={onSubmit}
+        >
+          Submit Review
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
       </div>
     </aside>
   );

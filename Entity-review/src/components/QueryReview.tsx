@@ -83,7 +83,7 @@ const QueryReview: React.FC<QueryReviewProps> = ({ onSubmit }) => {
         </section>
 
         {/* Sidebar */}
-        <QuerySidebar />
+        <QuerySidebar onSubmit={onSubmit} />
       </main>
     </div>
   );

@@ -169,14 +169,13 @@ const QuerySidebar: React.FC<QuerySidebarProps> = ({ onSubmit }) => {
         </div>
       </div>
 
-      {/* Submit Footer Action */}
-      <div className="absolute bottom-0 left-0 w-full p-6 bg-white border-t border-[#F1F3F5] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] animate-in slide-in-from-bottom-4">
+      {/* Footer Action */}
+      <div className="absolute bottom-0 left-0 w-full h-[64px] px-6 bg-[#F7F7F7] border-t border-[#F1F3F5] flex items-center justify-center">
         <button 
-          className="w-full bg-[#1C40CA] text-white py-3 rounded-lg font-bold shadow hover:bg-blue-800 transition-all flex items-center justify-center gap-2"
+          className="w-[148px] h-[29px] bg-[#1C40CA] text-white rounded-[4px] text-[12px] font-semibold hover:bg-[#1633A1] transition-colors flex items-center justify-center"
           onClick={onSubmit}
         >
-          Submit Review
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          Next
         </button>
       </div>
     </aside>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import BeaconLoader from './BeaconLoader';
 
 interface PublisherCentralProps {
@@ -95,15 +95,13 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
   const handlePeApprove = () => {
     setIsLoading(true);
     setIsPeActionMenuOpen(false);
-    
     setPeCompletionDate(getNowFormatted());
-    
-    // Show loader for 2 seconds
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsPeApproved(true);
-    }, 2000);
   };
+
+  const handleBeaconComplete = useCallback(() => {
+    setIsLoading(false);
+    setIsPeApproved(true);
+  }, []);
 
   const handlePapApprove = () => {
     setPapCompletionDate(getNowFormatted());
@@ -1048,7 +1046,7 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
       )}
 
       {/* Loading Overlay */}
-      {isLoading && <BeaconLoader />}
+      {isLoading && <BeaconLoader onComplete={handleBeaconComplete} />}
     </div>
   );
 };

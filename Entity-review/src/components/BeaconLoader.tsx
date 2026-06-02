@@ -8,16 +8,32 @@ const steps = [
   "Transforming to structured AI ready schema..."
 ];
 
-const BeaconLoader: React.FC = () => {
+const STEP_DELAY_MS = 2000;
+const COMPLETION_HOLD_MS = 300;
+
+interface BeaconLoaderProps {
+  onComplete?: () => void;
+}
+
+const BeaconLoader: React.FC<BeaconLoaderProps> = ({ onComplete }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % (steps.length + 1));
-    }, 2000);
+    const stepTimers = steps.map((_, stepIndex) =>
+      window.setTimeout(() => {
+        setIndex(stepIndex + 1);
+      }, (stepIndex + 1) * STEP_DELAY_MS)
+    );
 
-    return () => clearInterval(interval);
-  }, []);
+    const completionTimer = window.setTimeout(() => {
+      onComplete?.();
+    }, steps.length * STEP_DELAY_MS + COMPLETION_HOLD_MS);
+
+    return () => {
+      stepTimers.forEach(window.clearTimeout);
+      window.clearTimeout(completionTimer);
+    };
+  }, [onComplete]);
 
   return (
     <div className="fixed inset-0 z-[1000] bg-white flex justify-center items-center overflow-hidden font-['Inter',sans-serif]">
@@ -27,6 +43,20 @@ const BeaconLoader: React.FC = () => {
           50% { transform: translateY(-6px); }
         }
         .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        @keyframes slideInFade {
+          0% {
+            opacity: 0;
+            transform: translateX(-10px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        .animate-slide-in {
+          animation: slideInFade 0.5s ease-out forwards;
+        }
       `}</style>
       
       <div className="flex flex-col items-center gap-[40px] w-[400px]">
@@ -50,7 +80,10 @@ const BeaconLoader: React.FC = () => {
         {/* Checklist (from Edit Central submit page) */}
         <div className="w-full space-y-5">
           {steps.map((step, i) => (
-            <div key={i} className="flex items-center gap-4">
+            <div 
+              key={i} 
+              className="flex items-center gap-4"
+            >
               {/* Icon Container */}
               <div className={`w-7 h-7 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
                 i < index ? 'bg-[#3B17D3] border-[#3B17D3]' : (i === index ? 'border-[#3B17D3]' : 'border-gray-300')

@@ -152,9 +152,6 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
             </div>
             
             <div className="flex items-center gap-3 px-3 py-1.5 border border-[#d7d9db] rounded-[4px] text-left">
-              <div className="h-[24px] w-[16px] shrink-0 text-left">
-                <img src="/text_100.png" alt="" className="w-full h-full object-cover" />
-              </div>
               <div className="w-6 h-6 rounded-full bg-[#35424d] text-white flex items-center justify-center font-semibold text-[13px]">
                 JD
               </div>

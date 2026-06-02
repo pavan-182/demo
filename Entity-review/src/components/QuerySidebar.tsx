@@ -175,7 +175,7 @@ const QuerySidebar: React.FC<QuerySidebarProps> = ({ onSubmit }) => {
           className="w-[148px] h-[29px] bg-[#1C40CA] text-white rounded-[4px] text-[12px] font-semibold hover:bg-[#1633A1] transition-colors flex items-center justify-center"
           onClick={onSubmit}
         >
-          Next
+          Submit
         </button>
       </div>
     </aside>

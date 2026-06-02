@@ -12,8 +12,6 @@ interface PublisherCentralProps {
 
 const PublisherCentral: React.FC<PublisherCentralProps> = ({ 
   onEditCentral, 
-  graphicsCompleted, 
-  onCompleteGraphics,
   copyeditingCompleted,
   justUploaded,
   onClearJustUploaded
@@ -288,21 +286,11 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                               <td className="px-4 py-4">{articleData.dueDate}</td>
                               <td className="px-4 py-4 text-left">
                                 <div className="flex flex-col gap-1 text-left">
-                                  {!(graphicsCompleted && copyeditingCompleted) ? (
-                                    <>
-                                      {!copyeditingCompleted && (
-                                        <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border bg-[#dafbe8] text-[#005728] border-[#8bdfb2] w-fit text-left`}>
-                                          <span className={`w-2 h-2 rounded-full opacity-60 bg-[#005728]`}></span>
-                                          Copyediting
-                                        </span>
-                                      )}
-                                      {!graphicsCompleted && (
-                                        <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border bg-[#dafbe8] text-[#005728] border-[#8bdfb2] w-fit text-left`}>
-                                          <span className={`w-2 h-2 rounded-full opacity-60 bg-[#005728]`}></span>
-                                          Graphics
-                                        </span>
-                                      )}
-                                    </>
+                                  {!copyeditingCompleted ? (
+                                    <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border bg-[#dafbe8] text-[#005728] border-[#8bdfb2] w-fit text-left`}>
+                                      <span className={`w-2 h-2 rounded-full opacity-60 bg-[#005728]`}></span>
+                                      Copyediting
+                                    </span>
                                   ) : !isApproved ? (
                                     <span className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[13px] font-semibold border bg-[#dafbe8] text-[#005728] border-[#8bdfb2] w-fit text-left`}>
                                       <span className={`w-2 h-2 rounded-full opacity-60 bg-[#005728]`}></span>
@@ -567,27 +555,6 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                   <div className="flex flex-col gap-[12px] w-full max-w-[600px] text-left">
                     <h2 className="text-[16px] font-semibold text-[#35424d] text-left">Progress</h2>
                     <div className="flex flex-col gap-[16px] px-[6px] text-left">
-                      {/* Graphics Step */}
-                      <div className="flex gap-[8px] items-start pb-[4px] text-left cursor-pointer hover:bg-blue-50 transition-colors rounded-r-[4px] -mr-4 pr-4"
-                        onClick={onCompleteGraphics}
-                      >
-                        <div className="py-[8px] text-left">
-                          <img src={graphicsCompleted ? "/blue_check.png" : "/mode_standy.png"} alt="" className="w-6 h-6" />
-                        </div>
-                        <div className="flex-1 flex flex-col gap-[4px] text-left">
-                          <div className="flex items-center justify-between text-left">
-                            <span className="text-[16px] text-[#2a353e] text-left">Graphics</span>
-                            <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871] text-left">
-                              <span>26/12/2025 11:00 - </span>
-                              <span className="italic">In-progress</span>
-                            </div>
-                          </div>
-                          <p className="text-[13px] text-[#5d6871] text-left">
-                            Status: <span className="text-[#35424d]">{graphicsCompleted ? "Completed" : "In-progress"}</span>
-                          </p>
-                        </div>
-                      </div>
-
                       {/* Copyediting Step */}
                       <div className={`flex gap-[8px] items-start pb-[4px] text-left ${!copyeditingCompleted ? 'cursor-pointer hover:bg-blue-50 transition-colors rounded-r-[4px] -mr-4 pr-4' : ''}`}
                         onClick={!copyeditingCompleted ? () => onEditCentral?.('query-review') : undefined}

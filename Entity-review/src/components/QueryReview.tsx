@@ -15,8 +15,8 @@ const QueryReview: React.FC<QueryReviewProps> = ({ onSubmit }) => {
       {/* Main Content Area */}
       <main className="flex-1 flex overflow-hidden relative text-left">
         {/* Document Editor */}
-        <section className="flex-1 bg-[#F1F3F5] relative flex flex-col h-full overflow-hidden p-8">
-          <div className="flex-1 bg-white shadow-lg overflow-y-auto p-16 relative">
+        <section className="flex-1 bg-white relative flex flex-col h-full overflow-hidden">
+          <div className="flex-1 overflow-y-auto p-12 custom-scrollbar relative">
             {/* Navigation Arrow */}
             <button className="absolute left-6 top-6 z-20 p-2.5 bg-white border border-gray-100 rounded-full shadow-xl hover:shadow-2xl hover:bg-gray-50 text-gray-500 transition-all duration-300 group">
               <svg className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,7 +24,7 @@ const QueryReview: React.FC<QueryReviewProps> = ({ onSubmit }) => {
               </svg>
             </button>
 
-            <div className="max-w-3xl mx-auto space-y-12">
+            <div className="max-w-3xl mx-auto pl-24 space-y-8">
               {/* Title Section */}
               <div className="relative pt-4">
                 <span className="absolute -left-24 top-5 doc-tag">TITLE</span>

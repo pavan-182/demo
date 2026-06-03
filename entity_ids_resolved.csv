@@ -1,0 +1,46 @@
+display,correct_type,db,id,canonical_name
+Ferroptosis,biological process,Gene Ontology,GO:0097707,ferroptosis
+Apoptosis,biological process,Gene Ontology,GO:0006915,apoptotic process
+Cancer,disease,MeSH,D009369,Neoplasms
+GPX4,gene,NCBI Gene,2879,GPX4
+system Xc-,transporter complex,NCBI Gene,23657+6520,SLC7A11 (xCT) + SLC3A2 (4F2hc)
+SLC7A11,gene,NCBI Gene,23657,SLC7A11
+SLC3A2,gene,NCBI Gene,6520,SLC3A2
+GSH (glutathione),metabolite,ChEBI,CHEBI:16856,glutathione
+ROS,metabolite,ChEBI,CHEBI:26523,reactive oxygen species
+iron,metabolite,ChEBI,CHEBI:18248,iron(2+)
+MDA (malondialdehyde),metabolite,ChEBI,CHEBI:566274,malondialdehyde
+ALOX (family),gene,NCBI Gene,240,ALOX5
+PHD2 / EGLN1,gene,NCBI Gene,54583,EGLN1
+PUFAs,lipid,ChEBI,CHEBI:26208,polyunsaturated fatty acid
+phospholipids,lipid,ChEBI,CHEBI:16247,phospholipid
+cardiolipin,lipid,ChEBI,CHEBI:28494,cardiolipin
+phosphatidylcholine,lipid,ChEBI,CHEBI:64482,1-acyl-2-acyl-sn-glycero-3-phosphocholine
+phosphatidylethanolamine,lipid,ChEBI,CHEBI:16038,phosphatidylethanolamine
+PTGS2 / COX2,gene,NCBI Gene,5743,PTGS2
+ACSL4,gene,NCBI Gene,2182,ACSL4
+NFE2L2 / NRF2,gene,NCBI Gene,4780,NFE2L2
+ESCRT-III,other,ComplexPortal,CPX-1624,ESCRT-III complex
+HMGB1,gene,NCBI Gene,3146,HMGB1
+RAGE / AGER,gene,NCBI Gene,177,AGER
+NF-κB / NFKB1,gene,NCBI Gene,4790,NFKB1
+p53 / TP53,gene,NCBI Gene,7157,TP53
+SAT1,gene,NCBI Gene,6303,SAT1
+ALOX15,gene,NCBI Gene,246,ALOX15
+IREB2,gene,NCBI Gene,3658,IREB2
+ferritin / FTH1,gene,NCBI Gene,2495,FTH1
+transferrin / TF,gene,NCBI Gene,2152,TF
+erastin,drug,ChEBI,CHEBI:94287,erastin
+RSL3,drug,ChEBI,CHEBI:173109,RSL3
+sorafenib,drug,MeSH,D000077157,Sorafenib
+sulfasalazine,drug,MeSH,D012460,Sulfasalazine
+artesunate,drug,MeSH,D000077332,Artesunate
+doxorubicin,drug,MeSH,D004317,Doxorubicin
+melanoma,disease,MeSH,D000096142,Melanoma
+pancreatic cancer,disease,Disease Ontology,DOID:1793,pancreatic cancer
+prostate cancer,disease,Disease Ontology,DOID:10283,prostate cancer
+NSCLC,disease,Disease Ontology,DOID:3908,non-small cell lung carcinoma
+breast cancer,disease,MeSH,D000072656,Breast Neoplasms
+colon cancer,disease,Disease Ontology,DOID:219,colon cancer
+leukemia,disease,MeSH,D000406,Leukemia
+lymphoma,disease,MeSH,D000077548,Lymphoma

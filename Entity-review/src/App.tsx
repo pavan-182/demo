@@ -9,55 +9,95 @@ import type { Entity } from './components/ReviewSidebar';
 import './App.css';
 
 const INITIAL_ENTITIES: Entity[] = [
-  { id: 'pge2', name: 'PGE2', type: 'protein', status: 'unacknowledged' },
-  { id: '4hne', name: '4-hydroxynonenal (4HNE)', type: 'gene', status: 'unacknowledged' },
-  { id: 'ltb4', name: 'LTB4', type: 'ion', status: 'unacknowledged' },
-  { id: 'ltc4', name: 'LTC4', type: 'complex', status: 'unacknowledged' },
-  { id: 'ferroptosis', name: 'Ferroptosis', type: 'biological process', status: 'auto-approved' },
-  { id: 'apoptosis', name: 'Apoptosis', type: 'biological process', status: 'auto-approved' },
-  { id: 'cancer', name: 'Cancer', type: 'disease', status: 'auto-approved' },
-  { id: 'gpx4', name: 'GPX4', type: 'protein', status: 'auto-approved' },
-  { id: 'system_xc', name: 'system Xc-', type: 'protein complex / transporter', status: 'auto-approved' },
-  { id: 'slc7a11', name: 'SLC7A11', type: 'gene/protein', status: 'auto-approved' },
-  { id: 'slc3a2', name: 'SLC3A2', type: 'gene/protein', status: 'auto-approved' },
-  { id: 'gsh', name: 'GSH', type: 'metabolite', status: 'auto-approved' },
-  { id: 'ros', name: 'ROS', type: 'reactive species', status: 'auto-approved' },
-  { id: 'iron', name: 'iron', type: 'element', status: 'auto-approved' },
-  { id: 'mda', name: 'MDA', type: 'metabolite', status: 'auto-approved' },
-  { id: 'alox', name: 'ALOX', type: 'enzyme', status: 'auto-approved' },
-  { id: 'phd', name: 'PHD', type: 'enzyme', status: 'auto-approved' },
-  { id: 'pufas', name: 'PUFAs', type: 'lipid class', status: 'auto-approved' },
-  { id: 'phospholipids', name: 'phospholipids', type: 'lipid', status: 'auto-approved' },
-  { id: 'cardiolipin', name: 'cardiolipin', type: 'lipid', status: 'auto-approved' },
-  { id: 'phosphatidylcholine', name: 'phosphatidylcholine', type: 'lipid', status: 'auto-approved' },
-  { id: 'phosphatidylethanolamine', name: 'phosphatidylethanolamine (PE)', type: 'lipid', status: 'auto-approved' },
-  { id: 'ptgs2_cox2', name: 'PTGS2 / COX2', type: 'enzyme', status: 'auto-approved' },
-  { id: 'acsl4', name: 'ACSL4', type: 'gene/protein', status: 'auto-approved' },
-  { id: 'nfe2l2_nrf2', name: 'NFE2L2 / NRF2', type: 'gene/protein', status: 'auto-approved' },
-  { id: 'escrt_iii', name: 'ESCRT-III', type: 'protein complex', status: 'auto-approved' },
-  { id: 'hmgb1', name: 'HMGB1', type: 'protein', status: 'auto-approved' },
-  { id: 'rage', name: 'RAGE', type: 'receptor protein', status: 'auto-approved' },
-  { id: 'nf_kb', name: 'NF-B', type: 'transcription factor', status: 'auto-approved' },
-  { id: 'p53', name: 'p53', type: 'protein', status: 'auto-approved' },
-  { id: 'sat1', name: 'SAT1', type: 'gene/protein', status: 'auto-approved' },
-  { id: 'alox15', name: 'ALOX15', type: 'gene/protein', status: 'auto-approved' },
-  { id: 'ireb2', name: 'IREB2', type: 'gene/protein', status: 'auto-approved' },
-  { id: 'ferritin', name: 'ferritin', type: 'protein', status: 'auto-approved' },
-  { id: 'transferrin', name: 'transferrin', type: 'protein', status: 'auto-approved' },
-  { id: 'erastin', name: 'erastin', type: 'drug', status: 'auto-approved' },
-  { id: 'rsl3', name: 'RSL3', type: 'drug', status: 'auto-approved' },
-  { id: 'sorafenib', name: 'sorafenib', type: 'drug', status: 'auto-approved' },
-  { id: 'sulfasalazine', name: 'sulfasalazine', type: 'drug', status: 'auto-approved' },
-  { id: 'artesunate', name: 'artesunate', type: 'drug', status: 'auto-approved' },
-  { id: 'doxorubicin', name: 'doxorubicin', type: 'drug', status: 'auto-approved' },
-  { id: 'melanoma', name: 'melanoma', type: 'disease', status: 'auto-approved' },
-  { id: 'pancreatic_cancer', name: 'pancreatic cancer', type: 'disease', status: 'auto-approved' },
-  { id: 'prostate_cancer', name: 'prostate cancer', type: 'disease', status: 'auto-approved' },
-  { id: 'nsclc', name: 'non-small cell lung cancer', type: 'disease', status: 'auto-approved' },
-  { id: 'breast_cancer', name: 'breast cancer', type: 'disease', status: 'auto-approved' },
-  { id: 'colon_cancer', name: 'colon cancer', type: 'disease', status: 'auto-approved' },
-  { id: 'leukemia', name: 'leukemia', type: 'disease', status: 'auto-approved' },
-  { id: 'lymphoma', name: 'lymphoma', type: 'disease', status: 'auto-approved' },
+  { 
+    id: 'pge2', 
+    name: 'PGE2', 
+    type: 'protein', 
+    status: 'unacknowledged',
+    db: 'NCBI Gene',
+    externalId: '5743',
+    correctType: 'metabolite',
+    correctExternalId: 'CHEBI:26333',
+    correctDb: 'ChEBI'
+  },
+  { 
+    id: '4hne', 
+    name: '4-hydroxynonenal (4HNE)', 
+    type: 'gene', 
+    status: 'unacknowledged',
+    db: 'NCBI Gene',
+    externalId: '2592',
+    correctType: 'metabolite',
+    correctExternalId: 'CHEBI:24199',
+    correctDb: 'ChEBI'
+  },
+  { 
+    id: 'ltb4', 
+    name: 'LTB4', 
+    type: 'ion', 
+    status: 'unacknowledged',
+    db: 'NCBI Gene',
+    externalId: '1241',
+    correctType: 'metabolite',
+    correctExternalId: 'CHEBI:15647',
+    correctDb: 'ChEBI'
+  },
+  { 
+    id: 'ltc4', 
+    name: 'LTC4', 
+    type: 'complex', 
+    status: 'unacknowledged',
+    db: 'NCBI Gene',
+    externalId: '4056',
+    correctType: 'metabolite',
+    correctExternalId: 'CHEBI:15646',
+    correctDb: 'ChEBI'
+  },
+  { id: 'ferroptosis', name: 'Ferroptosis', type: 'biological process', status: 'auto-approved', canonicalName: 'ferroptosis', externalId: 'GO:0097707', db: 'Gene Ontology' },
+  { id: 'apoptosis', name: 'Apoptosis', type: 'biological process', status: 'auto-approved', canonicalName: 'apoptotic process', externalId: 'GO:0006915', db: 'Gene Ontology' },
+  { id: 'cancer', name: 'Cancer', type: 'disease', status: 'auto-approved', canonicalName: 'Neoplasms', externalId: 'D009369', db: 'MeSH' },
+  { id: 'gpx4', name: 'GPX4', type: 'gene', status: 'auto-approved', canonicalName: 'GPX4', externalId: '2879', db: 'NCBI Gene' },
+  { id: 'system_xc', name: 'system Xc-', type: 'transporter complex', status: 'auto-approved', canonicalName: 'SLC7A11 (xCT) + SLC3A2 (4F2hc)', externalId: '23657+6520', db: 'NCBI Gene' },
+  { id: 'slc7a11', name: 'SLC7A11', type: 'gene', status: 'auto-approved', canonicalName: 'SLC7A11', externalId: '23657', db: 'NCBI Gene' },
+  { id: 'slc3a2', name: 'SLC3A2', type: 'gene', status: 'auto-approved', canonicalName: 'SLC3A2', externalId: '6520', db: 'NCBI Gene' },
+  { id: 'gsh', name: 'GSH (glutathione)', type: 'metabolite', status: 'auto-approved', canonicalName: 'glutathione', externalId: 'CHEBI:16856', db: 'ChEBI' },
+  { id: 'ros', name: 'ROS', type: 'metabolite', status: 'auto-approved', canonicalName: 'reactive oxygen species', externalId: 'CHEBI:26523', db: 'ChEBI' },
+  { id: 'iron', name: 'iron', type: 'metabolite', status: 'auto-approved', canonicalName: 'iron(2+)', externalId: 'CHEBI:18248', db: 'ChEBI' },
+  { id: 'mda', name: 'MDA (malondialdehyde)', type: 'metabolite', status: 'auto-approved', canonicalName: 'malondialdehyde', externalId: 'CHEBI:566274', db: 'ChEBI' },
+  { id: 'alox', name: 'ALOX (family)', type: 'gene', status: 'auto-approved', canonicalName: 'ALOX5', externalId: '240', db: 'NCBI Gene' },
+  { id: 'phd2', name: 'PHD2 / EGLN1', type: 'gene', status: 'auto-approved', canonicalName: 'EGLN1', externalId: '54583', db: 'NCBI Gene' },
+  { id: 'pufas', name: 'PUFAs', type: 'lipid', status: 'auto-approved', canonicalName: 'polyunsaturated fatty acid', externalId: 'CHEBI:26208', db: 'ChEBI' },
+  { id: 'phospholipids', name: 'phospholipids', type: 'lipid', status: 'auto-approved', canonicalName: 'phospholipid', externalId: 'CHEBI:16247', db: 'ChEBI' },
+  { id: 'cardiolipin', name: 'cardiolipin', type: 'lipid', status: 'auto-approved', canonicalName: 'cardiolipin', externalId: 'CHEBI:28494', db: 'ChEBI' },
+  { id: 'phosphatidylcholine', name: 'phosphatidylcholine', type: 'lipid', status: 'auto-approved', canonicalName: '1-acyl-2-acyl-sn-glycero-3-phosphocholine', externalId: 'CHEBI:64482', db: 'ChEBI' },
+  { id: 'phosphatidylethanolamine', name: 'phosphatidylethanolamine', type: 'lipid', status: 'auto-approved', canonicalName: 'phosphatidylethanolamine', externalId: 'CHEBI:16038', db: 'ChEBI' },
+  { id: 'ptgs2_cox2', name: 'PTGS2 / COX2', type: 'gene', status: 'auto-approved', canonicalName: 'PTGS2', externalId: '5743', db: 'NCBI Gene' },
+  { id: 'acsl4', name: 'ACSL4', type: 'gene', status: 'auto-approved', canonicalName: 'ACSL4', externalId: '2182', db: 'NCBI Gene' },
+  { id: 'nfe2l2_nrf2', name: 'NFE2L2 / NRF2', type: 'gene', status: 'auto-approved', canonicalName: 'NFE2L2', externalId: '4780', db: 'NCBI Gene' },
+  { id: 'escrt_iii', name: 'ESCRT-III', type: 'other', status: 'auto-approved', canonicalName: 'ESCRT-III complex', externalId: 'CPX-1624', db: 'ComplexPortal' },
+  { id: 'hmgb1', name: 'HMGB1', type: 'gene', status: 'auto-approved', canonicalName: 'HMGB1', externalId: '3146', db: 'NCBI Gene' },
+  { id: 'rage_ager', name: 'RAGE / AGER', type: 'gene', status: 'auto-approved', canonicalName: 'AGER', externalId: '177', db: 'NCBI Gene' },
+  { id: 'nf_kb_nfkb1', name: 'NF-κB / NFKB1', type: 'gene', status: 'auto-approved', canonicalName: 'NFKB1', externalId: '4790', db: 'NCBI Gene' },
+  { id: 'p53_tp53', name: 'p53 / TP53', type: 'gene', status: 'auto-approved', canonicalName: 'TP53', externalId: '7157', db: 'NCBI Gene' },
+  { id: 'sat1', name: 'SAT1', type: 'gene', status: 'auto-approved', canonicalName: 'SAT1', externalId: '6303', db: 'NCBI Gene' },
+  { id: 'alox15', name: 'ALOX15', type: 'gene', status: 'auto-approved', canonicalName: 'ALOX15', externalId: '246', db: 'NCBI Gene' },
+  { id: 'ireb2', name: 'IREB2', type: 'gene', status: 'auto-approved', canonicalName: 'IREB2', externalId: '3658', db: 'NCBI Gene' },
+  { id: 'ferritin_fth1', name: 'ferritin / FTH1', type: 'gene', status: 'auto-approved', canonicalName: 'FTH1', externalId: '2495', db: 'NCBI Gene' },
+  { id: 'transferrin_tf', name: 'transferrin / TF', type: 'gene', status: 'auto-approved', canonicalName: 'TF', externalId: '2152', db: 'NCBI Gene' },
+  { id: 'erastin', name: 'erastin', type: 'drug', status: 'auto-approved', canonicalName: 'erastin', externalId: 'CHEBI:94287', db: 'ChEBI' },
+  { id: 'rsl3', name: 'RSL3', type: 'drug', status: 'auto-approved', canonicalName: 'RSL3', externalId: 'CHEBI:173109', db: 'ChEBI' },
+  { id: 'sorafenib', name: 'sorafenib', type: 'drug', status: 'auto-approved', canonicalName: 'Sorafenib', externalId: 'D000077157', db: 'MeSH' },
+  { id: 'sulfasalazine', name: 'sulfasalazine', type: 'drug', status: 'auto-approved', canonicalName: 'Sulfasalazine', externalId: 'D012460', db: 'MeSH' },
+  { id: 'artesunate', name: 'artesunate', type: 'drug', status: 'auto-approved', canonicalName: 'Artesunate', externalId: 'D000077332', db: 'MeSH' },
+  { id: 'doxorubicin', name: 'doxorubicin', type: 'drug', status: 'auto-approved', canonicalName: 'Doxorubicin', externalId: 'D004317', db: 'MeSH' },
+  { id: 'melanoma', name: 'melanoma', type: 'disease', status: 'auto-approved', canonicalName: 'Melanoma', externalId: 'D000096142', db: 'MeSH' },
+  { id: 'pancreatic_cancer', name: 'pancreatic cancer', type: 'disease', status: 'auto-approved', canonicalName: 'pancreatic cancer', externalId: 'DOID:1793', db: 'Disease Ontology' },
+  { id: 'prostate_cancer', name: 'prostate cancer', type: 'disease', status: 'auto-approved', canonicalName: 'prostate cancer', externalId: 'DOID:10283', db: 'Disease Ontology' },
+  { id: 'nsclc', name: 'NSCLC', type: 'disease', status: 'auto-approved', canonicalName: 'non-small cell lung carcinoma', externalId: 'DOID:3908', db: 'Disease Ontology' },
+  { id: 'breast_cancer', name: 'breast cancer', type: 'disease', status: 'auto-approved', canonicalName: 'Breast Neoplasms', externalId: 'D000072656', db: 'MeSH' },
+  { id: 'colon_cancer', name: 'colon cancer', type: 'disease', status: 'auto-approved', canonicalName: 'colon cancer', externalId: 'DOID:219', db: 'Disease Ontology' },
+  { id: 'leukemia', name: 'leukemia', type: 'disease', status: 'auto-approved', canonicalName: 'Leukemia', externalId: 'D000406', db: 'MeSH' },
+  { id: 'lymphoma', name: 'lymphoma', type: 'disease', status: 'auto-approved', canonicalName: 'Lymphoma', externalId: 'D000077548', db: 'MeSH' },
 ];
 
 const App: React.FC = () => {
@@ -112,7 +152,22 @@ const App: React.FC = () => {
   };
 
   const handleChangeType = (id: string, type: string) => {
-    setEntities(prev => prev.map(e => e.id === id ? { ...e, type, status: 'acknowledged' } : e));
+    setEntities(prev => prev.map(e => {
+      if (e.id === id) {
+        // If the user selects the "correct" type, also apply the correct ID and DB
+        if (e.correctType && type.toLowerCase() === e.correctType.toLowerCase()) {
+          return { 
+            ...e, 
+            type, 
+            status: 'acknowledged', 
+            externalId: e.correctExternalId, 
+            db: e.correctDb 
+          };
+        }
+        return { ...e, type, status: 'acknowledged' };
+      }
+      return e;
+    }));
     setActiveEntityId(null);
     setShowDropdownId(null);
   };

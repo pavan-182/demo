@@ -8,15 +8,21 @@ interface PublisherCentralProps {
   copyeditingCompleted?: boolean;
   justUploaded?: boolean;
   onClearJustUploaded?: () => void;
+  uploadTime?: string;
+  ceCompletionTime?: string;
+  initialView?: 'all-articles' | 'article-details' | 'published-articles';
 }
 
 const PublisherCentral: React.FC<PublisherCentralProps> = ({ 
   onEditCentral, 
   copyeditingCompleted,
   justUploaded,
-  onClearJustUploaded
+  onClearJustUploaded,
+  uploadTime,
+  ceCompletionTime: ceCompProp,
+  initialView = 'all-articles'
 }) => {
-  const [view, setView] = useState<'all-articles' | 'article-details' | 'published-articles'>('all-articles');
+  const [view, setView] = useState<'all-articles' | 'article-details' | 'published-articles'>(initialView);
   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
   const [isPeActionMenuOpen, setIsPeActionMenuOpen] = useState(false);
   const [isPapActionMenuOpen, setIsPapActionMenuOpen] = useState(false);
@@ -33,6 +39,22 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
   const [peCompletionDate, setPeCompletionDate] = useState<string | null>(null);
   const [apCompletionDate, setApCompletionDate] = useState<string | null>(null);
 
+  const getEstimatedTime = (uploadStr: string | undefined) => {
+    if (!uploadStr) return "";
+    // uploadStr is DD/MM/YYYY hh:mm
+    const [datePart, timePart] = uploadStr.split(' ');
+    const [day, month, year] = datePart.split('/').map(Number);
+    const [hour, minute] = timePart.split(':').map(Number);
+    
+    const uploadDate = new Date(year, month - 1, day, hour, minute);
+    const estDate = new Date(uploadDate);
+    estDate.setDate(estDate.getDate() + 2);
+    
+    return `${estDate.getDate().toString().padStart(2, '0')}/${(estDate.getMonth() + 1).toString().padStart(2, '0')}/${estDate.getFullYear()} ${estDate.getHours().toString().padStart(2, '0')}:${estDate.getMinutes().toString().padStart(2, '0')}`;
+  };
+
+  const estimatedTime = getEstimatedTime(uploadTime);
+
   const articleData = {
     id: "100913",
     title: "Widening educational inequalities in mortality in more recent birth-cohorts: a study of 14 European countries",
@@ -48,7 +70,7 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
     status: "In-progress",
     milestone: "Copyediting Review",
     nextMilestone: "Author Proof Review",
-    dueDate: "28/12/2025 11:00",
+    dueDate: estimatedTime,
     daysInProd: "10 Days",
     billing: "Unbilled",
     embargo: "15/01/2026",
@@ -315,7 +337,7 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                 </div>
                               </td>
                               <td className="px-4 py-4 text-left">2 Days</td>
-                              <td className="px-4 py-4 text-left">28/12/2025 11:00</td>
+                              <td className="px-4 py-4 text-left">{articleData.dueDate}</td>
                               <td className="px-4 py-4 text-left">
                                 <div className="border border-[#2853f8] p-[3px] rounded-[6px] w-[80px] text-left">
                                   <div 
@@ -400,7 +422,7 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                               <td className="px-4 py-4">{articleData.journalId}</td>
                               <td className="px-4 py-4">{articleData.id}</td>
                               <td className="px-4 py-4">PAP</td>
-                              <td className="px-4 py-4">26/12/2025 11:00</td>
+                              <td className="px-4 py-4">{uploadTime}</td>
                               <td className="px-4 py-4">{papCompletionDate}</td>
                               <td className="px-4 py-4 text-right">
                                 <button className="flex items-center justify-center hover:bg-gray-100 rounded-[4px] transition-all w-5 h-5 shrink-0 text-left">
@@ -566,12 +588,12 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                           <div className="flex items-center justify-between text-left">
                             <span className="text-[16px] text-[#2a353e] text-left">Copyediting</span>
                             <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871] text-left">
-                              <span>26/12/2025 11:00 - </span>
-                              <span className="italic">In-progress</span>
+                              <span>{uploadTime} - </span>
+                              <span className="italic">{copyeditingCompleted ? ceCompProp : 'In-progress'}</span>
                             </div>
                           </div>
                           <p className="text-[13px] text-[#5d6871] text-left">
-                            Status: <span className="text-[#35424d]">{copyeditingCompleted ? "Completed on-time" : "Pending your review"}</span>
+                            Status: <span className="text-[#35424d]">{copyeditingCompleted ? "Completed on-time" : `Estimated completion: ${estimatedTime}`}</span>
                           </p>
                         </div>
                       </div>
@@ -592,13 +614,13 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                 <span className="text-[16px] text-[#2a353e] text-left">{articleData.milestone}</span>
                                 {!isApproved ? (
                                   <p className="text-[13px] text-[#5d6871] text-left">
-                                    28/12/2025 24:01 - <span className="italic">In-progress</span>
+                                    {ceCompProp} - <span className="italic">In-progress</span>
                                   </p>
                                 ) : (
                                   <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871] text-left">
-                                    <span>28/12/2025 12:01 - {ceCompletionDate}</span>
+                                    <span>{ceCompProp} - {ceCompletionDate}</span>
                                     <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
-                                    <span>{ceCompletionDate?.includes('2026') ? 'Today' : '1 Day'}</span>
+                                    <span>Today</span>
                                   </div>
                                 )}
                               </div>

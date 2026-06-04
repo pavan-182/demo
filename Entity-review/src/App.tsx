@@ -110,10 +110,23 @@ const App: React.FC = () => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [justUploaded, setJustUploaded] = useState(false);
   const [viewMode, setViewMode] = useState<'entity-review' | 'query-review'>('entity-review');
+  const [publisherInitialView, setPublisherInitialView] = useState<'all-articles' | 'article-details'>('all-articles');
+  const [uploadTime, setUploadTime] = useState<string>('');
+  const [ceCompletionTime, setCeCompletionTime] = useState<string>('');
   
   // Progress states
   const [graphicsCompleted, setGraphicsCompleted] = useState(false);
   const [copyeditingCompleted, setCopyeditingCompleted] = useState(false);
+
+  const getNowFormatted = () => {
+    const now = new Date();
+    return `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+  };
+
+  const completeCopyediting = () => {
+    setCopyeditingCompleted(true);
+    setCeCompletionTime(getNowFormatted());
+  };
 
   const [connectors, setConnectors] = useState<Array<{
     id: string;
@@ -184,13 +197,15 @@ const App: React.FC = () => {
     setTimeout(() => {
       setIsSubmitting(false);
       setViewMode('entity-review');
+      setShowDashboard(false);
+      setSubmitStep(0);
     }, 5000);
   };
 
   const handleSubmit = () => {
-    setCopyeditingCompleted(true);
+    completeCopyediting();
+    setPublisherInitialView('article-details');
     setShowDashboard(true);
-    setJustUploaded(true);
   };
 
   useEffect(() => {
@@ -269,6 +284,10 @@ const App: React.FC = () => {
     return <DashboardEmptyState onUploadSuccess={() => {
       setIsUploaded(true);
       setJustUploaded(true);
+      setUploadTime(getNowFormatted());
+      setCeCompletionTime('');
+      setCopyeditingCompleted(false);
+      setPublisherInitialView('all-articles');
     }} />;
   }
 
@@ -276,7 +295,7 @@ const App: React.FC = () => {
     if (showDashboard) {
       return (
         <PublisherCentral 
-          onEditCentral={(mode: any) => {
+          onEditCentral={(mode: string) => {
             setViewMode(mode === 'query-review' ? 'query-review' : 'entity-review');
             setShowDashboard(false);
           }} 
@@ -285,6 +304,9 @@ const App: React.FC = () => {
           copyeditingCompleted={copyeditingCompleted}
           justUploaded={justUploaded}
           onClearJustUploaded={() => setJustUploaded(false)}
+          uploadTime={uploadTime}
+          ceCompletionTime={ceCompletionTime}
+          initialView={publisherInitialView}
         />
       );
     }

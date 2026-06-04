@@ -78,6 +78,10 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
   };
 
   const estimatedTime = getEstimatedTime(uploadTime);
+  const copyeditingReviewDue = getEstimatedTime(ceCompProp, 1);
+  const authorProofExpected = getEstimatedTime(ceCompletionDate, 13);
+  const peReviewEstimated = getEstimatedTime(apCompletionDate, 1);
+  const papEstimated = getEstimatedTime(peCompletionDate, 2);
 
   const getDaysInProd = () => {
     if (!uploadTime) return "0 Days";
@@ -111,11 +115,11 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
     doi: "10.1016/j.ctarc.2025.100913",
     journal: "Current Research in Toxicology",
     journalId: "CTARC",
-    issueId: "N/A",
-    volIssue: "N/A",
+    issueId: "43",
+    volIssue: "43(2025)",
     typesetPages: "12",
     category: "Review Article",
-    ceLevel: "L3",
+    ceLevel: "L1",
     status: currentStatus,
     milestone: "Copyediting Review",
     nextMilestone: "Author Proof Review",
@@ -647,10 +651,11 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                               )}
                             </div>
                           </div>
-                          <p className="text-[13px] text-[#5d6871] text-left">
-                            Status: <span className="text-[#35424d]">{copyeditingCompleted ? "Completed on-time" : "In-progress"}</span>
-                          </p>
-                          {!copyeditingCompleted && (
+                          {copyeditingCompleted ? (
+                            <p className="text-[13px] text-[#5d6871] text-left">
+                              Status: <span className="text-[#35424d]">Completed on-time</span>
+                            </p>
+                          ) : (
                             <p className="text-[13px] text-[#5d6871] text-left">
                               <span className="text-[#868e94]">Estimated completion:</span> {estimatedTime}
                             </p>
@@ -685,14 +690,9 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                 )}
                               </div>
                               {!isApproved ? (
-                                <div className="flex flex-col gap-[4px] text-left">
-                                  <p className="text-[13px] text-[#5d6871] text-left">
-                                    Status: <span className="text-[#35424d]">In-progress</span>
-                                  </p>
-                                  <p className="text-[13px] text-[#5d6871] text-left">
-                                    <span className="text-[#868e94]">Estimated completion:</span> {getEstimatedTime(ceCompProp)}
-                                  </p>
-                                </div>
+                                <p className="text-[13px] text-[#5d6871] text-left">
+                                  <span className="text-[#868e94]">Due on:</span> {copyeditingReviewDue}
+                                </p>
                               ) : (
                                 <div className="flex flex-col gap-[7px] text-left">
                                   <p className="text-[13px] text-[#5d6871] text-left">
@@ -794,12 +794,16 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                 ) : `${ceCompletionDate} - In-progress`}
                               </p>
                             </div>
-                            <p className="text-[13px] text-[#5d6871] text-left">
-                              Status: <span className="text-[#35424d]">{peReviewStarted ? "Completed on-time" : "Proofing In-progress by Author"}</span>
+                            <p className={`text-[13px] text-left ${peReviewStarted ? 'text-[#5d6871]' : 'text-[#35424d]'}`}>
+                              {peReviewStarted ? (
+                                <>
+                                  Status: <span className="text-[#35424d]">Completed on-time</span>
+                                </>
+                              ) : "Proofing In-progress by Author"}
                             </p>
                             {!peReviewStarted && (
                               <p className="text-[13px] text-[#5d6871] text-left">
-                                <span className="text-[#868e94]">Estimated completion:</span> {getEstimatedTime(ceCompletionDate)}
+                                <span className="text-[#868e94]">Expected completion:</span> {authorProofExpected}
                               </p>
                             )}
                           </div>
@@ -829,14 +833,9 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                 )}
                               </div>
                               {!isPeApproved ? (
-                                <div className="flex flex-col gap-[4px] text-left">
-                                  <p className="text-[13px] text-[#5d6871] text-left">
-                                    Status: <span className="text-[#35424d]">In-progress</span>
-                                  </p>
-                                  <p className="text-[13px] text-[#5d6871] text-left">
-                                    <span className="text-[#868e94]">Estimated completion:</span> {getEstimatedTime(apCompletionDate)}
-                                  </p>
-                                </div>
+                                <p className="text-[13px] text-[#5d6871] text-left">
+                                  <span className="text-[#868e94]">Estimated completion:</span> {peReviewEstimated}
+                                </p>
                               ) : (
                                 <div className="flex flex-col gap-[7px] text-left">
                                   <p className="text-[13px] text-[#5d6871] text-left">
@@ -937,14 +936,9 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                 )}
                               </div>
                               {!isPapApproved ? (
-                                <div className="flex flex-col gap-[4px] text-left">
-                                  <p className="text-[13px] text-[#5d6871] text-left">
-                                    Status: <span className="text-[#35424d]">In-progress</span>
-                                  </p>
-                                  <p className="text-[13px] text-[#868e94] text-left">
-                                    Estimated completion: <span className="text-[#35424d] text-left">{getEstimatedTime(peCompletionDate)}</span>
-                                  </p>
-                                </div>
+                                <p className="text-[13px] text-[#868e94] text-left">
+                                  Estimated completion: <span className="text-[#35424d] text-left">{papEstimated}</span>
+                                </p>
                               ) : (
                                 <div className="flex flex-col gap-[7px] text-left">
                                   <p className="text-[13px] text-[#5d6871] text-left">

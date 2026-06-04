@@ -39,47 +39,96 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
   const [peCompletionDate, setPeCompletionDate] = useState<string | null>(null);
   const [apCompletionDate, setApCompletionDate] = useState<string | null>(null);
 
-  const getEstimatedTime = (uploadStr: string | undefined) => {
-    if (!uploadStr) return "";
-    // uploadStr is DD/MM/YYYY hh:mm
-    const [datePart, timePart] = uploadStr.split(' ');
+  const parseDateTime = (dateTimeStr: string | null | undefined) => {
+    if (!dateTimeStr) return null;
+    const [datePart, timePart] = dateTimeStr.split(' ');
+    if (!datePart || !timePart) return null;
+
     const [day, month, year] = datePart.split('/').map(Number);
     const [hour, minute] = timePart.split(':').map(Number);
-    
-    const uploadDate = new Date(year, month - 1, day, hour, minute);
-    const estDate = new Date(uploadDate);
-    estDate.setDate(estDate.getDate() + 2);
-    
-    return `${estDate.getDate().toString().padStart(2, '0')}/${(estDate.getMonth() + 1).toString().padStart(2, '0')}/${estDate.getFullYear()} ${estDate.getHours().toString().padStart(2, '0')}:${estDate.getMinutes().toString().padStart(2, '0')}`;
+    if ([day, month, year, hour, minute].some(Number.isNaN)) return null;
+
+    return new Date(year, month - 1, day, hour, minute);
+  };
+
+  const formatDateTime = (date: Date) => {
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  };
+
+  const getEstimatedTime = (startStr: string | null | undefined, daysToAdd = 2) => {
+    const startDate = parseDateTime(startStr);
+    if (!startDate) return "";
+
+    const estDate = new Date(startDate);
+    estDate.setDate(estDate.getDate() + daysToAdd);
+
+    return formatDateTime(estDate);
+  };
+
+  const getDurationLabel = (startStr: string | null | undefined, endStr: string | null | undefined) => {
+    const startDate = parseDateTime(startStr);
+    const endDate = parseDateTime(endStr);
+    if (!startDate || !endDate) return "";
+
+    const startDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const endDay = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+    const diffDays = Math.max(1, Math.round((endDay.getTime() - startDay.getTime()) / (1000 * 60 * 60 * 24)));
+
+    return `${diffDays} Day${diffDays !== 1 ? 's' : ''}`;
   };
 
   const estimatedTime = getEstimatedTime(uploadTime);
 
+  const getDaysInProd = () => {
+    if (!uploadTime) return "0 Days";
+    const [datePart] = uploadTime.split(' ');
+    const [day, month, year] = datePart.split('/').map(Number);
+    const uploadDate = new Date(year, month - 1, day);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - uploadDate.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    return `${diffDays} Day${diffDays !== 1 ? 's' : ''}`;
+  };
+
+  const currentStatus = isPapApproved ? "Published" : 
+                        isPeApproved ? "PAP In-progress" :
+                        peReviewStarted ? "PE Review" :
+                        isApproved ? "Author Proof Review" :
+                        copyeditingCompleted ? "CE Review" :
+                        "In-progress";
+
+  const statusStyles = {
+    bg: "bg-[#dafbe8]",
+    border: "border-[#8bdfb2]",
+    dot: "bg-[#005728]",
+    text: "text-[#005728]"
+  };
+
   const articleData = {
     id: "100913",
-    title: "Widening educational inequalities in mortality in more recent birth-cohorts: a study of 14 European countries",
-    authors: "Dylan Field",
-    doi: "10.1176/appi.prcp",
-    journal: "Current Oncology Reports",
+    title: "Ferroptosis as the new approach to cancer therapy",
+    authors: "Oluwafemi Adeleke Ojo",
+    doi: "10.1016/j.ctarc.2025.100913",
+    journal: "Current Research in Toxicology",
     journalId: "CTARC",
-    issueId: "12",
-    volIssue: "12/35",
-    typesetPages: "10",
-    category: "Initial Check",
-    ceLevel: "L1",
-    status: "In-progress",
+    issueId: "N/A",
+    volIssue: "N/A",
+    typesetPages: "12",
+    category: "Review Article",
+    ceLevel: "L3",
+    status: currentStatus,
     milestone: "Copyediting Review",
     nextMilestone: "Author Proof Review",
     dueDate: estimatedTime,
-    daysInProd: "10 Days",
-    billing: "Unbilled",
-    embargo: "15/01/2026",
-    corrAuthor: "Dylan Field",
-    coAuthors: "John Brewis, Harvey Brut",
-    tables: "2",
+    daysInProd: getDaysInProd(),
+    billing: "Billed",
+    embargo: "N/A",
+    corrAuthor: "Oluwafemi Adeleke Ojo",
+    coAuthors: "Susan Grant, Pearl Ifunanya Nwafor-Ezeh",
+    tables: "1",
     figures: "2",
-    supplMtl: "19",
-    workflow: "1"
+    supplMtl: "0",
+    workflow: "Standard"
   };
 
   useEffect(() => {
@@ -95,7 +144,7 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
 
   const getNowFormatted = () => {
     const now = new Date();
-    return `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    return formatDateTime(now);
   };
 
   const handleApprove = () => {
@@ -542,9 +591,9 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                         </div>
                         <div className="flex gap-[4px] items-center text-[13px] text-left">
                           <span className="text-[#5d6871] w-[80px] shrink-0">Status</span>
-                          <div className="bg-[#dafbe8] border border-[#8bdfb2] flex gap-[4px] items-center px-[8px] py-[2px] rounded-full text-left">
-                            <span className="w-2 h-2 rounded-full bg-[#005728] opacity-60 text-left"></span>
-                            <span className="text-[#005728] font-semibold text-[11px] text-left">{articleData.status}</span>
+                          <div className={`${statusStyles.bg} ${statusStyles.border} border flex gap-[4px] items-center px-[8px] py-[2px] rounded-full text-left`}>
+                            <span className={`w-2 h-2 rounded-full ${statusStyles.dot} opacity-60 text-left`}></span>
+                            <span className={`${statusStyles.text} font-semibold text-[11px] text-left`}>{articleData.status}</span>
                           </div>
                         </div>
                         <div className="flex gap-[4px] text-[13px] text-left">
@@ -588,13 +637,24 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                           <div className="flex items-center justify-between text-left">
                             <span className="text-[16px] text-[#2a353e] text-left">Copyediting</span>
                             <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871] text-left">
-                              <span>{uploadTime} - </span>
-                              <span className="italic">{copyeditingCompleted ? ceCompProp : 'In-progress'}</span>
+                              {copyeditingCompleted ? (
+                                <span>{uploadTime} - {ceCompProp} • {getDurationLabel(uploadTime, ceCompProp)}</span>
+                              ) : (
+                                <>
+                                  <span>{uploadTime} - </span>
+                                  <span className="italic">In-progress</span>
+                                </>
+                              )}
                             </div>
                           </div>
                           <p className="text-[13px] text-[#5d6871] text-left">
-                            Status: <span className="text-[#35424d]">{copyeditingCompleted ? "Completed on-time" : `Estimated completion: ${estimatedTime}`}</span>
+                            Status: <span className="text-[#35424d]">{copyeditingCompleted ? "Completed on-time" : "In-progress"}</span>
                           </p>
+                          {!copyeditingCompleted && (
+                            <p className="text-[13px] text-[#5d6871] text-left">
+                              <span className="text-[#868e94]">Estimated completion:</span> {estimatedTime}
+                            </p>
+                          )}
                         </div>
                       </div>
 
@@ -620,14 +680,19 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                   <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871] text-left">
                                     <span>{ceCompProp} - {ceCompletionDate}</span>
                                     <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
-                                    <span>Today</span>
+                                    <span>{getDurationLabel(ceCompProp, ceCompletionDate)}</span>
                                   </div>
                                 )}
                               </div>
                               {!isApproved ? (
-                                <p className="text-[13px] text-[#5d6871] text-left">
-                                  <span className="text-[#868e94]">Due on:</span> {articleData.dueDate}
-                                </p>
+                                <div className="flex flex-col gap-[4px] text-left">
+                                  <p className="text-[13px] text-[#5d6871] text-left">
+                                    Status: <span className="text-[#35424d]">In-progress</span>
+                                  </p>
+                                  <p className="text-[13px] text-[#5d6871] text-left">
+                                    <span className="text-[#868e94]">Estimated completion:</span> {getEstimatedTime(ceCompProp)}
+                                  </p>
+                                </div>
                               ) : (
                                 <div className="flex flex-col gap-[7px] text-left">
                                   <p className="text-[13px] text-[#5d6871] text-left">
@@ -720,15 +785,21 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                 {articleData.nextMilestone}
                               </p>
                               <p className="text-[13px] text-[#5d6871] whitespace-nowrap text-left">
-                                {peReviewStarted ? `${ceCompletionDate} - ${apCompletionDate}` : `${ceCompletionDate} - In-progress`}
+                                {peReviewStarted ? (
+                                  <>
+                                    <span>{ceCompletionDate} - {apCompletionDate}</span>
+                                    <span className="w-1 h-1 rounded-full bg-[#5d6871] inline-block mx-[4px] align-middle"></span>
+                                    <span>{getDurationLabel(ceCompletionDate, apCompletionDate)}</span>
+                                  </>
+                                ) : `${ceCompletionDate} - In-progress`}
                               </p>
                             </div>
-                            <p className="text-[13px] text-[#35424d] text-left">
-                              {peReviewStarted ? "Status: Completed on-time" : "Proofing In-progress by Author"}
+                            <p className="text-[13px] text-[#5d6871] text-left">
+                              Status: <span className="text-[#35424d]">{peReviewStarted ? "Completed on-time" : "Proofing In-progress by Author"}</span>
                             </p>
                             {!peReviewStarted && (
                               <p className="text-[13px] text-[#5d6871] text-left">
-                                <span className="text-[#868e94]">Expected completion:</span> {getNowFormatted()}
+                                <span className="text-[#868e94]">Estimated completion:</span> {getEstimatedTime(ceCompletionDate)}
                               </p>
                             )}
                           </div>
@@ -753,14 +824,19 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                   <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871] text-left">
                                     <span>{apCompletionDate} - {peCompletionDate}</span>
                                     <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
-                                    <span>Today</span>
+                                    <span>{getDurationLabel(apCompletionDate, peCompletionDate)}</span>
                                   </div>
                                 )}
                               </div>
                               {!isPeApproved ? (
-                                <p className="text-[13px] text-[#5d6871] text-left">
-                                  <span className="text-[#868e94]">Estimated completion:</span> {getNowFormatted()}
-                                </p>
+                                <div className="flex flex-col gap-[4px] text-left">
+                                  <p className="text-[13px] text-[#5d6871] text-left">
+                                    Status: <span className="text-[#35424d]">In-progress</span>
+                                  </p>
+                                  <p className="text-[13px] text-[#5d6871] text-left">
+                                    <span className="text-[#868e94]">Estimated completion:</span> {getEstimatedTime(apCompletionDate)}
+                                  </p>
+                                </div>
                               ) : (
                                 <div className="flex flex-col gap-[7px] text-left">
                                   <p className="text-[13px] text-[#5d6871] text-left">
@@ -856,14 +932,19 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
                                   <div className="flex gap-[4px] items-center text-[13px] text-[#5d6871] text-left">
                                     <span>{peCompletionDate} - {papCompletionDate}</span>
                                     <span className="w-1 h-1 rounded-full bg-[#5d6871]"></span>
-                                    <span>Today</span>
+                                    <span>{getDurationLabel(peCompletionDate, papCompletionDate)}</span>
                                   </div>
                                 )}
                               </div>
                               {!isPapApproved ? (
-                                <p className="text-[13px] text-[#868e94] text-left">
-                                  Estimated completion: <span className="text-[#35424d] text-left">{getNowFormatted()}</span>
-                                </p>
+                                <div className="flex flex-col gap-[4px] text-left">
+                                  <p className="text-[13px] text-[#5d6871] text-left">
+                                    Status: <span className="text-[#35424d]">In-progress</span>
+                                  </p>
+                                  <p className="text-[13px] text-[#868e94] text-left">
+                                    Estimated completion: <span className="text-[#35424d] text-left">{getEstimatedTime(peCompletionDate)}</span>
+                                  </p>
+                                </div>
                               ) : (
                                 <div className="flex flex-col gap-[7px] text-left">
                                   <p className="text-[13px] text-[#5d6871] text-left">

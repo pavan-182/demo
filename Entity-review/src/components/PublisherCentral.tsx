@@ -94,12 +94,7 @@ const PublisherCentral: React.FC<PublisherCentralProps> = ({
     return `${diffDays} Day${diffDays !== 1 ? 's' : ''}`;
   };
 
-  const currentStatus = isPapApproved ? "Published" : 
-                        isPeApproved ? "PAP In-progress" :
-                        peReviewStarted ? "PE Review" :
-                        isApproved ? "Author Proof Review" :
-                        copyeditingCompleted ? "CE Review" :
-                        "In-progress";
+  const currentStatus = isPapApproved ? "Published" : "In-progress";
 
   const statusStyles = {
     bg: "bg-[#dafbe8]",
